@@ -11,6 +11,7 @@ import {
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { useState } from "react";
+import { headerStyle } from "../styles/headerStyle";
 
 const pages = ["List", "Result"];
 
@@ -26,13 +27,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        backgroundColor: "#F4F4F4",
-        boxShadow: "none",
-      }}
-    >
+    <AppBar position="static" sx={headerStyle.appBar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -40,19 +35,12 @@ export default function Header() {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "Outfit",
-              fontWeight: 900,
-              color: "black",
-              textDecoration: "none",
-            }}
+            sx={headerStyle.logoDesktop}
           >
             ShareMoney
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={headerStyle.mobileMenuContainer}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -91,30 +79,16 @@ export default function Header() {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "Outfit",
-              fontWeight: 900,
-              color: "black",
-              textDecoration: "none",
-            }}
+            sx={headerStyle.logoMobile}
           >
             ShareMoney
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={headerStyle.desktopMenuContainer}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
-                sx={{
-                  my: 2,
-                  fontFamily: "Outfit",
-                  fontWeight: 700,
-                  color: "#828282",
-                  display: "block",
-                }}
+                sx={headerStyle.navigationButton}
               >
                 {page}
               </Button>

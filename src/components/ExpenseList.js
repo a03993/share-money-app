@@ -8,42 +8,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
-
-const commonStyles = {
-  fontFamily: "Outfit",
-};
-
-export const styles = {
-  title: {
-    ...commonStyles,
-    marginBottom: "1rem",
-  },
-  primary: {
-    ...commonStyles,
-    fontWeight: 500,
-    color: "#0E0E0E",
-  },
-  secondary: {
-    ...commonStyles,
-    fontWeight: 300,
-    color: "#606060",
-  },
-};
+import theme from "../styles/theme";
 
 export default function ExpenseList({ expenseData }) {
   return (
     <>
-      <Typography sx={styles.title} variant="h6">
+      <Typography className="expense-list-title" variant="h6">
         Expense List
       </Typography>
-      <List sx={{ maxWidth: "30rem", margin: "auto" }}>
+      <List>
         {expenseData.map((expense, index) => (
           <ListItem
             key={index}
             divider
             secondaryAction={
-              <IconButton edge="end" aria-label="delete">
-                <DeleteIcon sx={{ color: "#E5E5E5" }} />
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                className="expense-delete-button"
+              >
+                <DeleteIcon />
               </IconButton>
             }
           >
@@ -51,31 +35,16 @@ export default function ExpenseList({ expenseData }) {
               <Avatar
                 sx={{
                   backgroundColor: expense.color,
-                  ...styles.common,
-                  fontWeight: 600,
                 }}
                 alt={expense.name}
               >
                 {expense.name[0]}
               </Avatar>
             </ListItemAvatar>
+            <ListItemText primary={expense.item} secondary={expense.name} />
             <ListItemText
-              primary={expense.item}
-              secondary={expense.name}
-              primaryTypographyProps={{
-                ...styles.primary,
-                fontSize: "1rem",
-              }}
-              secondaryTypographyProps={styles.secondary}
-            />
-            <ListItemText
+              className="expense-amount"
               primary={`$${expense.amount.toLocaleString()}`}
-              primaryTypographyProps={styles.primary}
-              sx={{
-                textAlign: "right",
-                marginRight: 2,
-                flex: "0 0 auto",
-              }}
             />
           </ListItem>
         ))}

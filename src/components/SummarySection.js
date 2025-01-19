@@ -1,34 +1,18 @@
 import { Typography } from "@mui/material";
 
-const commonStyles = {
-  fontFamily: "Outfit",
-};
-
-export const styles = {
-  title: {
-    ...commonStyles,
-    marginBottom: "3rem",
-  },
-  amount: {
-    ...commonStyles,
-    fontWeight: 400,
-    textAlign: "center",
-  },
-  personCount: {
-    ...commonStyles,
-    fontWeight: 900,
-  },
-};
-
 export default function SummarySection({ expenseData, totalAmount }) {
   return (
     <>
-      <Typography sx={styles.title} variant="h6">
+      <Typography className="summary-title" variant="h6">
         Summary
       </Typography>
-      <Typography variant="h3" gutterBottom sx={styles.amount}>
+      <Typography className="summary-amount" variant="h3" gutterBottom>
         {expenseData.length}
-        <Typography variant="h5" component="span" sx={styles.personCount}>
+        <Typography
+          className="summary-person-count"
+          variant="h5"
+          component="span"
+        >
           人
         </Typography>{" "}
         ${totalAmount.toLocaleString()}
