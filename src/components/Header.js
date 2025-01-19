@@ -15,8 +15,9 @@ import { headerStyle } from "../styles/headerStyle";
 
 const pages = ["List", "Result"];
 
-export default function Header() {
+export default function Header({ setPage }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
+  const [currentPage, setCurrentPage] = useState("List");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -24,6 +25,11 @@ export default function Header() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleChangePage = (page) => {
+    setPage(page);
+    setCurrentPage(page);
   };
 
   return (
@@ -39,20 +45,18 @@ export default function Header() {
           >
             ShareMoney
           </Typography>
-
           <Box sx={headerStyle.mobileMenuContainer}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="navigation menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="#828282"
             >
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id="navigation-mobile-menu"
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
@@ -68,8 +72,15 @@ export default function Header() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                <MenuItem
+                  key={page}
+                  disabled={currentPage === page}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleChangePage(page);
+                  }}
+                >
+                  <Typography sx={headerStyle.menuItemText}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -87,7 +98,8 @@ export default function Header() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => handleCloseNavMenu(page)}
+                onClick={() => handleChangePage(page)}
+                disabled={currentPage === page}
                 sx={headerStyle.navigationButton}
               >
                 {page}
