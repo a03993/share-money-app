@@ -1,22 +1,25 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { formBoxStyle, plusButtonStyle } from "../styles/inputStyle";
-
-const labels = ["Item", "Price"];
+import {
+  formBoxStyle,
+  inputWithButtonStyle,
+  plusButtonStyle,
+} from "../styles/inputStyle";
 
 export default function Input() {
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
-      {labels.map((label) => (
+      <TextField id="item-input" label="Item" variant="outlined" type="text" />
+      <Box sx={inputWithButtonStyle}>
         <TextField
-          key={label}
-          id={`${label.toLowerCase()}-input`}
-          label={label}
+          id="price-input"
+          label="Price"
           variant="outlined"
+          type="number"
         />
-      ))}
-      <Button type="submit" sx={plusButtonStyle}></Button>
+        <Button type="submit" sx={plusButtonStyle}></Button>
+      </Box>
     </Box>
   );
 }

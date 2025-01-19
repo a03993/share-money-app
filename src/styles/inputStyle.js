@@ -22,13 +22,24 @@ export const formBoxStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "100%",
+  width: "70%",
+  maxWidth: "800px",
   marginTop: theme.spacing(3),
+  marginLeft: "auto",
+  marginRight: "auto",
   gap: theme.spacing(INPUT_CONFIG.spacing.form),
+  flexWrap: "wrap",
 
   "& .MuiTextField-root": {
     width: INPUT_CONFIG.sizes.input,
+    flex: "1 1 auto",
   },
+};
+
+export const inputWithButtonStyle = {
+  display: "flex",
+  alignItems: "center",
+  flex: "1 1 auto",
 };
 
 export const plusButtonStyle = {
@@ -65,14 +76,6 @@ export const plusButtonStyle = {
   "&:hover": {
     backgroundColor: theme.palette.neutral.dark,
     transform: "scale(1.05)",
-
-    "&::before, &::after": {
-      backgroundColor: theme.palette.neutral.light,
-    },
-  },
-
-  "&:focus": {
-    backgroundColor: theme.palette.neutral.dark,
 
     "&::before, &::after": {
       backgroundColor: theme.palette.neutral.light,
