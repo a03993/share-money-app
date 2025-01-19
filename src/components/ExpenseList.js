@@ -8,16 +8,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import theme from "../styles/theme";
 
 export default function ExpenseList({ expenseData }) {
+  const flattenedExpenses = expenseData.flatMap((person) =>
+    person.expenses.map((expense) => ({
+      ...expense,
+      name: person.name,
+      color: person.color,
+    }))
+  );
+
   return (
     <>
       <Typography className="expense-list-title" variant="h6">
         Expense List
       </Typography>
       <List>
-        {expenseData.map((expense, index) => (
+        {flattenedExpenses.map((expense, index) => (
           <ListItem
             key={index}
             divider

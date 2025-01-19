@@ -11,7 +11,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Header setPage={setPage} />
-      {page === "List" ? <ListPage /> : <ResultPage />}
+      {page === "List" ? <ListPage page={page} /> : <ResultPage />}
     </ThemeProvider>
   );
 }
