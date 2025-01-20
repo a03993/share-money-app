@@ -2,8 +2,8 @@ import theme from "./theme";
 
 const INPUT_CONFIG = {
   spacing: {
-    form: 2,
-    button: 2,
+    form: theme.spacing(2),
+    button: theme.spacing(2),
   },
   sizes: {
     input: "25ch",
@@ -18,16 +18,27 @@ const INPUT_CONFIG = {
   },
 };
 
+const buttonCrossStyles = {
+  content: '""',
+  position: "absolute",
+  backgroundColor: theme.palette.neutral.main,
+  borderRadius: 2,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  transition: "inherit",
+};
+
 export const formBoxStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   width: "70%",
   maxWidth: "800px",
-  marginTop: theme.spacing(3),
+  marginTop: theme.spacing(8),
   marginLeft: "auto",
   marginRight: "auto",
-  gap: theme.spacing(INPUT_CONFIG.spacing.form),
+  gap: INPUT_CONFIG.spacing.form,
   flexWrap: "wrap",
 
   "& .MuiTextField-root": {
@@ -49,18 +60,11 @@ export const plusButtonStyle = {
   borderRadius: INPUT_CONFIG.radius.button,
   padding: 0,
   position: "relative",
-  marginLeft: theme.spacing(INPUT_CONFIG.spacing.button),
+  marginLeft: INPUT_CONFIG.spacing.button,
   backgroundColor: theme.palette.neutral.light,
 
   "&::before, &::after": {
-    content: '""',
-    position: "absolute",
-    backgroundColor: theme.palette.neutral.dark,
-    borderRadius: 2,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    transition: "inherit",
+    ...buttonCrossStyles,
   },
 
   "&::before": {
@@ -74,11 +78,11 @@ export const plusButtonStyle = {
   },
 
   "&:hover": {
-    backgroundColor: theme.palette.neutral.dark,
+    backgroundColor: theme.palette.primary.main,
     transform: "scale(1.05)",
 
     "&::before, &::after": {
-      backgroundColor: theme.palette.neutral.light,
+      backgroundColor: theme.palette.background.default,
     },
   },
 };

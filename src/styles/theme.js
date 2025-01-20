@@ -11,7 +11,6 @@ const palette = {
     lightest: "#F9F9F9",
     light: "#E5E5E5",
     main: "#606060",
-    dark: "#0E0E0E",
   },
   background: {
     default: "#FFFFFF",
@@ -19,12 +18,15 @@ const palette = {
   },
 };
 
+const commonStyles = {
+  borderRadius: "2rem",
+  transition: "all 0.3s ease-in-out",
+  textTransform: "none",
+};
+
 const theme = createTheme({
   typography: {
     fontFamily: "Outfit, sans-serif",
-    logo: {
-      fontWeight: 900,
-    },
   },
   palette: palette,
   components: {
@@ -32,9 +34,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            borderRadius: "2rem",
-            backgroundColor: palette.background.paper,
-            transition: "all 0.3s ease-in-out",
+            ...commonStyles,
+            backgroundColor: palette.neutral.lightest,
             "&:hover": {
               backgroundColor: palette.background.default,
             },
@@ -51,7 +52,7 @@ const theme = createTheme({
             borderWidth: "1px",
           },
           "& label": {
-            color: "#606060",
+            color: palette.neutral.main,
             "&.Mui-focused": {
               color: palette.primary.main,
             },
@@ -62,8 +63,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: "none",
-          transition: "all 0.3s ease-in-out",
+          ...commonStyles,
         },
       },
     },
@@ -109,16 +109,13 @@ const theme = createTheme({
           },
           "&.summary-title": {
             marginBottom: "3rem",
-            fontFamily: "Outfit",
           },
           "&.summary-amount": {
             fontWeight: 400,
             textAlign: "center",
-            fontFamily: "Outfit",
           },
           "&.summary-person-count": {
             fontWeight: 900,
-            fontFamily: "Outfit",
           },
         },
       },
@@ -135,7 +132,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          transition: "all 0.3s ease-in-out",
+          transition: commonStyles.transition,
         },
       },
     },

@@ -15,6 +15,19 @@ const HEADER_CONFIG = {
   },
 };
 
+const logoTypography = {
+  fontSize: HEADER_CONFIG.typography.fontSize.logo,
+  fontWeight: HEADER_CONFIG.typography.fontWeight.logo,
+  color: "primary.main",
+  textDecoration: "none",
+};
+
+const navTypography = {
+  fontSize: HEADER_CONFIG.typography.fontSize.nav,
+  fontWeight: HEADER_CONFIG.typography.fontWeight.nav,
+  color: "secondary.main",
+};
+
 export const headerStyle = {
   appBar: {
     backgroundColor: "background.paper",
@@ -23,19 +36,13 @@ export const headerStyle = {
   logoDesktop: {
     mr: 2,
     display: HEADER_CONFIG.display.desktop,
-    fontSize: HEADER_CONFIG.typography.fontSize.logo,
-    fontWeight: HEADER_CONFIG.typography.fontWeight.logo,
-    color: "primary.main",
-    textDecoration: "none",
+    ...logoTypography,
   },
   logoMobile: {
     mr: 2,
     display: HEADER_CONFIG.display.mobile,
     flexGrow: 1,
-    fontSize: HEADER_CONFIG.typography.fontSize.logo,
-    fontWeight: HEADER_CONFIG.typography.fontWeight.logo,
-    color: "primary.main",
-    textDecoration: "none",
+    ...logoTypography,
   },
   mobileMenuContainer: {
     flexGrow: 1,
@@ -47,9 +54,7 @@ export const headerStyle = {
   },
   navigationButton: {
     my: 2,
-    fontSize: HEADER_CONFIG.typography.fontSize.nav,
-    fontWeight: HEADER_CONFIG.typography.fontWeight.nav,
-    color: "secondary.main",
+    ...navTypography,
     opacity: 0.3,
     display: "block",
     "&.Mui-disabled": {
@@ -58,8 +63,6 @@ export const headerStyle = {
     },
   },
   menuItemText: {
-    fontSize: HEADER_CONFIG.typography.fontSize.nav,
-    fontWeight: HEADER_CONFIG.typography.fontWeight.nav,
-    color: "secondary.main",
+    ...navTypography,
   },
 };
