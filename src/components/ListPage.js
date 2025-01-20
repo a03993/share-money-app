@@ -1,14 +1,14 @@
 import { Box, Grid } from "@mui/material";
 import { expenseData, totalAmount } from "../mock/mockData";
 
-import Input from "./Input";
+import ExpenseEntryForm from "./ExpenseEntryForm";
 import SummarySection from "./SummarySection";
 import ExpenseList from "./ExpenseList";
 
 export default function ListPage({ page }) {
   return (
     <>
-      <Input />
+      <ExpenseEntryForm expenseData={expenseData} />
       <Box
         sx={{
           maxWidth: {
