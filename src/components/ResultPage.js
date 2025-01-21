@@ -1,52 +1,38 @@
 import { Box, Grid } from "@mui/material";
+
 import AverageAmount from "./AverageAmount";
 import MemberAvatars from "./MemberAvatars";
+import PaymentTransferList from "./PaymentTransferList";
 import SummarySection from "./SummarySection";
-import { expenseData, totalAmount } from "../mock/mockData";
+
+import { expenseData, totalAmount, paymentDetails } from "../mock/mockData";
+import { resultPageStyle } from "../styles/resultPageStyle";
 
 const averageAmountPerPerson = Math.round(totalAmount / expenseData.length);
 
 export default function ResultPage() {
   return (
-    <Box
-      sx={{
-        maxWidth: {
-          xs: "80%",
-          sm: "70%",
-          lg: "60%",
-        },
-        mx: "auto",
-        mt: 10,
-      }}
-    >
-      <Grid container spacing={2} alignItems="center">
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{ textAlign: { xs: "center", md: "left" } }}
-        >
-          <AverageAmount amount={averageAmountPerPerson} />
+    <>
+      <Box sx={resultPageStyle.container}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={4} sx={resultPageStyle.centerAlign}>
+            <AverageAmount amount={averageAmountPerPerson} />
+          </Grid>
+          <Grid item xs={12} md={4} sx={resultPageStyle.centerAlign}>
+            <MemberAvatars members={expenseData} />
+          </Grid>
+          <Grid item xs={12} md={4} sx={resultPageStyle.centerAlign}>
+            <SummarySection
+              page="result"
+              expenseData={expenseData}
+              totalAmount={totalAmount}
+            />
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <MemberAvatars members={expenseData} />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <SummarySection
-            page="result"
-            expenseData={expenseData}
-            totalAmount={totalAmount}
-          />
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+      <Box>
+        <PaymentTransferList paymentDetails={paymentDetails} />
+      </Box>
+    </>
   );
 }
