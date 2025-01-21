@@ -14,7 +14,7 @@ export const avatarGroup = {
 
 export const selectStyle = {
   borderRadius: 10,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.neutral.lightest,
 
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: theme.palette.primary.main,
@@ -29,18 +29,3 @@ export const selectStyle = {
     },
   },
 };
-
-export const avatarStyle = (color) => ({
-  backgroundColor: color,
-  width: 30,
-  height: 30,
-  fontSize: 15,
-  borderColor: theme.palette.neutral.lightest,
-});
-
-export const listItemtextStyle = () => ({
-  marginLeft: 1,
-  "& .MuiTypography-root": {
-    color: theme.palette.neutral.main,
-  },
-});

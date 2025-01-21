@@ -5,7 +5,7 @@ export default function AverageAmount({ amount }) {
     <Typography variant="h3">
       ${amount.toLocaleString()}
       <Typography
-        className="summary-person-count"
+        className="font-weight-extra-bold"
         variant="h5"
         component="span"
       >

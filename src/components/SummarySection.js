@@ -4,18 +4,18 @@ export default function SummarySection({ page, expenseData, totalAmount }) {
   return (
     <>
       {page === "List" && (
-        <Typography className="summary-title" variant="h6">
+        <Typography variant="h6" sx={{ mb: 6 }}>
           Summary
         </Typography>
       )}
       <Typography
-        className="summary-amount"
+        className="font-weight-regular text-align-center"
         variant={page === "List" ? "h3" : "h5"}
         gutterBottom
       >
         {expenseData.length}
         <Typography
-          className="summary-person-count"
+          className="font-weight-extra-bold"
           variant={page === "List" ? "h5" : "h6"}
           component="span"
         >

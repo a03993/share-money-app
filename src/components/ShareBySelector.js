@@ -15,8 +15,6 @@ import {
   formControlStyle,
   avatarGroup,
   selectStyle,
-  avatarStyle,
-  listItemtextStyle,
 } from "../styles/shareBySelectorStyle";
 
 const ITEM_HEIGHT = 48;
@@ -32,7 +30,6 @@ const MenuProps = {
 
 export default function ShareBySelector({ expenseData }) {
   const [personName, setPersonName] = useState([]);
-  const [avatarMax, setAvatarMax] = useState(3);
 
   const handleChange = (event) => {
     const {
@@ -53,14 +50,11 @@ export default function ShareBySelector({ expenseData }) {
         input={<OutlinedInput label="Share by" />}
         renderValue={(selected) => (
           <div style={avatarGroup}>
-            <AvatarGroup
-              max={3}
-              sx={{ "& .MuiAvatar-root": avatarStyle("#defaultColor") }}
-            >
+            <AvatarGroup max={3} className="avatar-group-select">
               {selected.map((name) => {
                 const item = expenseData.find((item) => item.name === name);
                 return (
-                  <Avatar key={name} sx={avatarStyle(item.color)}>
+                  <Avatar key={name} sx={{ backgroundColor: item.color }}>
                     {name.charAt(0)}
                   </Avatar>
                 );
@@ -74,8 +68,13 @@ export default function ShareBySelector({ expenseData }) {
         {expenseData.map((item) => (
           <MenuItem key={item.name} value={item.name}>
             <Checkbox checked={personName.includes(item.name)} />
-            <Avatar sx={avatarStyle(item.color)}>{item.name.charAt(0)}</Avatar>
-            <ListItemText primary={item.name} sx={listItemtextStyle} />
+            <Avatar
+              className="small-mui-avatar"
+              sx={{ backgroundColor: item.color }}
+            >
+              {item.name.charAt(0)}
+            </Avatar>
+            <ListItemText secondary={item.name} sx={{ ml: 1 }} />
           </MenuItem>
         ))}
       </Select>

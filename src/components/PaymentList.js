@@ -9,8 +9,6 @@ import {
   Avatar,
 } from "@mui/material";
 
-import { paymentListStyle } from "../styles/paymentListStyle";
-
 const PaymentList = ({ items, paymentDetails, checked, handleToggle }) => (
   <Paper sx={{ width: 450, height: 250, overflow: "auto", marginTop: 2 }}>
     <List dense component="div" role="list">
@@ -46,30 +44,32 @@ const PaymentList = ({ items, paymentDetails, checked, handleToggle }) => (
                   }}
                 >
                   <Avatar
+                    className="small-mui-avatar"
                     sx={{
-                      ...paymentListStyle.avatarStyle,
                       backgroundColor: paymentDetail.payer.avatarColor,
+                      mr: 0.5,
                     }}
                   >
                     {paymentDetail.payer.name[0]}
                   </Avatar>
                   <ListItemText
                     secondary={paymentDetail.payer.name}
-                    className="expense-amount"
+                    className="mui-list-item-text-point"
                   />
                   {"pay"}
                   <Avatar
+                    className="small-mui-avatar"
                     sx={{
-                      ...paymentListStyle.avatarStyle,
                       backgroundColor: paymentDetail.payee.avatarColor,
-                      marginLeft: 1,
+                      mr: 0.5,
+                      ml: 1,
                     }}
                   >
                     {paymentDetail.payee.name[0]}
                   </Avatar>
                   <ListItemText
                     secondary={paymentDetail.payee.name}
-                    className="expense-amount"
+                    className="mui-list-item-text-point"
                   />
                   {`$${paymentDetail.amount}`}
                 </span>

@@ -1,28 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
-const palette = {
-  primary: {
-    main: "#0E0E0E",
-  },
-  secondary: {
-    main: "#828282",
-  },
-  neutral: {
-    lightest: "#F9F9F9",
-    light: "#E5E5E5",
-    main: "#606060",
-  },
-  background: {
-    default: "#FFFFFF",
-    paper: "#F4F4F4",
-  },
-};
-
-const commonStyles = {
-  borderRadius: "2rem",
-  transition: "all 0.3s ease-in-out",
-  textTransform: "none",
-};
+import { palette } from "./palette";
+import { commonStyles } from "./commonStyle";
 
 const theme = createTheme({
   typography: {
@@ -30,6 +9,50 @@ const theme = createTheme({
   },
   palette: palette,
   components: {
+    MuiListItemText: {
+      styleOverrides: {
+        root: {
+          "&.mui-list-item-text-point": {
+            textAlign: "right",
+            marginRight: 16,
+            flex: "0 0 auto",
+          },
+        },
+        primary: {
+          fontWeight: 500,
+          color: palette.primary.main,
+        },
+        secondary: {
+          fontWeight: 300,
+          color: palette.neutral.dark,
+        },
+      },
+    },
+    MuiAvatarGroup: {
+      styleOverrides: {
+        root: {
+          "&.avatar-group-select .MuiAvatar-root": {
+            width: 30,
+            height: 30,
+            fontSize: 15,
+            fontWeight: 600,
+            borderColor: palette.neutral.lightest,
+          },
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+          "&.small-mui-avatar": {
+            width: 30,
+            height: 30,
+            fontSize: 18,
+          },
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -60,62 +83,72 @@ const theme = createTheme({
         },
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          ...commonStyles,
-        },
-      },
-    },
-    MuiList: {
-      styleOverrides: {
-        root: {
-          maxWidth: "30rem",
-          margin: "auto",
-        },
-      },
-    },
-    MuiListItemText: {
-      styleOverrides: {
-        root: {
-          "&.expense-amount": {
-            textAlign: "right",
-            marginRight: 16,
-            flex: "0 0 auto",
-          },
-        },
-        primary: {
-          fontWeight: 500,
-          color: palette.primary.main,
-        },
-        secondary: {
-          fontWeight: 300,
-          color: palette.neutral.dark,
-        },
-      },
-    },
-    MuiAvatar: {
-      styleOverrides: {
-        root: {
-          fontWeight: 600,
-        },
-      },
-    },
     MuiTypography: {
       styleOverrides: {
         root: {
-          "&.expense-list-title": {
-            marginBottom: "1rem",
-          },
-          "&.summary-title": {
-            marginBottom: "3rem",
-          },
-          "&.summary-amount": {
-            fontWeight: 400,
+          "&.text-align-center": {
             textAlign: "center",
           },
-          "&.summary-person-count": {
+          "&.font-size-logo": { fontSize: 28 },
+          "&.font-weight-regular": {
+            fontWeight: 400,
+          },
+          "&.font-weight-bold": {
+            fontWeight: 600,
+          },
+          "&.font-weight-extra-bold": {
             fontWeight: 900,
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "&.nav-list": {
+            fontWeight: 600,
+            fontSize: 16,
+            color: palette.secondary.main,
+            opacity: 0.3,
+            "&.Mui-disabled": {
+              color: "secondary.main",
+              opacity: 1,
+            },
+          },
+          "&.plus-button": {
+            width: 50,
+            height: 50,
+            minWidth: 50,
+            borderRadius: "50%",
+            padding: 0,
+            position: "relative",
+            marginLeft: 16,
+            backgroundColor: palette.neutral.light,
+            "&::before, &::after": {
+              content: '""',
+              position: "absolute",
+              backgroundColor: palette.neutral.main,
+              borderRadius: 2,
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              transition: "inherit",
+            },
+            "&::before": {
+              width: 20,
+              height: 3,
+            },
+            "&::after": {
+              height: 20,
+              width: 3,
+            },
+            "&:hover": {
+              backgroundColor: palette.primary.main,
+              transform: "scale(1.05)",
+              "&::before, &::after": {
+                backgroundColor: palette.background.default,
+              },
+            },
           },
         },
       },
@@ -125,22 +158,6 @@ const theme = createTheme({
         root: {
           "&.expense-delete-button": {
             color: palette.neutral.light,
-          },
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          transition: commonStyles.transition,
-        },
-      },
-    },
-    MuiToolbar: {
-      styleOverrides: {
-        root: {
-          "@media (min-width: 600px)": {
-            padding: "0.5rem 0",
           },
         },
       },

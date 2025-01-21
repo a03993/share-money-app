@@ -41,6 +41,7 @@ export default function Header({ setPage }) {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
+            className="font-size-logo font-weight-extra-bold"
             sx={headerStyle.logoDesktop}
           >
             ShareMoney
@@ -53,7 +54,7 @@ export default function Header({ setPage }) {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
             <Menu
               id="navigation-mobile-menu"
@@ -80,7 +81,12 @@ export default function Header({ setPage }) {
                     handleChangePage(page);
                   }}
                 >
-                  <Typography sx={headerStyle.menuItemText}>{page}</Typography>
+                  <Typography
+                    className="font-weight-bold"
+                    sx={headerStyle.menuItemText}
+                  >
+                    {page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -90,6 +96,7 @@ export default function Header({ setPage }) {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
+            className="font-size-logo font-weight-extra-bold"
             sx={headerStyle.logoMobile}
           >
             ShareMoney
@@ -100,7 +107,7 @@ export default function Header({ setPage }) {
                 key={page}
                 onClick={() => handleChangePage(page)}
                 disabled={currentPage === page}
-                sx={headerStyle.navigationButton}
+                className="nav-list"
               >
                 {page}
               </Button>

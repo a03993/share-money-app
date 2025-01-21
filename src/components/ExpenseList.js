@@ -20,7 +20,7 @@ export default function ExpenseList({ expenseData }) {
 
   return (
     <>
-      <Typography className="expense-list-title" variant="h6">
+      <Typography variant="h6" sx={{ mb: 3 }}>
         Expense List
       </Typography>
       <List>
@@ -40,9 +40,7 @@ export default function ExpenseList({ expenseData }) {
           >
             <ListItemAvatar>
               <Avatar
-                sx={{
-                  backgroundColor: expense.color,
-                }}
+                sx={{ backgroundColor: expense.color }}
                 alt={expense.name}
               >
                 {expense.name[0]}
@@ -50,7 +48,7 @@ export default function ExpenseList({ expenseData }) {
             </ListItemAvatar>
             <ListItemText primary={expense.item} secondary={expense.name} />
             <ListItemText
-              className="expense-amount"
+              className="mui-list-item-text-point"
               primary={`$${expense.amount.toLocaleString()}`}
             />
           </ListItem>
