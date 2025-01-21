@@ -70,3 +70,28 @@ export const totalAmount = expenseData.reduce((sum, person) => {
   );
   return sum + personTotal;
 }, 0);
+
+export const paymentDetails = [
+  {
+    payer: {
+      name: "The Chairs",
+      avatarColor: "#E7D3A7",
+    },
+    payee: {
+      name: "KANA-BOON",
+      avatarColor: "#F0B694",
+    },
+    amount: 600,
+  },
+  {
+    payer: {
+      name: "DragonPony",
+      avatarColor: "#C2C2BB",
+    },
+    payee: {
+      name: "老王樂隊",
+      avatarColor: "#F0B694",
+    },
+    amount: 66,
+  },
+];
