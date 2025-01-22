@@ -63,35 +63,125 @@ export const expenseData = [
   },
 ];
 
-export const totalAmount = expenseData.reduce((sum, person) => {
-  const personTotal = person.expenses.reduce(
-    (expenseSum, expense) => expenseSum + expense.amount,
-    0
-  );
-  return sum + personTotal;
-}, 0);
+// 計算所有使用者的總花費金額
+const calculateTotalAmount = (data) => {
+  return data.reduce((sum, { expenses }) => {
+    const personTotal = expenses.reduce(
+      (expenseSum, { amount }) => expenseSum + amount,
+      0
+    );
+    return sum + personTotal;
+  }, 0);
+};
 
-export const paymentDetails = [
-  {
-    payer: {
-      name: "The Chairs",
-      avatarColor: "#E7D3A7",
-    },
-    payee: {
-      name: "KANA-BOON",
-      avatarColor: "#F0B694",
-    },
-    amount: 600,
-  },
-  {
-    payer: {
-      name: "DragonPony",
-      avatarColor: "#C2C2BB",
-    },
-    payee: {
-      name: "老王樂隊",
-      avatarColor: "#F0B694",
-    },
-    amount: 66,
-  },
-];
+// 計算所有使用者的個別實際花費
+const calculateTotalExpensePerPerson = (data) => {
+  const totalExpenses = {};
+
+  data.forEach(({ name, expenses }) => {
+    const personTotal = expenses.reduce(
+      (expenseSum, { amount }) => expenseSum + amount,
+      0
+    );
+    totalExpenses[name] = personTotal;
+  });
+
+  return Object.entries(totalExpenses).map(([name, actualExpense]) => ({
+    name,
+    actualExpense: actualExpense,
+  }));
+};
+
+// 計算所有使用者的個別已付費花費
+const calculateAmountPaidByEachPerson = (data) => {
+  const amountPaid = {};
+
+  data.forEach(({ expenses }) => {
+    expenses.forEach(({ amount, sharedBy }) => {
+      const splitAmount = amount / sharedBy.length;
+      sharedBy.forEach((person) => {
+        if (!amountPaid[person]) {
+          amountPaid[person] = 0;
+        }
+        amountPaid[person] += splitAmount;
+      });
+    });
+  });
+
+  return Object.entries(amountPaid).map(([name, paid]) => ({
+    name,
+    paidAmount: parseFloat(paid.toFixed(0)),
+  }));
+};
+
+// 計算結果，正數為收款人，負數代表為付款人
+const calculatePayments = (actualExpense, paidAmount) => {
+  const balance = {};
+
+  // 計算每個人應該支付或應該收到的金額
+  actualExpense.forEach(({ name, actualExpense }) => {
+    balance[name] =
+      (paidAmount.find((person) => person.name === name)?.paidAmount || 0) -
+      actualExpense;
+  });
+
+  // 將正數 (payer) 和負數 (payee) 分開
+  const payers = [];
+  const payees = [];
+
+  for (let person in balance) {
+    if (balance[person] > 0) {
+      payers.push({ name: person, amount: balance[person] });
+    } else if (balance[person] < 0) {
+      payees.push({ name: person, amount: -balance[person] }); // 負數轉正數
+    }
+  }
+
+  // 配對 payer 和 payee
+  const transactions = [];
+  let payerIndex = 0;
+  let payeeIndex = 0;
+
+  while (payerIndex < payers.length && payeeIndex < payees.length) {
+    const payer = payers[payerIndex];
+    const payee = payees[payeeIndex];
+    const transferAmount = Math.min(payer.amount, payee.amount);
+
+    // 生成交易資料
+    transactions.push({
+      payer: {
+        name: payer.name,
+        avatarColor: expenseData.find((person) => person.name === payer.name)
+          .color,
+      },
+      payee: {
+        name: payee.name,
+        avatarColor: expenseData.find((person) => person.name === payee.name)
+          .color,
+      },
+      amount: transferAmount,
+    });
+
+    // 更新支付者和接受者的餘額
+    payers[payerIndex].amount -= transferAmount;
+    payees[payeeIndex].amount -= transferAmount;
+
+    // 移動到下一個 payer 或 payee
+    if (payers[payerIndex].amount === 0) {
+      payerIndex++;
+    }
+    if (payees[payeeIndex].amount === 0) {
+      payeeIndex++;
+    }
+  }
+
+  return transactions;
+};
+
+const actualExpense = calculateTotalExpensePerPerson(expenseData);
+const paidAmount = calculateAmountPaidByEachPerson(expenseData);
+export const totalAmount = calculateTotalAmount(expenseData);
+export const paymentDetails = calculatePayments(actualExpense, paidAmount);
+export const averageAmountPerPerson = parseFloat(
+  (totalAmount / expenseData.length).toFixed(0)
+);

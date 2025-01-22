@@ -87,6 +87,12 @@ const theme = createTheme({
             fontSize: 13,
             color: palette.neutral.main,
           },
+          "&.font-empty-list-message": {
+            color: palette.neutral.main,
+          },
+          "&.font-weight-thin": {
+            fontWeight: 300,
+          },
           "&.font-weight-regular": {
             fontWeight: 400,
           },

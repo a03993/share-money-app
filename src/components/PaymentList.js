@@ -18,7 +18,7 @@ export default function PaymentList({
   handleToggle,
 }) {
   return (
-    <Paper sx={{ width: 450, height: 250, overflow: "auto", marginTop: 2 }}>
+    <Paper sx={{ width: 450, height: 350, overflow: "auto", marginTop: 2 }}>
       <List dense component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
