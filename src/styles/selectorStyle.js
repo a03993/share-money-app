@@ -1,9 +1,7 @@
 import theme from "./theme";
 
 export const formControlStyle = {
-  m: 1,
   width: "100%",
-  minWidth: 110,
 };
 
 export const avatarGroup = {

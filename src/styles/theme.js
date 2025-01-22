@@ -11,20 +11,13 @@ const theme = createTheme({
   components: {
     MuiListItemText: {
       styleOverrides: {
-        root: {
-          "&.mui-list-item-text-point": {
-            textAlign: "right",
-            marginRight: 16,
-            flex: "0 0 auto",
-          },
-        },
         primary: {
           fontWeight: 500,
           color: palette.primary.main,
         },
         secondary: {
           fontWeight: 300,
-          color: palette.neutral.dark,
+          color: palette.neutral.main,
         },
       },
     },
@@ -90,6 +83,10 @@ const theme = createTheme({
             textAlign: "center",
           },
           "&.font-size-logo": { fontSize: 28 },
+          "&.font-list-secondary": {
+            fontSize: 13,
+            color: palette.neutral.main,
+          },
           "&.font-weight-regular": {
             fontWeight: 400,
           },
@@ -122,7 +119,6 @@ const theme = createTheme({
             borderRadius: "50%",
             padding: 0,
             position: "relative",
-            marginLeft: 16,
             backgroundColor: palette.neutral.light,
             "&::before, &::after": {
               content: '""',
@@ -156,7 +152,7 @@ const theme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: {
-          "&.expense-delete-button": {
+          "&.expense-list-button": {
             color: palette.neutral.light,
           },
         },

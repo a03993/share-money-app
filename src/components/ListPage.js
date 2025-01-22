@@ -23,14 +23,14 @@ export default function ListPage({ page }) {
           mt: 10,
         }}
       >
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 5 }}>
           <SummarySection
             page={page}
             expenseData={expenseData}
             totalAmount={totalAmount}
           />
         </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 7 }}>
           <ExpenseList expenseData={expenseData} />
         </Grid>
       </Grid>

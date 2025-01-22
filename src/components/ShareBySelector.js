@@ -15,7 +15,7 @@ import {
   formControlStyle,
   avatarGroup,
   selectStyle,
-} from "../styles/shareBySelectorStyle";
+} from "../styles/selectorStyle";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,7 +50,7 @@ export default function ShareBySelector({ expenseData }) {
         input={<OutlinedInput label="Share by" />}
         renderValue={(selected) => (
           <div style={avatarGroup}>
-            <AvatarGroup max={3} className="avatar-group-select">
+            <AvatarGroup max={8} className="avatar-group-select">
               {selected.map((name) => {
                 const item = expenseData.find((item) => item.name === name);
                 return (

@@ -1,4 +1,7 @@
 import { Box, TextField, Button } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+
+import PayerSelector from "./PayerSelector";
 import ShareBySelector from "./ShareBySelector";
 
 import theme from "../styles/theme";
@@ -30,17 +33,30 @@ const inputWithButtonStyle = {
 export default function ExpenseEntryForm({ expenseData }) {
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
-      <TextField id="item-input" label="Item" variant="outlined" type="text" />
-      <TextField
-        id="price-input"
-        label="Price"
-        variant="outlined"
-        type="number"
-      />
-      <Box sx={inputWithButtonStyle}>
-        <ShareBySelector expenseData={expenseData} />
-        <Button type="submit" className="plus-button"></Button>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <PayerSelector expenseData={expenseData} />
+        </Grid>
+        <TextField
+          id="item-input"
+          label="Item"
+          variant="outlined"
+          type="text"
+        />
+        <TextField
+          id="price-input"
+          label="Price"
+          variant="outlined"
+          type="number"
+        />
+        <Grid size={10}>
+          <ShareBySelector expenseData={expenseData} />
+        </Grid>
+        <Grid size={2}>
+          {" "}
+          <Button type="submit" className="plus-button"></Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
