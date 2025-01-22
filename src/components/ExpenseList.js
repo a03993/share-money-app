@@ -37,9 +37,6 @@ export default function ExpenseList({ expenseData }) {
     }))
   );
 
-  console.log("expenseData: ", expenseData);
-  console.log("flattenedExpenses: ", flattenedExpenses);
-
   return (
     <>
       <Typography variant="h6" sx={{ mb: 3 }}>
