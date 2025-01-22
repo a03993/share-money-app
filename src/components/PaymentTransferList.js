@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Grid, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 import PaymentList from "./PaymentList";
 

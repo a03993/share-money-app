@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 import AverageAmount from "./AverageAmount";
 import MemberAvatars from "./MemberAvatars";
@@ -9,17 +9,13 @@ import { expenseData, totalAmount, paymentDetails } from "../mock/mockData";
 
 const averageAmountPerPerson = Math.round(totalAmount / expenseData.length);
 
-const centerAlign = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-};
-
 export default function ResultPage() {
   return (
     <>
-      <Box
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
         sx={{
           maxWidth: {
             xs: "80%",
@@ -29,27 +25,25 @@ export default function ResultPage() {
           mx: "auto",
           mt: 10,
           mb: 10,
+          justifyContent: "center",
         }}
       >
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={4} sx={centerAlign}>
-            <AverageAmount amount={averageAmountPerPerson} />
-          </Grid>
-          <Grid item xs={12} md={4} sx={centerAlign}>
-            <MemberAvatars members={expenseData} />
-          </Grid>
-          <Grid item xs={12} md={4} sx={centerAlign}>
-            <SummarySection
-              page="result"
-              expenseData={expenseData}
-              totalAmount={totalAmount}
-            />
-          </Grid>
+        <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
+          <AverageAmount amount={averageAmountPerPerson} />
         </Grid>
-      </Box>
-      <Box>
-        <PaymentTransferList paymentDetails={paymentDetails} />
-      </Box>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <MemberAvatars members={expenseData} />
+        </Grid>
+        <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
+          <SummarySection
+            page="result"
+            expenseData={expenseData}
+            totalAmount={totalAmount}
+          />
+        </Grid>
+      </Grid>
+
+      <PaymentTransferList paymentDetails={paymentDetails} />
     </>
   );
 }

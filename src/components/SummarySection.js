@@ -8,11 +8,7 @@ export default function SummarySection({ page, expenseData, totalAmount }) {
           Summary
         </Typography>
       )}
-      <Typography
-        className="font-weight-regular text-align-center"
-        variant={page === "List" ? "h3" : "h5"}
-        gutterBottom
-      >
+      <Typography variant={page === "List" ? "h3" : "h5"} gutterBottom>
         {expenseData.length}
         <Typography
           className="font-weight-extra-bold"

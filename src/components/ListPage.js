@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import { expenseData, totalAmount } from "../mock/mockData";
 
 import ExpenseEntryForm from "./ExpenseEntryForm";
@@ -9,7 +9,10 @@ export default function ListPage({ page }) {
   return (
     <>
       <ExpenseEntryForm expenseData={expenseData} />
-      <Box
+
+      <Grid
+        container
+        spacing={2}
         sx={{
           maxWidth: {
             xs: "80%",
@@ -20,19 +23,17 @@ export default function ListPage({ page }) {
           mt: 10,
         }}
       >
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={6}>
-            <SummarySection
-              page={page}
-              expenseData={expenseData}
-              totalAmount={totalAmount}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <ExpenseList expenseData={expenseData} />
-          </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <SummarySection
+            page={page}
+            expenseData={expenseData}
+            totalAmount={totalAmount}
+          />
         </Grid>
-      </Box>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <ExpenseList expenseData={expenseData} />
+        </Grid>
+      </Grid>
     </>
   );
 }
