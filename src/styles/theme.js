@@ -118,14 +118,30 @@ const theme = createTheme({
               opacity: 1,
             },
           },
-          "&.plus-button": {
+          "&.button": {
+            borderRadius: 30,
+            "&:hover": {
+              transform: "scale(1.05)",
+            },
+          },
+          "&.regular-button": {
+            backgroundColor: palette.neutral.light,
+            color: palette.neutral.main,
+          },
+          "&.cancel-button": {
+            backgroundColor: palette.primary.main,
+            color: palette.background.default,
+          },
+          "&.circle-button": {
             width: 50,
             height: 50,
             minWidth: 50,
             borderRadius: "50%",
+          },
+
+          "&.plus-button": {
             padding: 0,
             position: "relative",
-            backgroundColor: palette.neutral.light,
             "&::before, &::after": {
               content: '""',
               position: "absolute",
@@ -146,7 +162,6 @@ const theme = createTheme({
             },
             "&:hover": {
               backgroundColor: palette.primary.main,
-              transform: "scale(1.05)",
               "&::before, &::after": {
                 backgroundColor: palette.background.default,
               },

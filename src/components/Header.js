@@ -13,9 +13,9 @@ import { Menu } from "@mui/material";
 import { useState } from "react";
 import { headerStyle } from "../styles/headerStyle";
 
-const pages = ["List", "Result"];
+const pages = ["List", "Result", "Create User"];
 
-export default function Header({ setPage }) {
+export default function Header({ setPage, setOpenCreateUserModal }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState("List");
 
@@ -28,8 +28,12 @@ export default function Header({ setPage }) {
   };
 
   const handleChangePage = (page) => {
-    setPage(page);
-    setCurrentPage(page);
+    if (page === "Create User") {
+      setOpenCreateUserModal(true);
+    } else {
+      setPage(page);
+      setCurrentPage(page);
+    }
   };
 
   return (

@@ -24,12 +24,6 @@ const formBoxStyle = {
   },
 };
 
-const inputWithButtonStyle = {
-  display: "flex",
-  alignItems: "center",
-  flex: "1 1 auto",
-};
-
 export default function ExpenseEntryForm({ expenseData }) {
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
@@ -54,7 +48,10 @@ export default function ExpenseEntryForm({ expenseData }) {
         </Grid>
         <Grid size={2}>
           {" "}
-          <Button type="submit" className="plus-button"></Button>
+          <Button
+            type="submit"
+            className="button regular-button circle-button plus-button"
+          ></Button>
         </Grid>
       </Grid>
     </Box>
