@@ -46,7 +46,7 @@ export default function PaymentTransferList({ paymentDetails }) {
       spacing={2}
       sx={{ justifyContent: "center", alignItems: "center" }}
     >
-      <Grid item>
+      <Grid>
         <Typography variant="h6" align="left">
           Payment List
         </Typography>
@@ -69,7 +69,7 @@ export default function PaymentTransferList({ paymentDetails }) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid>
         <Typography variant="h6" align="left">
           Done Payment List
         </Typography>
