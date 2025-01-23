@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -28,14 +27,12 @@ const MenuProps = {
   },
 };
 
-export default function ShareBySelector({ expenseData }) {
-  const [personName, setPersonName] = useState([]);
-
+export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) {
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
+    setSharedBy(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
@@ -45,7 +42,7 @@ export default function ShareBySelector({ expenseData }) {
         labelId="user-select-checkbox-label"
         id="user-select-checkbox"
         multiple
-        value={personName}
+        value={sharedBy}
         onChange={handleChange}
         input={<OutlinedInput label="Share by" />}
         renderValue={(selected) => (
@@ -67,7 +64,7 @@ export default function ShareBySelector({ expenseData }) {
       >
         {expenseData.map((item) => (
           <MenuItem key={item.name} value={item.name}>
-            <Checkbox checked={personName.includes(item.name)} />
+            <Checkbox checked={sharedBy.includes(item.name)} />
             <Avatar
               className="small-mui-avatar"
               sx={{ backgroundColor: item.color }}

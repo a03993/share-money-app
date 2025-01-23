@@ -20,7 +20,10 @@ export default function ListPage({
   };
   return (
     <>
-      <ExpenseEntryForm expenseData={expenseData} />
+      <ExpenseEntryForm
+        expenseData={expenseData}
+        setExpenseData={setExpenseData}
+      />
       {expenseData.length !== 0 ? (
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>

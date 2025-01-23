@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Avatar,
   OutlinedInput,
@@ -26,11 +25,9 @@ const MenuProps = {
   },
 };
 
-export default function PayerSelector({ expenseData }) {
-  const [selectedPerson, setSelectedPerson] = useState("");
-
+export default function PayerSelector({ expenseData, payer, setPayer }) {
   const handleChange = (event) => {
-    setSelectedPerson(event.target.value);
+    setPayer(event.target.value);
   };
 
   return (
@@ -39,7 +36,7 @@ export default function PayerSelector({ expenseData }) {
       <Select
         labelId="user-select-label"
         id="user-select"
-        value={selectedPerson}
+        value={payer}
         onChange={handleChange}
         input={<OutlinedInput label="Payer" />}
         renderValue={(selected) => {
