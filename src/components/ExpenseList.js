@@ -8,6 +8,7 @@ import {
   Typography,
   Collapse,
   Box,
+  Alert,
 } from "@mui/material";
 import {
   Delete as DeleteIcon,
@@ -18,7 +19,7 @@ import {
 import { useState } from "react";
 import { palette } from "../styles/palette";
 
-export default function ExpenseList({ expenseData }) {
+export default function ExpenseList({ expenseData, setExpenseData }) {
   const [expanded, setExpanded] = useState({});
 
   const handleExpandClick = (index) => {
@@ -26,6 +27,19 @@ export default function ExpenseList({ expenseData }) {
       ...prev,
       [index]: !prev[index],
     }));
+  };
+
+  const handleDelete = (expenseToDelete) => {
+    setExpenseData((prevData) =>
+      prevData.map((person) => ({
+        ...person,
+        expenses: person.expenses.filter(
+          (expense) =>
+            expense.item !== expenseToDelete.item ||
+            expense.amount !== expenseToDelete.amount
+        ),
+      }))
+    );
   };
 
   const flattenedExpenses = expenseData.flatMap((person) =>
@@ -42,6 +56,13 @@ export default function ExpenseList({ expenseData }) {
       <Typography variant="h6" sx={{ mb: 3 }}>
         Expense List
       </Typography>
+      {flattenedExpenses.length === 0 && (
+        <Alert severity="" sx={{ bgcolor: palette.background.paper }}>
+          NOTHING INSIDE!
+          <br />
+          Please add an expense using the form above.
+        </Alert>
+      )}
       <List>
         {flattenedExpenses.map((expense, index) => (
           <div key={index}>
@@ -61,6 +82,7 @@ export default function ExpenseList({ expenseData }) {
                     edge="end"
                     aria-label="delete"
                     className="expense-list-button"
+                    onClick={() => handleDelete(expense)}
                   >
                     <DeleteIcon />
                   </IconButton>

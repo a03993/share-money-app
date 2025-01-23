@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
@@ -11,7 +11,7 @@ const getIntersection = (source, target) =>
 
 export default function PaymentTransferList({ paymentDetails }) {
   const [checked, setChecked] = useState([]);
-  const [left, setLeft] = useState(paymentDetails.map((_, index) => index));
+  const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
   const leftChecked = getIntersection(checked, left);
@@ -35,6 +35,10 @@ export default function PaymentTransferList({ paymentDetails }) {
     moveCheckedItems(left, right, leftChecked, setLeft, setRight);
   const handleCheckedLeft = () =>
     moveCheckedItems(right, left, rightChecked, setRight, setLeft);
+
+  useEffect(() => {
+    setLeft(paymentDetails.map((_, index) => index));
+  }, [paymentDetails]);
 
   return (
     <Grid

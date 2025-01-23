@@ -3,9 +3,13 @@ import { Typography } from "@mui/material";
 import ExpenseEntryForm from "./ExpenseEntryForm";
 import SummarySection from "./SummarySection";
 import ExpenseList from "./ExpenseList";
-import { palette } from "../styles/palette";
 
-export default function ListPage({ page, expenseData, totalAmount }) {
+export default function ListPage({
+  page,
+  expenseData,
+  setExpenseData,
+  totalAmount,
+}) {
   const commonGridSx = {
     maxWidth: {
       xs: "80%",
@@ -27,7 +31,10 @@ export default function ListPage({ page, expenseData, totalAmount }) {
             />
           </Grid>
           <Grid size={{ xs: 12, md: 7 }}>
-            <ExpenseList expenseData={expenseData} />
+            <ExpenseList
+              expenseData={expenseData}
+              setExpenseData={setExpenseData}
+            />
           </Grid>
         </Grid>
       ) : (
