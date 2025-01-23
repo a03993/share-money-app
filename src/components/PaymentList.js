@@ -77,7 +77,7 @@ export default function PaymentList({
                     <Typography className="font-list-secondary" sx={{ mr: 1 }}>
                       {paymentDetail.payee.name}
                     </Typography>
-                    {`$${paymentDetail.amount}`}
+                    {`$${paymentDetail.amount.toLocaleString()}`}
                   </Box>
                 }
               />
