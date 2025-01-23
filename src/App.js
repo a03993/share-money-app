@@ -47,6 +47,7 @@ function App() {
       <CreateUserModal
         open={openCreateUserModal}
         setOpen={setOpenCreateUserModal}
+        setExpenseData={setExpenseData}
       />
     </ThemeProvider>
   );

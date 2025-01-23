@@ -33,11 +33,21 @@ const avatarList = [
   palette.avatar.sage,
 ];
 
-export default function CreateUserPage({ open, setOpen }) {
+export default function CreateUserPage({ open, setOpen, setExpenseData }) {
   const [name, setName] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState(2);
 
   const handleClose = () => setOpen(false);
+
+  const handleCreate = () => {
+    const newUser = {
+      name,
+      color: avatarList[selectedAvatar],
+      expenses: [],
+    };
+    setExpenseData((prevData) => [...prevData, newUser]);
+    handleClose();
+  };
 
   return (
     <>
@@ -120,7 +130,11 @@ export default function CreateUserPage({ open, setOpen }) {
               <Avatar sx={{ backgroundColor: avatarList[selectedAvatar] }}>
                 {name[0]?.toUpperCase()}
               </Avatar>
-              <Button variant="contained" className="button regular-button">
+              <Button
+                variant="contained"
+                className="button regular-button"
+                onClick={handleCreate}
+              >
                 Create
               </Button>
               <Button
