@@ -25,7 +25,11 @@ export default function PaymentList({
   return (
     <Paper
       sx={{
-        width: 450,
+        width: {
+          xs: "85%",
+          sm: 450,
+        },
+        minWidth: 350,
         height: 350,
         overflow: "auto",
         marginTop: 2,
