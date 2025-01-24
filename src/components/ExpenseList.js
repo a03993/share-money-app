@@ -94,7 +94,7 @@ export default function ExpenseList({ expenseData, setExpenseData }) {
                   sx={{ backgroundColor: expense.color }}
                   alt={expense.name}
                 >
-                  {expense.name[0]}
+                  {expense.name[0]?.toUpperCase()}
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary={expense.item} secondary={expense.name} />

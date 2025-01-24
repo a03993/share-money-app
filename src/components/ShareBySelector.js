@@ -52,7 +52,7 @@ export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) 
                 const item = expenseData.find((item) => item.name === name);
                 return (
                   <Avatar key={name} sx={{ backgroundColor: item.color }}>
-                    {name.charAt(0)}
+                    {name.charAt(0)?.toUpperCase()}
                   </Avatar>
                 );
               })}
@@ -69,7 +69,7 @@ export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) 
               className="small-mui-avatar"
               sx={{ backgroundColor: item.color }}
             >
-              {item.name.charAt(0)}
+              {item.name.charAt(0)?.toUpperCase()}
             </Avatar>
             <ListItemText secondary={item.name} sx={{ ml: 1 }} />
           </MenuItem>

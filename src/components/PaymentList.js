@@ -58,7 +58,7 @@ export default function PaymentList({
                         mr: 0.5,
                       }}
                     >
-                      {paymentDetail.payer.name[0]}
+                      {paymentDetail.payer.name[0]?.toUpperCase()}
                     </Avatar>
                     <Typography className="font-list-secondary" sx={{ mr: 1 }}>
                       {paymentDetail.payer.name}
@@ -72,7 +72,7 @@ export default function PaymentList({
                         ml: 1,
                       }}
                     >
-                      {paymentDetail.payee.name[0]}
+                      {paymentDetail.payee.name[0]?.toUpperCase()}
                     </Avatar>
                     <Typography className="font-list-secondary" sx={{ mr: 1 }}>
                       {paymentDetail.payee.name}

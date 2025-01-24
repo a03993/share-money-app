@@ -47,7 +47,7 @@ export default function PayerSelector({ expenseData, payer, setPayer }) {
                 className="small-mui-avatar"
                 sx={{ backgroundColor: item.color }}
               >
-                {selected.charAt(0)}
+                {selected.charAt(0)?.toUpperCase()}
               </Avatar>
               <ListItemText
                 secondary={selected}
@@ -65,7 +65,7 @@ export default function PayerSelector({ expenseData, payer, setPayer }) {
               className="small-mui-avatar"
               sx={{ backgroundColor: item.color }}
             >
-              {item.name.charAt(0)}
+              {item.name.charAt(0)?.toUpperCase()}
             </Avatar>
             <ListItemText secondary={item.name} sx={{ ml: 1 }} />
           </MenuItem>

@@ -5,7 +5,7 @@ export default function MemberAvatars({ members }) {
     <AvatarGroup max={5} sx={{ justifyContent: "center" }}>
       {members.map((member) => (
         <Avatar key={member.name} sx={{ backgroundColor: member.color }}>
-          {member.name[0]}
+          {member.name[0]?.toUpperCase()}
         </Avatar>
       ))}
     </AvatarGroup>
