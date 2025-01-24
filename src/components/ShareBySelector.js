@@ -33,6 +33,7 @@ export default function ShareBySelector({
   expenseData,
   sharedBy,
   setSharedBy,
+  error,
 }) {
   const theme = useTheme();
 
@@ -44,7 +45,7 @@ export default function ShareBySelector({
   };
 
   return (
-    <FormControl sx={formControlStyle}>
+    <FormControl sx={formControlStyle} required error={error}>
       <InputLabel id="user-select-checkbox-label">Share by</InputLabel>
       <Select
         labelId="user-select-checkbox-label"

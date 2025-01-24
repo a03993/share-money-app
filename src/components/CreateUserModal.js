@@ -21,10 +21,11 @@ export default function CreateUserPage({
   setExpenseData,
 }) {
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(2);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [severity, setSeverity] = useState("warning");
+  const [severity, setSeverity] = useState("error");
 
   const theme = useTheme();
 
@@ -51,7 +52,8 @@ export default function CreateUserPage({
 
   const handleCreate = () => {
     if (!name) {
-      setSeverity("warning");
+      setNameError(true);
+      setSeverity("error");
       setSnackbarOpen(true);
       setSnackbarMessage("User name cannot be empty!");
       return;
@@ -73,6 +75,7 @@ export default function CreateUserPage({
     setSnackbarMessage("User created successfully!");
     setOpen(false);
     setName("");
+    setNameError(false);
   };
 
   const handleClose = () => {
@@ -83,6 +86,7 @@ export default function CreateUserPage({
     }
     setOpen(false);
     setSnackbarOpen(false);
+    setNameError(false);
   };
 
   return (
@@ -145,6 +149,8 @@ export default function CreateUserPage({
                 variant="outlined"
                 onChange={(e) => setName(e.target.value)}
                 sx={{ mr: 1 }}
+                required
+                error={!name && nameError}
               />
               <Stack direction="row" spacing={0.5}>
                 {avatarList.map((color, index) => (

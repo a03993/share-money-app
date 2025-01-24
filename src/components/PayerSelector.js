@@ -25,13 +25,13 @@ const MenuProps = {
   },
 };
 
-export default function PayerSelector({ expenseData, payer, setPayer }) {
+export default function PayerSelector({ expenseData, payer, setPayer, error }) {
   const handleChange = (event) => {
     setPayer(event.target.value);
   };
 
   return (
-    <FormControl sx={formControlStyle}>
+    <FormControl sx={formControlStyle} required error={error}>
       <InputLabel id="user-select-label">Payer</InputLabel>
       <Select
         labelId="user-select-label"
