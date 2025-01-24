@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-import { expenseMockData } from "./mock/mockData";
+import { mockExpenseDatabase } from "./mock/mockData";
 import theme from "./styles/theme";
 import Header from "./components/Header";
 import ListPage from "./components/ListPage";
@@ -19,7 +19,7 @@ const calculateTotalAmount = (data) => {
 
 function App() {
   const [page, setPage] = useState("List");
-  const [expenseData, setExpenseData] = useState(expenseMockData);
+  const [expenseData, setExpenseData] = useState(mockExpenseDatabase);
   const [totalAmount, setTotalAmount] = useState(0);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 

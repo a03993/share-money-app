@@ -1,3 +1,5 @@
+export const mockExpenseDatabase = [];
+
 export const expenseMockData = [
   {
     name: "The Chairs",
