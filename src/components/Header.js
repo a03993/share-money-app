@@ -11,6 +11,7 @@ import {
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import { headerStyle } from "../styles/headerStyle";
 
 const pages = ["List", "Result", "Create User"];
@@ -18,6 +19,8 @@ const pages = ["List", "Result", "Create User"];
 export default function Header({ setPage, setOpenCreateUserModal }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState("List");
+
+  const theme = useTheme();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -111,7 +114,16 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
                 key={page}
                 onClick={() => handleChangePage(page)}
                 disabled={currentPage === page}
-                className="nav-list"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: 16,
+                  color: theme.palette.secondary.main,
+                  opacity: 0.3,
+                  ...(currentPage === page && {
+                    color: theme.palette.secondary.main,
+                    opacity: 1,
+                  }),
+                }}
               >
                 {page}
               </Button>

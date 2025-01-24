@@ -16,6 +16,8 @@ import {
   selectStyle,
 } from "../styles/selectorStyle";
 
+import { useTheme } from "@mui/material/styles";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -27,7 +29,13 @@ const MenuProps = {
   },
 };
 
-export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) {
+export default function ShareBySelector({
+  expenseData,
+  sharedBy,
+  setSharedBy,
+}) {
+  const theme = useTheme();
+
   const handleChange = (event) => {
     const {
       target: { value },
@@ -47,11 +55,19 @@ export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) 
         input={<OutlinedInput label="Share by" />}
         renderValue={(selected) => (
           <div style={avatarGroup}>
-            <AvatarGroup max={8} className="avatar-group-select">
+            <AvatarGroup max={8}>
               {selected.map((name) => {
                 const item = expenseData.find((item) => item.name === name);
                 return (
-                  <Avatar key={name} sx={{ backgroundColor: item.color }}>
+                  <Avatar
+                    key={name}
+                    alt={item.name}
+                    sx={{
+                      backgroundColor: item.color,
+                      borderColor: theme.palette.neutral.lightest,
+                    }}
+                    className="small-mui-avatar"
+                  >
                     {name.charAt(0)?.toUpperCase()}
                   </Avatar>
                 );
@@ -67,6 +83,7 @@ export default function ShareBySelector({ expenseData, sharedBy, setSharedBy }) 
             <Checkbox checked={sharedBy.includes(item.name)} />
             <Avatar
               className="small-mui-avatar"
+              alt={item.name}
               sx={{ backgroundColor: item.color }}
             >
               {item.name.charAt(0)?.toUpperCase()}

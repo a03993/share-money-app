@@ -17,10 +17,12 @@ import {
 } from "@mui/icons-material";
 
 import { useState } from "react";
-import { palette } from "../styles/palette";
+import { useTheme } from "@mui/material/styles";
 
 export default function ExpenseList({ expenseData, setExpenseData }) {
   const [expanded, setExpanded] = useState({});
+
+  const theme = useTheme();
 
   const handleExpandClick = (index) => {
     setExpanded((prev) => ({
@@ -57,7 +59,13 @@ export default function ExpenseList({ expenseData, setExpenseData }) {
         Expense List
       </Typography>
       {flattenedExpenses.length === 0 && (
-        <Alert severity="" sx={{ bgcolor: palette.background.paper }}>
+        <Alert
+          severity=""
+          sx={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.neutral.main,
+          }}
+        >
           NOTHING INSIDE!
           <br />
           Please add an expense using the form above.
@@ -100,22 +108,22 @@ export default function ExpenseList({ expenseData, setExpenseData }) {
               <ListItemText primary={expense.item} secondary={expense.name} />
               <ListItemText
                 primary={`$${expense.amount.toLocaleString()}`}
-                sx={{ textAlign: "right", marginRight: 5 }}
+                sx={{ textAlign: "right", mr: 5 }}
               />
             </ListItem>
             <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
               <List
                 component="div"
                 disablePadding
-                sx={{ backgroundColor: palette.background.paper }}
+                sx={{ backgroundColor: theme.palette.background.paper }}
               >
                 {expense.sharedBy && (
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText
                       primary="Share by:"
                       secondary={
-                        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                          <Typography variant="body2">
+                        <Box>
+                          <Typography variant="body3">
                             {expense.sharedBy.join(", ")}
                           </Typography>
                         </Box>

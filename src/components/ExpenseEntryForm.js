@@ -96,7 +96,7 @@ export default function ExpenseEntryForm({ expenseData, setExpenseData }) {
           {" "}
           <Button
             type="submit"
-            className="button regular-button circle-button plus-button"
+            className="regular-button circle-button plus-button"
           ></Button>
         </Grid>
       </Grid>

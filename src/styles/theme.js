@@ -21,19 +21,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiAvatarGroup: {
-      styleOverrides: {
-        root: {
-          "&.avatar-group-select .MuiAvatar-root": {
-            width: 30,
-            height: 30,
-            fontSize: 15,
-            fontWeight: 600,
-            borderColor: palette.neutral.lightest,
-          },
-        },
-      },
-    },
     MuiAvatar: {
       styleOverrides: {
         root: {
@@ -41,7 +28,7 @@ const theme = createTheme({
           "&.small-mui-avatar": {
             width: 30,
             height: 30,
-            fontSize: 18,
+            fontSize: 16,
           },
         },
       },
@@ -69,9 +56,6 @@ const theme = createTheme({
           },
           "& label": {
             color: palette.neutral.main,
-            "&.Mui-focused": {
-              color: palette.primary.main,
-            },
           },
         },
       },
@@ -83,11 +67,10 @@ const theme = createTheme({
             textAlign: "center",
           },
           "&.font-size-logo": { fontSize: 28 },
-          "&.font-list-secondary": {
-            fontSize: 13,
-            color: palette.neutral.main,
+          "&.font-size-list-secondary": {
+            fontSize: 12,
           },
-          "&.font-empty-list-message": {
+          "&.font-color-dark-gray": {
             color: palette.neutral.main,
           },
           "&.font-weight-thin": {
@@ -108,21 +91,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          "&.nav-list": {
-            fontWeight: 600,
-            fontSize: 16,
-            color: palette.secondary.main,
-            opacity: 0.3,
-            "&.Mui-disabled": {
-              color: "secondary.main",
-              opacity: 1,
-            },
-          },
-          "&.button": {
-            borderRadius: 30,
-            "&:hover": {
-              transform: "scale(1.05)",
-            },
+          "&:hover": {
+            transform: "scale(1.05)",
           },
           "&.regular-button": {
             backgroundColor: palette.neutral.light,
@@ -132,16 +102,16 @@ const theme = createTheme({
             backgroundColor: palette.primary.main,
             color: palette.background.default,
           },
+          "&.rectangular-button": {
+            borderRadius: 30,
+          },
           "&.circle-button": {
             width: 50,
             height: 50,
             minWidth: 50,
             borderRadius: "50%",
           },
-
           "&.plus-button": {
-            padding: 0,
-            position: "relative",
             "&::before, &::after": {
               content: '""',
               position: "absolute",

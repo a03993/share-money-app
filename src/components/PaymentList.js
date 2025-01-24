@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { palette } from "../styles/palette";
+import { useTheme } from "@mui/material/styles";
 
 export default function PaymentList({
   items,
@@ -20,6 +20,8 @@ export default function PaymentList({
   handleToggle,
   emptyMessage,
 }) {
+  const theme = useTheme();
+
   return (
     <Paper
       sx={{
@@ -27,7 +29,7 @@ export default function PaymentList({
         height: 350,
         overflow: "auto",
         marginTop: 2,
-        backgroundColor: palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       {items.length === 0 ? (
@@ -39,7 +41,7 @@ export default function PaymentList({
             alignItems: "center",
           }}
         >
-          <Typography variant="body2" color={palette.neutral.main}>
+          <Typography variant="body2" color={theme.palette.neutral.main}>
             {emptyMessage}
           </Typography>
         </Box>
@@ -86,7 +88,7 @@ export default function PaymentList({
                         {paymentDetail.payer.name[0]?.toUpperCase()}
                       </Avatar>
                       <Typography
-                        className="font-list-secondary"
+                        className="font-size-list-secondary font-weight-thin font-color-dark-gray"
                         sx={{ mr: 1 }}
                       >
                         {paymentDetail.payer.name}
@@ -103,7 +105,7 @@ export default function PaymentList({
                         {paymentDetail.payee.name[0]?.toUpperCase()}
                       </Avatar>
                       <Typography
-                        className="font-list-secondary"
+                        className="font-size-list-secondary font-weight-thin font-color-dark-gray"
                         sx={{ mr: 1 }}
                       >
                         {paymentDetail.payee.name}

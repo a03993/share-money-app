@@ -11,29 +11,8 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { palette } from "../styles/palette";
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: {
-    xs: "80%",
-    sm: 400,
-  },
-  backgroundColor: palette.background.paper,
-  p: 4,
-};
-
-const avatarList = [
-  palette.avatar.mauve,
-  palette.avatar.khaki,
-  palette.avatar.cream,
-  palette.avatar.peach,
-  palette.avatar.sage,
-];
 
 export default function CreateUserPage({
   open,
@@ -46,6 +25,29 @@ export default function CreateUserPage({
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [severity, setSeverity] = useState("warning");
+
+  const theme = useTheme();
+
+  const avatarList = [
+    theme.palette.avatar.mauve,
+    theme.palette.avatar.khaki,
+    theme.palette.avatar.cream,
+    theme.palette.avatar.peach,
+    theme.palette.avatar.sage,
+  ];
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: {
+      xs: "80%",
+      sm: 400,
+    },
+    backgroundColor: theme.palette.background.paper,
+    p: 4,
+  };
 
   const handleCreate = () => {
     if (!name) {
@@ -120,7 +122,11 @@ export default function CreateUserPage({
             >
               Create a User
             </Typography>
-            <Typography id="create-user-modal-description">
+            <Typography
+              id="create-user-modal-description"
+              variant="body1"
+              sx={{ mt: 2 }}
+            >
               Create and share your private money list with others. no
               downloads, no signups!
             </Typography>
@@ -151,7 +157,7 @@ export default function CreateUserPage({
                       borderRadius: "50%",
                       border:
                         selectedAvatar === index
-                          ? "1px solid " + palette.primary.main
+                          ? "1px solid " + theme.palette.primary.main
                           : "1px solid transparent",
                     }}
                   >
@@ -178,14 +184,14 @@ export default function CreateUserPage({
               </Avatar>
               <Button
                 variant="contained"
-                className="button regular-button"
+                className="rectangular-button regular-button"
                 onClick={handleCreate}
               >
                 Create
               </Button>
               <Button
                 variant="contained"
-                className="button cancel-button"
+                className="rectangular-button cancel-button"
                 onClick={handleClose}
               >
                 Cancel

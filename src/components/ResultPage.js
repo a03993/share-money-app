@@ -186,7 +186,7 @@ export default function ResultPage({ expenseData, totalAmount }) {
           <Typography
             variant="h5"
             gutterBottom
-            className="font-weight-thin font-empty-list-message text-align-center"
+            className="font-weight-thin font-color-dark-gray text-align-center"
           >
             Please go back to list page
             <br /> and add something to this list

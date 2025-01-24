@@ -53,7 +53,7 @@ export default function ListPage({
           <Typography
             variant="h5"
             gutterBottom
-            className="font-weight-thin font-empty-list-message"
+            className="font-weight-thin font-color-dark-gray"
           >
             Please add something to this list
           </Typography>

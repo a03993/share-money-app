@@ -45,14 +45,12 @@ export default function PayerSelector({ expenseData, payer, setPayer }) {
             <div style={avatarGroup}>
               <Avatar
                 className="small-mui-avatar"
+                alt={item.name}
                 sx={{ backgroundColor: item.color }}
               >
                 {selected.charAt(0)?.toUpperCase()}
               </Avatar>
-              <ListItemText
-                secondary={selected}
-                sx={{ ml: 1, display: "inline-block" }}
-              />
+              <ListItemText secondary={selected} sx={{ ml: 1 }} />
             </div>
           );
         }}
@@ -63,6 +61,7 @@ export default function PayerSelector({ expenseData, payer, setPayer }) {
           <MenuItem key={item.name} value={item.name}>
             <Avatar
               className="small-mui-avatar"
+              alt={item.name}
               sx={{ backgroundColor: item.color }}
             >
               {item.name.charAt(0)?.toUpperCase()}
