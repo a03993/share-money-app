@@ -55,6 +55,7 @@ export default function PaymentTransferList({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={checked}
           handleToggle={handleToggle}
+          emptyMessage="Please ADD items."
         />
         <Grid container direction="column" sx={{ alignItems: "center" }}>
           <Button
@@ -78,6 +79,7 @@ export default function PaymentTransferList({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={checked}
           handleToggle={handleToggle}
+          emptyMessage="Please MOVE items here."
         />
         <Grid container direction="column" sx={{ alignItems: "center" }}>
           <Button
