@@ -8,6 +8,8 @@ import {
   Avatar,
   Button,
   Stack,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { palette } from "../styles/palette";
 import { useState } from "react";
@@ -33,29 +35,74 @@ const avatarList = [
   palette.avatar.sage,
 ];
 
-export default function CreateUserPage({ open, setOpen, setExpenseData }) {
+export default function CreateUserPage({
+  open,
+  setOpen,
+  expenseData,
+  setExpenseData,
+}) {
   const [name, setName] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState(2);
-
-  const handleClose = () => setOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [severity, setSeverity] = useState("warning");
 
   const handleCreate = () => {
+    if (!name) {
+      setSeverity("warning");
+      setSnackbarOpen(true);
+      setSnackbarMessage("User name cannot be empty!");
+      return;
+    }
+
     const newUser = {
       name,
       color: avatarList[selectedAvatar],
       expenses: [],
     };
-    setExpenseData((prevData) => [...prevData, newUser]);
-    handleClose();
+
+    setExpenseData((prevData) => {
+      const updatedData = [...prevData, newUser];
+      return updatedData;
+    });
+
+    setSeverity("success");
+    setSnackbarOpen(true);
+    setSnackbarMessage("User created successfully!");
+    setOpen(false);
+    setName("");
+  };
+
+  const handleClose = () => {
+    if (expenseData.length === 0) {
+      setSnackbarOpen(true);
+      setSnackbarMessage("You have to create The FIRST User before closing.");
+      return;
+    }
+    setOpen(false);
+    setSnackbarOpen(false);
   };
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Modal
         aria-labelledby="create-user-modal-title"
         aria-describedby="create-user-modal-description"
         open={open}
-        onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -118,7 +165,6 @@ export default function CreateUserPage({ open, setOpen, setExpenseData }) {
                 ))}
               </Stack>
             </Box>
-
             <Box
               sx={{
                 display: "flex",

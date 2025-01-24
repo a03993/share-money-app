@@ -25,6 +25,9 @@ function App() {
 
   useEffect(() => {
     setTotalAmount(calculateTotalAmount(expenseData));
+    if (expenseData.length === 0) {
+      setOpenCreateUserModal(true);
+    }
   }, [expenseData]);
 
   return (
@@ -47,6 +50,7 @@ function App() {
       <CreateUserModal
         open={openCreateUserModal}
         setOpen={setOpenCreateUserModal}
+        expenseData={expenseData}
         setExpenseData={setExpenseData}
       />
     </ThemeProvider>
