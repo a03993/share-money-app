@@ -124,7 +124,7 @@ export default function ResultPage({ expenseData, totalAmount }) {
     setAverageAmountPerPerson(
       calculateAverageAmountPerPerson(totalAmount, expenseData)
     );
-  }, [totalAmount]);
+  }, [totalAmount, expenseData]);
 
   useEffect(() => {
     const actualExpense = calculateTotalExpensePerPerson(expenseData);
