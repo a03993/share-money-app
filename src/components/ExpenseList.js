@@ -68,7 +68,7 @@ export default function ExpenseList({ expenseData, setExpenseData }) {
         >
           NOTHING INSIDE!
           <br />
-          Please add an expense using the form above.
+          Use the form above to add an expense and get started.
         </Alert>
       )}
       <List>
