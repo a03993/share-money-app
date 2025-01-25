@@ -9,6 +9,7 @@ export default function ListPage({
   expenseData,
   setExpenseData,
   totalAmount,
+  setOpenCreateUserModal,
 }) {
   const commonGridSx = {
     maxWidth: {
@@ -23,6 +24,7 @@ export default function ListPage({
       <ExpenseEntryForm
         expenseData={expenseData}
         setExpenseData={setExpenseData}
+        setOpenCreateUserModal={setOpenCreateUserModal}
       />
       {expenseData.length !== 0 ? (
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>

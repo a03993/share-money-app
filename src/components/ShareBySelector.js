@@ -34,6 +34,7 @@ export default function ShareBySelector({
   sharedBy,
   setSharedBy,
   error,
+  setOpenCreateUserModal,
 }) {
   const theme = useTheme();
 
@@ -56,9 +57,10 @@ export default function ShareBySelector({
         input={<OutlinedInput label="Share by" />}
         renderValue={(selected) => (
           <div style={avatarGroup}>
-            <AvatarGroup max={8}>
+            <AvatarGroup max={8} className="neutral-lightest-border">
               {selected.map((name) => {
                 const item = expenseData.find((item) => item.name === name);
+                if (!item) return null;
                 return (
                   <Avatar
                     key={name}
@@ -92,6 +94,20 @@ export default function ShareBySelector({
             <ListItemText secondary={item.name} sx={{ ml: 1 }} />
           </MenuItem>
         ))}
+        <MenuItem
+          onClick={(e) => {
+            e.preventDefault();
+            setOpenCreateUserModal(true);
+          }}
+          sx={{
+            borderTop: 1,
+            borderColor: "divider",
+            justifyContent: "center",
+            color: theme.palette.primary.main,
+          }}
+        >
+          + Create New User
+        </MenuItem>
       </Select>
     </FormControl>
   );

@@ -21,6 +21,18 @@ const theme = createTheme({
         },
       },
     },
+    MuiAvatarGroup: {
+      styleOverrides: {
+        root: {
+          "&.paper-border .MuiAvatar-root": {
+            borderColor: palette.background.paper,
+          },
+          "&.neutral-lightest-border .MuiAvatar-root": {
+            borderColor: palette.neutral.lightest,
+          },
+        },
+      },
+    },
     MuiAvatar: {
       styleOverrides: {
         root: {
@@ -94,11 +106,11 @@ const theme = createTheme({
           "&:hover": {
             transform: "scale(1.05)",
           },
-          "&.regular-button": {
+          "&.light-button": {
             backgroundColor: palette.neutral.light,
             color: palette.neutral.main,
           },
-          "&.cancel-button": {
+          "&.dark-button": {
             backgroundColor: palette.primary.main,
             color: palette.background.default,
           },

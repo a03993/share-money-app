@@ -41,6 +41,7 @@ function App() {
           page={page}
           expenseData={expenseData}
           setExpenseData={setExpenseData}
+          setOpenCreateUserModal={setOpenCreateUserModal}
           totalAmount={totalAmount}
         />
       )}

@@ -6,6 +6,7 @@ import {
   Typography,
   TextField,
   Avatar,
+  AvatarGroup,
   Button,
   Stack,
   Snackbar,
@@ -20,9 +21,8 @@ export default function CreateUserPage({
   expenseData,
   setExpenseData,
 }) {
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState(2);
+  const [userList, setUserList] = useState([{ name: "", avatar: 2 }]);
+  const [nameErrors, setNameErrors] = useState([false]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [severity, setSeverity] = useState("error");
@@ -50,32 +50,54 @@ export default function CreateUserPage({
     p: 4,
   };
 
+  const addUserField = () => {
+    setUserList([...userList, { name: "", avatar: 2 }]);
+    setNameErrors([...nameErrors, false]);
+  };
+
+  const removeUserField = (index) => {
+    const newUserList = userList.filter((_, i) => i !== index);
+    const newNameErrors = nameErrors.filter((_, i) => i !== index);
+    setUserList(newUserList);
+    setNameErrors(newNameErrors);
+  };
+
+  const handleNameChange = (index, value) => {
+    const newUserList = [...userList];
+    newUserList[index].name = value;
+    setUserList(newUserList);
+  };
+
+  const handleAvatarChange = (index, avatarIndex) => {
+    const newUserList = [...userList];
+    newUserList[index].avatar = avatarIndex;
+    setUserList(newUserList);
+  };
+
   const handleCreate = () => {
-    if (!name) {
-      setNameError(true);
+    const hasEmptyNames = userList.some((user) => !user.name);
+    if (hasEmptyNames) {
+      const newNameErrors = userList.map((user) => !user.name);
+      setNameErrors(newNameErrors);
       setSeverity("error");
       setSnackbarOpen(true);
-      setSnackbarMessage("User name cannot be empty!");
+      setSnackbarMessage("User names cannot be empty!");
       return;
     }
 
-    const newUser = {
-      name,
-      color: avatarList[selectedAvatar],
+    const newUsers = userList.map((user) => ({
+      name: user.name,
+      color: avatarList[user.avatar],
       expenses: [],
-    };
+    }));
 
-    setExpenseData((prevData) => {
-      const updatedData = [...prevData, newUser];
-      return updatedData;
-    });
-
+    setExpenseData((prevData) => [...prevData, ...newUsers]);
     setSeverity("success");
     setSnackbarOpen(true);
-    setSnackbarMessage("User created successfully!");
+    setSnackbarMessage("Users created successfully!");
     setOpen(false);
-    setName("");
-    setNameError(false);
+    setUserList([{ name: "", avatar: 2 }]);
+    setNameErrors([false]);
   };
 
   const handleClose = () => {
@@ -86,7 +108,7 @@ export default function CreateUserPage({
     }
     setOpen(false);
     setSnackbarOpen(false);
-    setNameError(false);
+    setNameErrors([false]);
   };
 
   return (
@@ -97,11 +119,7 @@ export default function CreateUserPage({
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={severity}
-          sx={{ width: "100%" }}
-        >
+        <Alert severity={severity} sx={{ width: "100%" }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
@@ -124,7 +142,7 @@ export default function CreateUserPage({
               variant="h5"
               className="font-weight-extra-bold"
             >
-              Create a User
+              Create Users
             </Typography>
             <Typography
               id="create-user-modal-description"
@@ -134,49 +152,75 @@ export default function CreateUserPage({
               Create and share your private money list with others. no
               downloads, no signups!
             </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: 10,
-                mb: 10,
-              }}
-            >
-              <TextField
-                id="create-user-name-input"
-                label="Name"
-                variant="outlined"
-                onChange={(e) => setName(e.target.value)}
-                sx={{ mr: 1 }}
-                required
-                error={!name && nameError}
-              />
-              <Stack direction="row" spacing={0.5}>
-                {avatarList.map((color, index) => (
-                  <Box
-                    key={index}
-                    onClick={() => setSelectedAvatar(index)}
-                    sx={{
-                      cursor: "pointer",
-                      padding: "2px",
-                      borderRadius: "50%",
-                      border:
-                        selectedAvatar === index
-                          ? "1px solid " + theme.palette.primary.main
-                          : "1px solid transparent",
-                    }}
-                  >
-                    <Avatar
-                      sx={{ backgroundColor: color }}
-                      className="small-mui-avatar"
+
+            {userList.map((user, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mt: 3,
+                  mb: 3,
+                }}
+              >
+                <TextField
+                  label={
+                    userList.length === 1 ? "Name" : `User ${index + 1} Name`
+                  }
+                  variant="outlined"
+                  value={user.name}
+                  onChange={(e) => handleNameChange(index, e.target.value)}
+                  sx={{ mr: 1 }}
+                  required
+                  error={!user.name && nameErrors[index]}
+                />
+                <Stack direction="row" spacing={0.5}>
+                  {avatarList.map((color, avatarIndex) => (
+                    <Box
+                      key={avatarIndex}
+                      onClick={() => handleAvatarChange(index, avatarIndex)}
+                      sx={{
+                        cursor: "pointer",
+                        padding: "2px",
+                        borderRadius: "50%",
+                        border:
+                          user.avatar === avatarIndex
+                            ? "1px solid " + theme.palette.primary.main
+                            : "1px solid transparent",
+                      }}
                     >
-                      {" "}
-                    </Avatar>
-                  </Box>
-                ))}
-              </Stack>
-            </Box>
+                      <Avatar
+                        sx={{ backgroundColor: color }}
+                        className="small-mui-avatar"
+                      >
+                        {" "}
+                      </Avatar>
+                    </Box>
+                  ))}
+                </Stack>
+                {userList.length > 1 && (
+                  <Button
+                    onClick={() => removeUserField(index)}
+                    sx={{ ml: 1 }}
+                    color={theme.palette.primary.main}
+                  >
+                    Remove
+                  </Button>
+                )}
+              </Box>
+            ))}
+
+            <Button
+              onClick={addUserField}
+              sx={{ mb: 4, border: "none" }}
+              variant="outlined"
+              className="rectangular-button"
+              fullWidth
+            >
+              + Add Another User
+            </Button>
+
             <Box
               sx={{
                 display: "flex",
@@ -185,22 +229,29 @@ export default function CreateUserPage({
                 gap: 1,
               }}
             >
-              <Avatar sx={{ backgroundColor: avatarList[selectedAvatar] }}>
-                {name[0]?.toUpperCase()}
-              </Avatar>
+              <AvatarGroup max={4} className="paper-border">
+                {userList.map((user) => (
+                  <Avatar
+                    key={user.name}
+                    sx={{ backgroundColor: avatarList[user.avatar] }}
+                  >
+                    {user.name[0]?.toUpperCase()}
+                  </Avatar>
+                ))}
+              </AvatarGroup>
               <Button
                 variant="contained"
-                className="rectangular-button regular-button"
-                onClick={handleCreate}
-              >
-                Create
-              </Button>
-              <Button
-                variant="contained"
-                className="rectangular-button cancel-button"
+                className="rectangular-button light-button"
                 onClick={handleClose}
               >
                 Cancel
+              </Button>
+              <Button
+                variant="contained"
+                className="rectangular-button dark-button"
+                onClick={handleCreate}
+              >
+                {userList.length === 1 ? "Create" : "Create All"}
               </Button>
             </Box>
           </Box>

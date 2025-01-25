@@ -26,7 +26,11 @@ const formBoxStyle = {
   },
 };
 
-export default function ExpenseEntryForm({ expenseData, setExpenseData }) {
+export default function ExpenseEntryForm({
+  expenseData,
+  setExpenseData,
+  setOpenCreateUserModal,
+}) {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState(0);
   const [payer, setPayer] = useState("");
@@ -147,13 +151,14 @@ export default function ExpenseEntryForm({ expenseData, setExpenseData }) {
               sharedBy={sharedBy}
               setSharedBy={setSharedBy}
               error={sharedBy.length === 0 && error.sharedBy}
+              setOpenCreateUserModal={setOpenCreateUserModal}
             />
           </Grid>
           <Grid size={2}>
             {" "}
             <Button
               type="submit"
-              className="regular-button circle-button plus-button"
+              className="light-button circle-button plus-button"
             ></Button>
           </Grid>
         </Grid>
