@@ -14,6 +14,8 @@ import {
   selectStyle,
 } from "../styles/selectorStyle";
 
+import { useTheme } from "@mui/material/styles";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -25,7 +27,15 @@ const MenuProps = {
   },
 };
 
-export default function PayerSelector({ expenseData, payer, setPayer, error }) {
+export default function PayerSelector({
+  expenseData,
+  payer,
+  setPayer,
+  error,
+  setOpenCreateUserModal,
+}) {
+  const theme = useTheme();
+
   const handleChange = (event) => {
     setPayer(event.target.value);
   };
@@ -69,6 +79,20 @@ export default function PayerSelector({ expenseData, payer, setPayer, error }) {
             <ListItemText secondary={item.name} sx={{ ml: 1 }} />
           </MenuItem>
         ))}
+        <MenuItem
+          onClick={(e) => {
+            e.preventDefault();
+            setOpenCreateUserModal(true);
+          }}
+          sx={{
+            borderTop: 1,
+            borderColor: "divider",
+            justifyContent: "center",
+            color: theme.palette.primary.main,
+          }}
+        >
+          + Create New User
+        </MenuItem>
       </Select>
     </FormControl>
   );

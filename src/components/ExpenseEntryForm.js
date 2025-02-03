@@ -123,6 +123,7 @@ export default function ExpenseEntryForm({
               payer={payer}
               setPayer={setPayer}
               error={!payer && error.payer}
+              setOpenCreateUserModal={setOpenCreateUserModal}
             />
           </Grid>
           <TextField
