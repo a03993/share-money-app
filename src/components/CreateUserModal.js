@@ -15,7 +15,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
-export default function CreateUserPage({
+export default function CreateUserModal({
   open,
   setOpen,
   expenseData,
