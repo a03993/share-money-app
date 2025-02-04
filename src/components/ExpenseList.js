@@ -51,14 +51,15 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
   };
 
   const currentExpenseItem = expenseList.find((data) => data.linkId === linkId);
-  const flattenedExpenses = currentExpenseItem?.expenses.flatMap((person) =>
-    person.personalExpenses.map((expense) => ({
-      ...expense,
-      name: person.name,
-      color: person.color,
-      sharedBy: expense.sharedBy || [],
-    }))
-  );
+  const flattenedExpenses =
+    currentExpenseItem?.expenses.flatMap((person) =>
+      person.personalExpenses.map((expense) => ({
+        ...expense,
+        name: person.name,
+        color: person.color,
+        sharedBy: expense.sharedBy || [],
+      }))
+    ) || [];
 
   return (
     <>
