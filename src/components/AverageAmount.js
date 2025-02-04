@@ -18,7 +18,7 @@ export default function AverageAmount({ totalAmount, expenseList, linkId }) {
 
   return (
     <Typography variant="h3">
-      ${amount.toLocaleString()}
+      ${isNaN(amount) ? 0 : amount.toLocaleString()}
       <Typography
         className="font-weight-extra-bold"
         variant="h5"
