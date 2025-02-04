@@ -19,7 +19,7 @@ import {
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 
-export default function ExpenseList({ expenseData, setExpenseData }) {
+export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
   const [expanded, setExpanded] = useState({});
 
   const theme = useTheme();
@@ -32,20 +32,27 @@ export default function ExpenseList({ expenseData, setExpenseData }) {
   };
 
   const handleDelete = (expenseToDelete) => {
-    setExpenseData((prevData) =>
-      prevData.map((person) => ({
-        ...person,
-        expenses: person.expenses.filter(
-          (expense) =>
-            expense.item !== expenseToDelete.item ||
-            expense.amount !== expenseToDelete.amount
-        ),
-      }))
+    setExpenseList((prevData) =>
+      prevData.map((group) => {
+        if (group.linkId !== linkId) return group;
+        return {
+          ...group,
+          expenses: group.expenses.map((person) => ({
+            ...person,
+            personalExpenses: person.personalExpenses.filter(
+              (expense) =>
+                expense.item !== expenseToDelete.item ||
+                expense.amount !== expenseToDelete.amount
+            ),
+          })),
+        };
+      })
     );
   };
 
-  const flattenedExpenses = expenseData.flatMap((person) =>
-    person.expenses.map((expense) => ({
+  const currentExpenseItem = expenseList.find((data) => data.linkId === linkId);
+  const flattenedExpenses = currentExpenseItem?.expenses.flatMap((person) =>
+    person.personalExpenses.map((expense) => ({
       ...expense,
       name: person.name,
       color: person.color,

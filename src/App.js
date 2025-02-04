@@ -1,15 +1,18 @@
 import { ThemeProvider } from "@mui/material/styles";
-import { useState, useEffect } from "react";
-import { mockExpenseDatabase } from "./mock/mockData";
+import { useState, useEffect, useMemo } from "react";
+import { expenseMockData } from "./mock/mockData";
 import theme from "./styles/theme";
 import Header from "./components/Header";
 import ListPage from "./components/ListPage";
 import ResultPage from "./components/ResultPage";
 import CreateUserModal from "./components/CreateUserModal";
 
-const calculateTotalAmount = (data) => {
-  return data.reduce((sum, { expenses }) => {
-    const personTotal = expenses.reduce(
+const calculateTotalAmount = (data, linkId) => {
+  const currentExpenseItem = data.find((entry) => entry.linkId === linkId);
+  const expenseItem = currentExpenseItem?.expenses || [];
+
+  return expenseItem.reduce((sum, { personalExpenses }) => {
+    const personTotal = personalExpenses.reduce(
       (expenseSum, { amount }) => expenseSum + amount,
       0
     );
@@ -19,16 +22,32 @@ const calculateTotalAmount = (data) => {
 
 function App() {
   const [page, setPage] = useState("List");
-  const [expenseData, setExpenseData] = useState(mockExpenseDatabase);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [expenseList, setExpenseList] = useState(expenseMockData);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
+  // TODO: 改成從DB取得
+  const linkId = "1234567890";
+
+  const currentExpenseItem = useMemo(
+    () => expenseList.find((data) => data.linkId === linkId),
+    [expenseList, linkId]
+  );
+
+  const expenseItem = useMemo(
+    () => currentExpenseItem?.expenses || [],
+    [currentExpenseItem]
+  );
+
+  const totalAmount = useMemo(
+    () => calculateTotalAmount(expenseList, linkId),
+    [calculateTotalAmount, expenseList, linkId]
+  );
+
   useEffect(() => {
-    setTotalAmount(calculateTotalAmount(expenseData));
-    if (expenseData.length === 0) {
+    if (expenseList.length === 0) {
       setOpenCreateUserModal(true);
     }
-  }, [expenseData]);
+  }, [expenseList]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,20 +58,27 @@ function App() {
       {page === "List" && (
         <ListPage
           page={page}
-          expenseData={expenseData}
-          setExpenseData={setExpenseData}
-          setOpenCreateUserModal={setOpenCreateUserModal}
+          expenseList={expenseList}
+          setExpenseList={setExpenseList}
           totalAmount={totalAmount}
+          setOpenCreateUserModal={setOpenCreateUserModal}
+          linkId={linkId}
+          currentExpenseItem={currentExpenseItem}
+          expenseItem={expenseItem}
         />
       )}
       {page === "Result" && (
-        <ResultPage expenseData={expenseData} totalAmount={totalAmount} />
+        <ResultPage
+          expenseList={expenseList}
+          totalAmount={totalAmount}
+          expenseItem={expenseItem}
+        />
       )}
       <CreateUserModal
         open={openCreateUserModal}
         setOpen={setOpenCreateUserModal}
-        expenseData={expenseData}
-        setExpenseData={setExpenseData}
+        expenseList={expenseList}
+        setExpenseList={setExpenseList}
       />
     </ThemeProvider>
   );

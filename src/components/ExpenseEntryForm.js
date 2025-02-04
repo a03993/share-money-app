@@ -27,9 +27,11 @@ const formBoxStyle = {
 };
 
 export default function ExpenseEntryForm({
-  expenseData,
-  setExpenseData,
+  expenseList,
+  setExpenseList,
   setOpenCreateUserModal,
+  linkId,
+  expenseItem,
 }) {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState(0);
@@ -76,17 +78,25 @@ export default function ExpenseEntryForm({
 
     const newExpense = { item, amount: parseFloat(amount), sharedBy };
 
-    const updatedExpenseData = expenseData.map((expense) => {
-      if (expense.name === payer) {
+    const updatedExpenseList = expenseList.map((expenseItem) => {
+      if (expenseItem.linkId === linkId) {
         return {
-          ...expense,
-          expenses: [...expense.expenses, newExpense],
+          ...expenseItem,
+          expenses: expenseItem.expenses.map((expense) => {
+            if (expense.name === payer) {
+              return {
+                ...expense,
+                personalExpenses: [...expense.personalExpenses, newExpense],
+              };
+            }
+            return expense;
+          }),
         };
       }
-      return expense;
+      return expenseItem;
     });
 
-    setExpenseData(updatedExpenseData);
+    setExpenseList(updatedExpenseList);
     setItem("");
     setAmount(0);
     setPayer("");
@@ -119,11 +129,11 @@ export default function ExpenseEntryForm({
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 3 }}>
             <PayerSelector
-              expenseData={expenseData}
               payer={payer}
               setPayer={setPayer}
               error={!payer && error.payer}
               setOpenCreateUserModal={setOpenCreateUserModal}
+              expenseItem={expenseItem}
             />
           </Grid>
           <TextField
@@ -148,11 +158,11 @@ export default function ExpenseEntryForm({
           />
           <Grid size={10}>
             <ShareBySelector
-              expenseData={expenseData}
               sharedBy={sharedBy}
               setSharedBy={setSharedBy}
               error={sharedBy.length === 0 && error.sharedBy}
               setOpenCreateUserModal={setOpenCreateUserModal}
+              expenseItem={expenseItem}
             />
           </Grid>
           <Grid size={2}>

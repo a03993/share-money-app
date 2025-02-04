@@ -28,11 +28,11 @@ const MenuProps = {
 };
 
 export default function PayerSelector({
-  expenseData,
   payer,
   setPayer,
   error,
   setOpenCreateUserModal,
+  expenseItem,
 }) {
   const theme = useTheme();
 
@@ -50,7 +50,7 @@ export default function PayerSelector({
         onChange={handleChange}
         input={<OutlinedInput label="Payer" />}
         renderValue={(selected) => {
-          const item = expenseData.find((item) => item.name === selected);
+          const item = expenseItem.find((item) => item.name === selected);
           return (
             <div style={avatarGroup}>
               <Avatar
@@ -67,7 +67,7 @@ export default function PayerSelector({
         MenuProps={MenuProps}
         sx={selectStyle}
       >
-        {expenseData.map((item) => (
+        {expenseItem.map((item) => (
           <MenuItem key={item.name} value={item.name}>
             <Avatar
               className="small-mui-avatar"

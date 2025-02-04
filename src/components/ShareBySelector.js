@@ -30,11 +30,11 @@ const MenuProps = {
 };
 
 export default function ShareBySelector({
-  expenseData,
   sharedBy,
   setSharedBy,
   error,
   setOpenCreateUserModal,
+  expenseItem,
 }) {
   const theme = useTheme();
 
@@ -59,7 +59,7 @@ export default function ShareBySelector({
           <div style={avatarGroup}>
             <AvatarGroup max={8} className="neutral-lightest-border">
               {selected.map((name) => {
-                const item = expenseData.find((item) => item.name === name);
+                const item = expenseItem.find((item) => item.name === name);
                 if (!item) return null;
                 return (
                   <Avatar
@@ -81,7 +81,7 @@ export default function ShareBySelector({
         MenuProps={MenuProps}
         sx={selectStyle}
       >
-        {expenseData.map((item) => (
+        {expenseItem.map((item) => (
           <MenuItem key={item.name} value={item.name}>
             <Checkbox checked={sharedBy.includes(item.name)} />
             <Avatar

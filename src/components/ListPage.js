@@ -6,10 +6,13 @@ import ExpenseList from "./ExpenseList";
 
 export default function ListPage({
   page,
-  expenseData,
-  setExpenseData,
+  expenseList,
+  setExpenseList,
   totalAmount,
   setOpenCreateUserModal,
+  linkId,
+  currentExpenseItem,
+  expenseItem,
 }) {
   const commonGridSx = {
     maxWidth: {
@@ -19,26 +22,30 @@ export default function ListPage({
     },
     mx: "auto",
   };
+
   return (
     <>
       <ExpenseEntryForm
-        expenseData={expenseData}
-        setExpenseData={setExpenseData}
+        expenseList={expenseList}
+        setExpenseList={setExpenseList}
         setOpenCreateUserModal={setOpenCreateUserModal}
+        linkId={linkId}
+        expenseItem={expenseItem}
       />
-      {expenseData.length !== 0 ? (
+      {expenseList.length !== 0 ? (
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>
             <SummarySection
               page={page}
-              expenseData={expenseData}
               totalAmount={totalAmount}
+              expenseItem={expenseItem}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 7 }}>
             <ExpenseList
-              expenseData={expenseData}
-              setExpenseData={setExpenseData}
+              expenseList={expenseList}
+              setExpenseList={setExpenseList}
+              linkId={linkId}
             />
           </Grid>
         </Grid>

@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-export default function SummarySection({ page, expenseData, totalAmount }) {
+export default function SummarySection({ page, totalAmount, expenseItem }) {
   return (
     <>
       {page === "List" && (
@@ -9,7 +9,7 @@ export default function SummarySection({ page, expenseData, totalAmount }) {
         </Typography>
       )}
       <Typography variant={page === "List" ? "h3" : "h5"} gutterBottom>
-        {expenseData.length}
+        {expenseItem?.length || 0}
         <Typography
           className="font-weight-extra-bold"
           variant={page === "List" ? "h5" : "h6"}
