@@ -16,7 +16,7 @@ import { headerStyle } from "../styles/headerStyle";
 
 const pages = ["List", "Result", "Create User"];
 
-export default function Header({ setPage, setOpenCreateUserModal }) {
+export default function Header({ setPage, setOpenCreateUserModal, linkId }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [currentPage, setCurrentPage] = useState("");
 
@@ -52,6 +52,7 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
             variant="h5"
             noWrap
             component="a"
+            href="/"
             onClick={() => handleChangePage("Create Link")}
             className="font-size-logo font-weight-extra-bold"
             sx={{ ...headerStyle.logoDesktop, cursor: "pointer" }}
@@ -65,6 +66,7 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
+              sx={{ visibility: linkId ? "visible" : "hidden" }}
             >
               <MenuIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
@@ -107,13 +109,19 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
             variant="h5"
             noWrap
             component="a"
+            href="/"
             onClick={() => handleChangePage("Create Link")}
             className="font-size-logo font-weight-extra-bold"
             sx={{ ...headerStyle.logoMobile, cursor: "pointer" }}
           >
             ShareMoney
           </Typography>
-          <Box sx={headerStyle.desktopMenuContainer}>
+          <Box
+            sx={{
+              ...headerStyle.desktopMenuContainer,
+              visibility: linkId ? "visible" : "hidden",
+            }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
