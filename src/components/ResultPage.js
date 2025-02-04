@@ -17,15 +17,13 @@ const commonGridSx = {
   mx: "auto",
 };
 
-const calculateAverageAmountPerPerson = (totalAmount, expenseData) => {
-  return parseFloat((totalAmount / expenseData.length).toFixed(0));
-};
+const calculateTotalExpensePerPerson = (currentExpenseItem) => {
+  if (!currentExpenseItem) return [];
 
-const calculateTotalExpensePerPerson = (data) => {
   const totalExpenses = {};
 
-  data.forEach(({ name, expenses }) => {
-    const personTotal = expenses.reduce(
+  currentExpenseItem.expenses.forEach(({ name, personalExpenses }) => {
+    const personTotal = personalExpenses.reduce(
       (expenseSum, { amount }) => expenseSum + amount,
       0
     );
@@ -38,18 +36,22 @@ const calculateTotalExpensePerPerson = (data) => {
   }));
 };
 
-const calculateAmountPaidByEachPerson = (data) => {
+const calculateAmountPaidByEachPerson = (currentExpenseItem) => {
+  if (!currentExpenseItem) return [];
+
   const amountPaid = {};
 
-  data.forEach(({ expenses }) => {
-    expenses.forEach(({ amount, sharedBy }) => {
-      const splitAmount = amount / sharedBy.length;
-      sharedBy.forEach((person) => {
-        if (!amountPaid[person]) {
-          amountPaid[person] = 0;
-        }
-        amountPaid[person] += splitAmount;
-      });
+  currentExpenseItem.expenses.forEach(({ name, personalExpenses }) => {
+    personalExpenses.forEach(({ amount, sharedBy }) => {
+      if (sharedBy && sharedBy.length > 0) {
+        const splitAmount = amount / sharedBy.length;
+        sharedBy.forEach((person) => {
+          if (!amountPaid[person]) {
+            amountPaid[person] = 0;
+          }
+          amountPaid[person] += splitAmount;
+        });
+      }
     });
   });
 
@@ -59,7 +61,7 @@ const calculateAmountPaidByEachPerson = (data) => {
   }));
 };
 
-const calculatePayments = (actualExpense, paidAmount, expenseData) => {
+const calculatePayments = (actualExpense, paidAmount, expenseList) => {
   const balance = {};
 
   actualExpense.forEach(({ name, actualExpense }) => {
@@ -88,16 +90,21 @@ const calculatePayments = (actualExpense, paidAmount, expenseData) => {
     const payee = payees[payeeIndex];
     const transferAmount = Math.min(payer.amount, payee.amount);
 
+    const payerColor = expenseList[0].expenses.find(
+      (person) => person.name === payer.name
+    )?.color;
+    const payeeColor = expenseList[0].expenses.find(
+      (person) => person.name === payee.name
+    )?.color;
+
     transactions.push({
       payer: {
         name: payer.name,
-        avatarColor: expenseData.find((person) => person.name === payer.name)
-          .color,
+        avatarColor: payerColor,
       },
       payee: {
         name: payee.name,
-        avatarColor: expenseData.find((person) => person.name === payee.name)
-          .color,
+        avatarColor: payeeColor,
       },
       amount: transferAmount,
     });
@@ -116,58 +123,56 @@ const calculatePayments = (actualExpense, paidAmount, expenseData) => {
   return transactions;
 };
 
-export default function ResultPage({ expenseData, totalAmount }) {
-  const [averageAmountPerPerson, setAverageAmountPerPerson] = useState(0);
+export default function ResultPage({
+  expenseList,
+  totalAmount,
+  expenseItem,
+  linkId,
+  currentExpenseItem,
+}) {
   const [paymentDetails, setPaymentDetails] = useState([]);
 
   useEffect(() => {
-    setAverageAmountPerPerson(
-      calculateAverageAmountPerPerson(totalAmount, expenseData)
-    );
-  }, [totalAmount, expenseData]);
-
-  useEffect(() => {
-    const actualExpense = calculateTotalExpensePerPerson(expenseData);
-    const paidAmount = calculateAmountPaidByEachPerson(expenseData);
+    const actualExpense = calculateTotalExpensePerPerson(currentExpenseItem);
+    const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
     const newPaymentDetails = calculatePayments(
       actualExpense,
       paidAmount,
-      expenseData
+      expenseList
     );
     setPaymentDetails(newPaymentDetails);
-  }, [expenseData]);
+  }, [expenseList, currentExpenseItem]);
 
   return (
     <>
-      {expenseData.length !== 0 ? (
+      {expenseList.length !== 0 ? (
         <>
           <Grid
             container
             spacing={2}
             alignItems="center"
             sx={{
-              maxWidth: {
-                xs: "80%",
-                sm: "70%",
-                lg: "60%",
-              },
-              mx: "auto",
+              ...commonGridSx,
               mt: 10,
               mb: 10,
               justifyContent: "center",
             }}
           >
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
-              <AverageAmount amount={averageAmountPerPerson} />
+              <AverageAmount
+                totalAmount={totalAmount}
+                expenseList={expenseList}
+                linkId={linkId}
+              />
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <MemberAvatars members={expenseData} />
+              <MemberAvatars members={expenseItem} />
             </Grid>
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
               <SummarySection
                 page="result"
-                expenseData={expenseData}
                 totalAmount={totalAmount}
+                expenseItem={expenseItem}
               />
             </Grid>
           </Grid>

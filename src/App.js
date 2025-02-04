@@ -72,6 +72,8 @@ function App() {
           expenseList={expenseList}
           totalAmount={totalAmount}
           expenseItem={expenseItem}
+          linkId={linkId}
+          currentExpenseItem={currentExpenseItem}
         />
       )}
       <CreateUserModal
