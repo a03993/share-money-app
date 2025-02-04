@@ -1,8 +1,25 @@
 import { Box, Typography, Button } from "@mui/material";
+import { nanoid } from "nanoid";
+import { useNavigate } from "react-router-dom";
+import { expenseMockData } from "../mock/mockData";
 
 export default function CreatLinkPage({ setPage }) {
+  const navigate = useNavigate();
+
   const handleCreateLink = () => {
-    setPage("List");
+    const newLinkId = nanoid();
+    const newExpenseData = {
+      linkId: newLinkId,
+      expenses: [],
+    };
+    try {
+      // TODO: call API
+      expenseMockData.push(newExpenseData);
+      navigate(`/list/${newLinkId}`);
+      setPage("List");
+    } catch (error) {
+      console.error("Failed to create expense:", error);
+    }
   };
 
   return (
