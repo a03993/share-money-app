@@ -18,8 +18,8 @@ import { useState } from "react";
 export default function CreateUserModal({
   open,
   setOpen,
-  expenseData,
-  setExpenseData,
+  expenseList,
+  setExpenseList,
 }) {
   const [userList, setUserList] = useState([{ name: "", avatar: 2 }]);
   const [nameErrors, setNameErrors] = useState([false]);
@@ -88,10 +88,16 @@ export default function CreateUserModal({
     const newUsers = userList.map((user) => ({
       name: user.name,
       color: avatarList[user.avatar],
-      expenses: [],
+      personalExpenses: [],
     }));
 
-    setExpenseData((prevData) => [...prevData, ...newUsers]);
+    setExpenseList((prevExpenseList) =>
+      prevExpenseList.map((item) => ({
+        ...item,
+        expenses: [...item.expenses, ...newUsers],
+      }))
+    );
+
     setSeverity("success");
     setSnackbarOpen(true);
     setSnackbarMessage("Users created successfully!");
@@ -101,7 +107,7 @@ export default function CreateUserModal({
   };
 
   const handleClose = () => {
-    if (expenseData.length === 0) {
+    if (expenseList.length === 0) {
       setSnackbarOpen(true);
       setSnackbarMessage("You have to create The FIRST User before closing.");
       return;
