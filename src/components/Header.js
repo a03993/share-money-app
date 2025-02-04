@@ -18,7 +18,7 @@ const pages = ["List", "Result", "Create User"];
 
 export default function Header({ setPage, setOpenCreateUserModal }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [currentPage, setCurrentPage] = useState("List");
+  const [currentPage, setCurrentPage] = useState("");
 
   const theme = useTheme();
 
@@ -33,10 +33,15 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
   const handleChangePage = (page) => {
     if (page === "Create User") {
       setOpenCreateUserModal(true);
-    } else {
-      setPage(page);
-      setCurrentPage(page);
+      return;
     }
+    if (page === "Create Link") {
+      setPage(page);
+      setCurrentPage("");
+      return;
+    }
+    setPage(page);
+    setCurrentPage(page);
   };
 
   return (
@@ -47,9 +52,9 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={() => handleChangePage("Create Link")}
             className="font-size-logo font-weight-extra-bold"
-            sx={headerStyle.logoDesktop}
+            sx={{ ...headerStyle.logoDesktop, cursor: "pointer" }}
           >
             ShareMoney
           </Typography>
@@ -102,9 +107,9 @@ export default function Header({ setPage, setOpenCreateUserModal }) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={() => handleChangePage("Create Link")}
             className="font-size-logo font-weight-extra-bold"
-            sx={headerStyle.logoMobile}
+            sx={{ ...headerStyle.logoMobile, cursor: "pointer" }}
           >
             ShareMoney
           </Typography>

@@ -82,6 +82,9 @@ const theme = createTheme({
           "&.font-size-list-secondary": {
             fontSize: 12,
           },
+          "&.font-color-light-gray": {
+            color: palette.neutral.light,
+          },
           "&.font-color-dark-gray": {
             color: palette.neutral.main,
           },

@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { expenseMockData } from "./mock/mockData";
 import theme from "./styles/theme";
 import Header from "./components/Header";
+import CreateLinkPage from "./components/CreateLinkPage";
 import ListPage from "./components/ListPage";
 import ResultPage from "./components/ResultPage";
 import CreateUserModal from "./components/CreateUserModal";
@@ -21,7 +22,7 @@ const calculateTotalAmount = (data, linkId) => {
 };
 
 function App() {
-  const [page, setPage] = useState("List");
+  const [page, setPage] = useState("Create Link");
   const [expenseList, setExpenseList] = useState(expenseMockData);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
@@ -55,6 +56,7 @@ function App() {
         setPage={setPage}
         setOpenCreateUserModal={setOpenCreateUserModal}
       />
+      {page === "Create Link" && <CreateLinkPage setPage={setPage} />}
       {page === "List" && (
         <ListPage
           page={page}
