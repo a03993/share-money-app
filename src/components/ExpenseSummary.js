@@ -1,14 +1,17 @@
 import { Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
-export default function SummarySection({ page, totalAmount, expenseItem }) {
+export default function ExpenseSummary({ page, totalAmount, expenseItem }) {
+  const isListPage = page === "List";
+
   return (
     <>
-      {page === "List" && (
+      {isListPage && (
         <Typography variant="h6" sx={{ mb: 6 }}>
           Summary
         </Typography>
       )}
-      <Typography variant={page === "List" ? "h3" : "h5"} gutterBottom>
+      <Typography variant={isListPage ? "h3" : "h5"} gutterBottom>
         {expenseItem?.length || 0}
         <Typography
           className="font-weight-extra-bold"
@@ -22,3 +25,9 @@ export default function SummarySection({ page, totalAmount, expenseItem }) {
     </>
   );
 }
+
+ExpenseSummary.propTypes = {
+  page: PropTypes.string.isRequired,
+  totalAmount: PropTypes.number.isRequired,
+  expenseItem: PropTypes.array,
+};

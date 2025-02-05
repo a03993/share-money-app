@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 import ExpenseEntryForm from "./ExpenseEntryForm";
-import SummarySection from "./SummarySection";
+import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 
 export default function ListPage({
@@ -35,7 +35,7 @@ export default function ListPage({
       {expenseList.length !== 0 ? (
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>
-            <SummarySection
+            <ExpenseSummary
               page={page}
               totalAmount={totalAmount}
               expenseItem={expenseItem}

@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
 import PaymentTransferList from "./PaymentTransferList";
-import SummarySection from "./SummarySection";
+import ExpenseSummary from "./ExpenseSummary";
 
 import { useState, useEffect } from "react";
 
@@ -169,7 +169,7 @@ export default function ResultPage({
               <MemberAvatars members={expenseItem} />
             </Grid>
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
-              <SummarySection
+              <ExpenseSummary
                 page="result"
                 totalAmount={totalAmount}
                 expenseItem={expenseItem}
