@@ -91,7 +91,7 @@ export default function Header({
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo
-            onClick={() => handleChangePage("Create Link")}
+            onClick={() => handleChangePage("Home")}
             style={headerStyle.logoDesktop}
           />
           <Box sx={headerStyle.mobileMenuContainer}>
@@ -113,7 +113,7 @@ export default function Header({
             />
           </Box>
           <Logo
-            onClick={() => handleChangePage("Create Link")}
+            onClick={() => handleChangePage("Home")}
             style={headerStyle.logoMobile}
           />
           <Box
