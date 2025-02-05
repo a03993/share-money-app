@@ -50,6 +50,7 @@ export default function ExpenseLayout() {
   return (
     <>
       <Header
+        page={page}
         setPage={setPage}
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}

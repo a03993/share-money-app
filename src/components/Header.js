@@ -16,129 +16,125 @@ import { headerStyle } from "../styles/headerStyle";
 
 const pages = ["List", "Result", "Create User"];
 
-export default function Header({ setPage, setOpenCreateUserModal, linkId }) {
+const Logo = ({ onClick, style }) => (
+  <Typography
+    variant="h5"
+    noWrap
+    component="a"
+    href="/"
+    onClick={onClick}
+    className="font-size-logo font-weight-extra-bold"
+    sx={{ ...style, cursor: "pointer" }}
+  >
+    ShareMoney
+  </Typography>
+);
+
+const NavigationMenu = ({ anchorEl, onClose, page, onPageChange }) => (
+  <Menu
+    id="navigation-mobile-menu"
+    anchorEl={anchorEl}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "left",
+    }}
+    keepMounted
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "left",
+    }}
+    open={Boolean(anchorEl)}
+    onClose={onClose}
+    sx={{ display: { xs: "block", md: "none" } }}
+  >
+    {pages.map((pageName) => (
+      <MenuItem
+        key={pageName}
+        disabled={page === pageName}
+        onClick={() => {
+          onClose();
+          onPageChange(pageName);
+        }}
+      >
+        <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
+          {pageName}
+        </Typography>
+      </MenuItem>
+    ))}
+  </Menu>
+);
+
+export default function Header({
+  page,
+  setPage,
+  setOpenCreateUserModal,
+  linkId,
+}) {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [currentPage, setCurrentPage] = useState("");
 
   const theme = useTheme();
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const handleNavMenu = (event = null) => {
+    setAnchorElNav(event?.currentTarget || null);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleChangePage = (page) => {
-    if (page === "Create User") {
+  const handleChangePage = (pageName) => {
+    if (pageName === "Create User") {
       setOpenCreateUserModal(true);
       return;
     }
-    if (page === "Create Link") {
-      setPage(page);
-      setCurrentPage("");
-      return;
-    }
-    setPage(page);
-    setCurrentPage(page);
+    setPage(pageName);
   };
 
   return (
     <AppBar position="static" sx={headerStyle.appBar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
+          <Logo
             onClick={() => handleChangePage("Create Link")}
-            className="font-size-logo font-weight-extra-bold"
-            sx={{ ...headerStyle.logoDesktop, cursor: "pointer" }}
-          >
-            ShareMoney
-          </Typography>
+            style={headerStyle.logoDesktop}
+          />
           <Box sx={headerStyle.mobileMenuContainer}>
             <IconButton
               size="large"
               aria-label="navigation menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={handleNavMenu}
               sx={{ visibility: linkId ? "visible" : "hidden" }}
             >
               <MenuIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
-            <Menu
-              id="navigation-mobile-menu"
+            <NavigationMenu
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  disabled={currentPage === page}
-                  onClick={() => {
-                    handleCloseNavMenu();
-                    handleChangePage(page);
-                  }}
-                >
-                  <Typography
-                    className="font-weight-bold"
-                    sx={headerStyle.menuItemText}
-                  >
-                    {page}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              onClose={() => handleNavMenu()}
+              page={page}
+              onPageChange={handleChangePage}
+            />
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
+          <Logo
             onClick={() => handleChangePage("Create Link")}
-            className="font-size-logo font-weight-extra-bold"
-            sx={{ ...headerStyle.logoMobile, cursor: "pointer" }}
-          >
-            ShareMoney
-          </Typography>
+            style={headerStyle.logoMobile}
+          />
           <Box
             sx={{
               ...headerStyle.desktopMenuContainer,
               visibility: linkId ? "visible" : "hidden",
             }}
           >
-            {pages.map((page) => (
+            {pages.map((pageName) => (
               <Button
-                key={page}
-                onClick={() => handleChangePage(page)}
-                disabled={currentPage === page}
+                key={pageName}
+                onClick={() => handleChangePage(pageName)}
+                disabled={page === pageName}
                 sx={{
                   fontWeight: 600,
                   fontSize: 16,
                   color: theme.palette.secondary.main,
-                  opacity: 0.3,
-                  ...(currentPage === page && {
-                    color: theme.palette.secondary.main,
-                    opacity: 1,
-                  }),
+                  opacity: page === pageName ? 1 : 0.2,
                 }}
               >
-                {page}
+                {pageName}
               </Button>
             ))}
           </Box>
