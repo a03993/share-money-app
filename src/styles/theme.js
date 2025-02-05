@@ -9,6 +9,17 @@ const theme = createTheme({
   },
   palette: palette,
   components: {
+    MuiSelect: {
+      defaultProps: {
+        MenuProps: {
+          PaperProps: {
+            style: {
+              maxHeight: 48 * 4.5 + 8,
+            },
+          },
+        },
+      },
+    },
     MuiListItemText: {
       styleOverrides: {
         primary: {

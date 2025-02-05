@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
-import ExpenseEntryForm from "./ExpenseEntryForm";
+import ExpenseCreateForm from "./ExpenseCreateForm";
 import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 
@@ -25,7 +25,7 @@ export default function ListPage({
 
   return (
     <>
-      <ExpenseEntryForm
+      <ExpenseCreateForm
         expenseList={expenseList}
         setExpenseList={setExpenseList}
         setOpenCreateUserModal={setOpenCreateUserModal}

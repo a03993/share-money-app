@@ -3,8 +3,8 @@ import Grid from "@mui/material/Grid2";
 
 import { useState } from "react";
 
-import PayerSelector from "./PayerSelector";
-import ShareBySelector from "./ShareBySelector";
+import ExpensePayerSelector from "./ExpensePayerSelector";
+import ExpenseShareSelector from "./ExpenseShareSelector";
 
 import theme from "../styles/theme";
 
@@ -26,20 +26,24 @@ const formBoxStyle = {
   },
 };
 
-export default function ExpenseEntryForm({
+export default function ExpenseCreateForm({
   expenseList,
   setExpenseList,
   setOpenCreateUserModal,
   linkId,
   expenseItem,
 }) {
-  const [item, setItem] = useState("");
-  const [amount, setAmount] = useState(0);
-  const [payer, setPayer] = useState("");
-  const [sharedBy, setSharedBy] = useState([]);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [severity, setSeverity] = useState("error");
+  const [formData, setFormData] = useState({
+    item: "",
+    amount: 0,
+    payer: "",
+    sharedBy: [],
+  });
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
   const [error, setError] = useState({
     item: false,
     amount: false,
@@ -47,15 +51,26 @@ export default function ExpenseEntryForm({
     sharedBy: false,
   });
 
+  const handleChange = (field) => (event) => {
+    const value = event?.target?.value ?? event;
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    const { item, amount, payer, sharedBy } = formData;
 
     if (item === "" || amount === 0 || payer === "" || sharedBy.length === 0) {
-      setSeverity("error");
-      setSnackbarMessage(
-        "Please check out the from. Payer, Item, Price, ShaeBy are required!"
-      );
-      setSnackbarOpen(true);
+      setNotification({
+        open: true,
+        message:
+          "Please check out the form. Payer, Item, Price, Share By are required!",
+        severity: "error",
+      });
+
       setError({
         item: item === "",
         amount: amount === 0,
@@ -64,16 +79,6 @@ export default function ExpenseEntryForm({
       });
 
       return;
-    } else {
-      setSeverity("success");
-      setSnackbarMessage("Expenses created successfully!");
-      setSnackbarOpen(true);
-      setError({
-        item: false,
-        amount: false,
-        payer: false,
-        sharedBy: false,
-      });
     }
 
     const newExpense = { item, amount: parseFloat(amount), sharedBy };
@@ -97,26 +102,39 @@ export default function ExpenseEntryForm({
     });
 
     setExpenseList(updatedExpenseList);
-    setItem("");
-    setAmount(0);
-    setPayer("");
-    setSharedBy([]);
+    setNotification({
+      open: true,
+      message: "Expenses created successfully!",
+      severity: "success",
+    });
+    setError({
+      item: false,
+      amount: false,
+      payer: false,
+      sharedBy: false,
+    });
+    setFormData({
+      item: "",
+      amount: 0,
+      payer: "",
+      sharedBy: [],
+    });
   };
 
   return (
     <>
       <Snackbar
-        open={snackbarOpen}
+        open={notification.open}
         autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={severity}
+          onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
+          severity={notification.severity}
           sx={{ width: "100%" }}
         >
-          {snackbarMessage}
+          {notification.message}
         </Alert>
       </Snackbar>
       <Box
@@ -128,10 +146,10 @@ export default function ExpenseEntryForm({
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <PayerSelector
-              payer={payer}
-              setPayer={setPayer}
-              error={!payer && error.payer}
+            <ExpensePayerSelector
+              payer={formData.payer}
+              setPayer={handleChange("payer")}
+              error={!formData.payer && error.payer}
               setOpenCreateUserModal={setOpenCreateUserModal}
               expenseItem={expenseItem}
             />
@@ -141,26 +159,26 @@ export default function ExpenseEntryForm({
             label="Item"
             variant="outlined"
             type="text"
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
+            value={formData.item}
+            onChange={handleChange("item")}
             required
-            error={!item && error.item}
+            error={!formData.item && error.item}
           />
           <TextField
             id="price-input"
             label="Price"
             variant="outlined"
             type="number"
-            value={amount === 0 ? "" : amount}
-            onChange={(e) => setAmount(e.target.value)}
+            value={formData.amount === 0 ? "" : formData.amount}
+            onChange={handleChange("amount")}
             required
-            error={!amount && error.amount}
+            error={!formData.amount && error.amount}
           />
           <Grid size={10}>
-            <ShareBySelector
-              sharedBy={sharedBy}
-              setSharedBy={setSharedBy}
-              error={sharedBy.length === 0 && error.sharedBy}
+            <ExpenseShareSelector
+              sharedBy={formData.sharedBy}
+              setSharedBy={handleChange("sharedBy")}
+              error={formData.sharedBy.length === 0 && error.sharedBy}
               setOpenCreateUserModal={setOpenCreateUserModal}
               expenseItem={expenseItem}
             />
