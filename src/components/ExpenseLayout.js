@@ -22,7 +22,7 @@ const calculateTotalAmount = (data, linkId) => {
 
 export default function ExpenseLayout() {
   const { linkId } = useParams();
-  const [page, setPage] = useState(linkId ? "List" : "Create Link");
+  const [page, setPage] = useState(linkId ? "Expenses" : "Create Link");
   const [expenseList, setExpenseList] = useState(expenseMockData);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
@@ -56,7 +56,7 @@ export default function ExpenseLayout() {
         linkId={linkId}
       />
       {page === "Create Link" && <CreateLinkPage setPage={setPage} />}
-      {page === "List" && (
+      {page === "Expenses" && (
         <ListPage
           page={page}
           expenseList={expenseList}
@@ -68,7 +68,7 @@ export default function ExpenseLayout() {
           expenseItem={expenseItem}
         />
       )}
-      {page === "Result" && (
+      {page === "Settlement" && (
         <ResultPage
           expenseList={expenseList}
           totalAmount={totalAmount}

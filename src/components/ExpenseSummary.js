@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function ExpenseSummary({ page, totalAmount, expenseItem }) {
-  const isListPage = page === "List";
+  const isListPage = page === "Expenses";
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function ExpenseSummary({ page, totalAmount, expenseItem }) {
         {expenseItem?.length || 0}
         <Typography
           className="font-weight-extra-bold"
-          variant={page === "List" ? "h5" : "h6"}
+          variant={page === "Expenses" ? "h5" : "h6"}
           component="span"
         >
           人

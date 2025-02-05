@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { headerStyle } from "../styles/headerStyle";
 
-const pages = ["List", "Result", "Create User"];
+const pages = ["Expenses", "Settlement", "Create User"];
 
 const Logo = ({ onClick, style }) => (
   <Typography
