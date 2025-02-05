@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 
-import AverageAmount from "./AverageAmount";
+import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
 import PaymentTransferList from "./PaymentTransferList";
 import SummarySection from "./SummarySection";
@@ -159,7 +159,7 @@ export default function ResultPage({
             }}
           >
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
-              <AverageAmount
+              <PerPersonExpenseAmount
                 totalAmount={totalAmount}
                 expenseList={expenseList}
                 linkId={linkId}
