@@ -16,7 +16,7 @@ import {
   ExpandLess as ExpandLessIcon,
 } from "@mui/icons-material";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
@@ -50,16 +50,21 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
     );
   };
 
-  const currentExpenseItem = expenseList.find((data) => data.linkId === linkId);
-  const flattenedExpenses =
-    currentExpenseItem?.expenses.flatMap((person) =>
-      person.personalExpenses.map((expense) => ({
-        ...expense,
-        name: person.name,
-        color: person.color,
-        sharedBy: expense.sharedBy || [],
-      }))
-    ) || [];
+  const flattenedExpenses = useMemo(() => {
+    const currentExpenseItem = expenseList.find(
+      (data) => data.linkId === linkId
+    );
+    return (
+      currentExpenseItem?.expenses.flatMap((person) =>
+        person.personalExpenses.map((expense) => ({
+          ...expense,
+          name: person.name,
+          color: person.color,
+          sharedBy: expense.sharedBy || [],
+        }))
+      ) || []
+    );
+  }, [expenseList, linkId]);
 
   return (
     <>
@@ -108,7 +113,7 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
               <ListItemAvatar>
                 <Avatar
                   sx={{ backgroundColor: expense.color }}
-                  alt={expense.name}
+                  alt={`${expense.name}'s avatar`}
                 >
                   {expense.name[0]?.toUpperCase()}
                 </Avatar>
