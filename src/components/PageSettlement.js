@@ -145,7 +145,7 @@ export default function PageSettlement({
 
   return (
     <>
-      {expenseList.length !== 0 ? (
+      {expenseItem.length !== 0 ? (
         <>
           <Grid
             container
@@ -193,8 +193,8 @@ export default function PageSettlement({
             gutterBottom
             className="font-weight-thin font-color-dark-gray text-align-center"
           >
-            Please go back to list page
-            <br /> and add something to this list
+            No expenses found
+            <br /> Please add some expenses in the EXPENSES page
           </Typography>
         </Grid>
       )}

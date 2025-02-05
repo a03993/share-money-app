@@ -42,10 +42,10 @@ export default function ExpenseLayout() {
   );
 
   useEffect(() => {
-    if (expenseList.length === 0) {
+    if (linkId && expenseItem.length === 0) {
       setOpenCreateUserModal(true);
     }
-  }, [expenseList]);
+  }, [expenseList, linkId]);
 
   return (
     <>
@@ -80,8 +80,8 @@ export default function ExpenseLayout() {
       <CreateUserModal
         open={openCreateUserModal}
         setOpen={setOpenCreateUserModal}
-        expenseList={expenseList}
         setExpenseList={setExpenseList}
+        expenseItem={expenseItem}
       />
     </>
   );

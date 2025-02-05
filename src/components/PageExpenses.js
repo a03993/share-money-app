@@ -32,7 +32,7 @@ export default function PageExpenses({
         linkId={linkId}
         expenseItem={expenseItem}
       />
-      {expenseList.length !== 0 ? (
+      {expenseItem.length !== 0 ? (
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>
             <ExpenseSummary
@@ -64,7 +64,7 @@ export default function PageExpenses({
             gutterBottom
             className="font-weight-thin font-color-dark-gray"
           >
-            Please add something to this list
+            Please add a user to get started
           </Typography>
         </Grid>
       )}

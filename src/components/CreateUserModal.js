@@ -18,8 +18,8 @@ import { useState } from "react";
 export default function CreateUserModal({
   open,
   setOpen,
-  expenseList,
   setExpenseList,
+  expenseItem,
 }) {
   const [userList, setUserList] = useState([{ name: "", avatar: 2 }]);
   const [nameErrors, setNameErrors] = useState([false]);
@@ -107,7 +107,7 @@ export default function CreateUserModal({
   };
 
   const handleClose = () => {
-    if (expenseList.length === 0) {
+    if (expenseItem.length === 0) {
       setSnackbarOpen(true);
       setSnackbarMessage("You have to create The FIRST User before closing.");
       return;
