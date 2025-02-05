@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import { expenseMockData } from "../mock/mockData";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
-import CreateLinkPage from "./CreateLinkPage";
-import ListPage from "./ListPage";
-import ResultPage from "./ResultPage";
+import PageHome from "./PageHome";
+import PageExpenses from "./PageExpenses";
+import PageSettlement from "./PageSettlement";
 import CreateUserModal from "./CreateUserModal";
 
 const calculateTotalAmount = (data, linkId) => {
@@ -55,9 +55,9 @@ export default function ExpenseLayout() {
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}
       />
-      {page === "Create Link" && <CreateLinkPage setPage={setPage} />}
+      {page === "Create Link" && <PageHome setPage={setPage} />}
       {page === "Expenses" && (
-        <ListPage
+        <PageExpenses
           page={page}
           expenseList={expenseList}
           setExpenseList={setExpenseList}
@@ -69,7 +69,7 @@ export default function ExpenseLayout() {
         />
       )}
       {page === "Settlement" && (
-        <ResultPage
+        <PageSettlement
           expenseList={expenseList}
           totalAmount={totalAmount}
           expenseItem={expenseItem}

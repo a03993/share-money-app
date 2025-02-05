@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { expenseMockData } from "../mock/mockData";
 
-export default function CreateLinkPage({ setPage }) {
+export default function PageHome({ setPage }) {
   const navigate = useNavigate();
 
   const handleCreateLink = () => {

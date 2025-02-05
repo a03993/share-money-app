@@ -4,7 +4,7 @@ import ExpenseCreateForm from "./ExpenseCreateForm";
 import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 
-export default function ListPage({
+export default function PageExpenses({
   page,
   expenseList,
   setExpenseList,

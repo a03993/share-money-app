@@ -123,7 +123,7 @@ const calculatePayments = (actualExpense, paidAmount, expenseList) => {
   return transactions;
 };
 
-export default function ResultPage({
+export default function PageSettlement({
   expenseList,
   totalAmount,
   expenseItem,
