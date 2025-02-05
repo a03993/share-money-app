@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
-import PaymentTransferList from "./PaymentTransferList";
+import PaymentStatusTransfer from "./PaymentStatusTransfer";
 import ExpenseSummary from "./ExpenseSummary";
 
 import { useState, useEffect } from "react";
@@ -176,7 +176,7 @@ export default function ResultPage({
               />
             </Grid>
           </Grid>
-          <PaymentTransferList paymentDetails={paymentDetails} />
+          <PaymentStatusTransfer paymentDetails={paymentDetails} />
         </>
       ) : (
         <Grid

@@ -1,21 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-import PaymentList from "./PaymentList";
+import PaymentCheckList from "./PaymentCheckList";
 
 const getDifference = (source, target) =>
   source.filter((item) => !target.includes(item));
 const getIntersection = (source, target) =>
   source.filter((item) => target.includes(item));
 
-export default function PaymentTransferList({ paymentDetails }) {
+export default function PaymentStatusTransfer({ paymentDetails }) {
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
-  const leftChecked = getIntersection(checked, left);
-  const rightChecked = getIntersection(checked, right);
+  const leftChecked = useMemo(
+    () => getIntersection(checked, left),
+    [checked, left]
+  );
+
+  const rightChecked = useMemo(
+    () => getIntersection(checked, right),
+    [checked, right]
+  );
 
   const handleToggle = (item) => () => {
     setChecked((prevChecked) =>
@@ -50,7 +57,7 @@ export default function PaymentTransferList({ paymentDetails }) {
         <Typography variant="h6" align="left">
           Payment List
         </Typography>
-        <PaymentList
+        <PaymentCheckList
           items={left}
           paymentDetails={paymentDetails}
           checked={checked}
@@ -74,7 +81,7 @@ export default function PaymentTransferList({ paymentDetails }) {
         <Typography variant="h6" align="left">
           Done Payment List
         </Typography>
-        <PaymentList
+        <PaymentCheckList
           items={right}
           paymentDetails={paymentDetails}
           checked={checked}
