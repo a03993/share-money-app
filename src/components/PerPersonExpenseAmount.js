@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { useMemo } from "react";
-import PropTypes from "prop-types";
 
 const calculateExpensePerPerson = (totalAmount, expenseList, linkId) => {
   const currentExpense = expenseList.find(
@@ -38,14 +37,3 @@ export default function PerPersonExpenseAmount({
     </Typography>
   );
 }
-
-PerPersonExpenseAmount.propTypes = {
-  totalAmount: PropTypes.number.isRequired,
-  expenseList: PropTypes.arrayOf(
-    PropTypes.shape({
-      linkId: PropTypes.string.isRequired,
-      expenses: PropTypes.array.isRequired,
-    })
-  ).isRequired,
-  linkId: PropTypes.string.isRequired,
-};

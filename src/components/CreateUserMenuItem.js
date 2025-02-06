@@ -1,5 +1,4 @@
 import { MenuItem } from "@mui/material";
-import PropTypes from "prop-types";
 
 export default function CreateUserMenuItem({ setOpenCreateUserModal, theme }) {
   return (
@@ -19,8 +18,3 @@ export default function CreateUserMenuItem({ setOpenCreateUserModal, theme }) {
     </MenuItem>
   );
 }
-
-CreateUserMenuItem.propTypes = {
-  setOpenCreateUserModal: PropTypes.func.isRequired,
-  theme: PropTypes.object.isRequired,
-};
