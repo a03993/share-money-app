@@ -56,25 +56,7 @@ export default function PageExpenses({
             />
           </Grid>
         </Grid>
-      ) : (
-        <Grid
-          container
-          spacing={2}
-          sx={{
-            ...commonGridSx,
-            mt: 20,
-            justifyContent: "center",
-          }}
-        >
-          <Typography
-            variant="body1"
-            gutterBottom
-            className="font-weight-thin font-color-dark-gray"
-          >
-            Please add a user to get started
-          </Typography>
-        </Grid>
-      )}
+      ) : null}
     </>
   );
 }

@@ -78,9 +78,9 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
             mt: 3,
           }}
         >
-          NOTHING INSIDE!
+          <strong>NO EXPENSES FOUND!</strong>
           <br />
-          Use the form above to add an expense and get started.
+          Please add some expenses using the form above.
         </Alert>
       )}
       <List sx={{ mt: 1 }}>
