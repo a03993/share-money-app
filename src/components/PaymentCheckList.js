@@ -12,14 +12,14 @@ import {
 
 import { useTheme } from "@mui/material/styles";
 
-const UserAvatar = ({ user, marginLeft }) => (
+const UserAvatar = ({ user, mr }) => (
   <>
     <Avatar
       className="small-mui-avatar"
       sx={{
         backgroundColor: user.avatarColor,
         mr: 0.5,
-        ml: marginLeft || 0,
+        ml: mr || 0,
       }}
     >
       {user.name[0]?.toUpperCase()}
@@ -66,7 +66,7 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
           >
             <UserAvatar user={paymentDetail.payer} />
             {"pay"}
-            <UserAvatar user={paymentDetail.payee} marginLeft={1} />
+            <UserAvatar user={paymentDetail.payee} mr={1} />
             {`$${paymentDetail.amount.toLocaleString()}`}
           </Box>
         }

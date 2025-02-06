@@ -1,47 +1,22 @@
 import { useState, useEffect, useMemo } from "react";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 import PaymentCheckList from "./PaymentCheckList";
 
-const getDifference = (source, target) =>
-  source.filter((item) => !target.includes(item));
-const getIntersection = (source, target) =>
-  source.filter((item) => target.includes(item));
-
 export default function PaymentStatusTransfer({ paymentDetails }) {
-  const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
-  const leftChecked = useMemo(
-    () => getIntersection(checked, left),
-    [checked, left]
-  );
-
-  const rightChecked = useMemo(
-    () => getIntersection(checked, right),
-    [checked, right]
-  );
-
   const handleToggle = (item) => () => {
-    setChecked((prevChecked) =>
-      prevChecked.includes(item)
-        ? prevChecked.filter((i) => i !== item)
-        : [...prevChecked, item]
-    );
+    if (left.includes(item)) {
+      setRight([...right, item]);
+      setLeft(left.filter((i) => i !== item));
+    } else {
+      setLeft([...left, item]);
+      setRight(right.filter((i) => i !== item));
+    }
   };
-
-  const moveCheckedItems = (from, to, checkedItems, setFrom, setTo) => {
-    setTo(to.concat(checkedItems));
-    setFrom(getDifference(from, checkedItems));
-    setChecked(getDifference(checked, checkedItems));
-  };
-
-  const handleCheckedRight = () =>
-    moveCheckedItems(left, right, leftChecked, setLeft, setRight);
-  const handleCheckedLeft = () =>
-    moveCheckedItems(right, left, rightChecked, setRight, setLeft);
 
   useEffect(() => {
     setLeft(paymentDetails.map((_, index) => index));
@@ -60,22 +35,10 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         <PaymentCheckList
           items={left}
           paymentDetails={paymentDetails}
-          checked={checked}
+          checked={right}
           handleToggle={handleToggle}
           emptyMessage="✓ All payments are settled! No one need to pay."
         />
-        <Grid container direction="column" sx={{ alignItems: "center" }}>
-          <Button
-            sx={{ m: 3 }}
-            variant="outlined"
-            size="small"
-            onClick={handleCheckedRight}
-            disabled={leftChecked.length === 0}
-            aria-label="move selected right"
-          >
-            &gt;
-          </Button>
-        </Grid>
       </Grid>
       <Grid>
         <Typography variant="h6" align="left">
@@ -84,22 +47,10 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         <PaymentCheckList
           items={right}
           paymentDetails={paymentDetails}
-          checked={checked}
+          checked={right}
           handleToggle={handleToggle}
           emptyMessage="← Move completed payments from the left."
         />
-        <Grid container direction="column" sx={{ alignItems: "center" }}>
-          <Button
-            sx={{ m: 3 }}
-            variant="outlined"
-            size="small"
-            onClick={handleCheckedLeft}
-            disabled={rightChecked.length === 0}
-            aria-label="move selected left"
-          >
-            &lt;
-          </Button>
-        </Grid>
       </Grid>
     </Grid>
   );

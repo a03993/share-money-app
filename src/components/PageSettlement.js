@@ -8,14 +8,6 @@ import ExpenseSummary from "./ExpenseSummary";
 
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
-const commonGridSx = {
-  maxWidth: {
-    xs: "80%",
-    sm: "70%",
-    lg: "60%",
-  },
-  mx: "auto",
-};
 
 const calculateTotalExpensePerPerson = (currentExpenseItem) => {
   if (!currentExpenseItem) return [];
@@ -151,7 +143,8 @@ export default function PageSettlement({
         spacing={2}
         alignItems="center"
         sx={{
-          ...commonGridSx,
+          maxWidth: "700px",
+          mx: "auto",
           mt: 8,
           mb: { xs: 4, sm: 8 },
           justifyContent: "center",
