@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 export default function ExpenseSummary({ totalAmount, expenseItem }) {
   const location = useLocation();
-  const isExpensesPage = location.pathname.includes("expenses");
+  const isExpensesPage = location.pathname.includes("expenses") && !location.pathname.includes("settlement");
 
   return (
     <>
