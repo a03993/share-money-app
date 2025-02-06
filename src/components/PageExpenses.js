@@ -1,5 +1,4 @@
 import Grid from "@mui/material/Grid2";
-import { Typography } from "@mui/material";
 import ExpenseCreateForm from "./ExpenseCreateForm";
 import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
