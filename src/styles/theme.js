@@ -137,6 +137,12 @@ const theme = createTheme({
             minWidth: 50,
             borderRadius: "50%",
           },
+          "&.small-circle-button": {
+            width: 25,
+            height: 25,
+            minWidth: 25,
+            borderRadius: "50%",
+          },
           "&.plus-button": {
             "&::before, &::after": {
               content: '""',

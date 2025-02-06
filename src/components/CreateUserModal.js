@@ -208,10 +208,10 @@ export default function CreateUserModal({
                 {userList.length > 1 && (
                   <Button
                     onClick={() => removeUserField(index)}
+                    className="small-circle-button"
                     sx={{ ml: 1 }}
-                    color={theme.palette.primary.main}
                   >
-                    Remove
+                    X
                   </Button>
                 )}
               </Box>
