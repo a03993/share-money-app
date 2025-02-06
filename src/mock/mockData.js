@@ -1,6 +1,6 @@
 export const expenseMockData = [
   {
-    linkId: "1234567890",
+    linkId: "aDJaimK6PhqDNMvzmocl3",
     expenses: [
       {
         name: "The Chairs",
@@ -79,7 +79,7 @@ export const expenseMockData = [
     ],
   },
   {
-    linkId: "0987654321",
+    linkId: "TMmk7xy7pK8xJXMrAMAIL",
     expenses: [
       {
         name: "Amazing show",
