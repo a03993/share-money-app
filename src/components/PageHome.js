@@ -28,6 +28,7 @@ export default function PageHome({ setPage }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        textAlign: "center",
         gap: 5,
         mt: 10,
       }}
@@ -39,7 +40,11 @@ export default function PageHome({ setPage }) {
       >
         $
       </Typography>
-      <Typography variant="h6" className="font-weight-regular">
+      <Typography
+        variant="h6"
+        className="font-weight-regular"
+        sx={{ width: "80%" }}
+      >
         Share expenses online, <strong>no downloads needed!</strong> <br />
         Easily settle who owes what with ShareMoney.
       </Typography>
