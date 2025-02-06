@@ -31,7 +31,17 @@ export default function PageExpenses({
         expenseItem={expenseItem}
       />
       {expenseItem.length !== 0 ? (
-        <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            ...commonGridSx,
+            mt: {
+              xs: 4,
+              sm: 8,
+            },
+          }}
+        >
           <Grid size={{ xs: 12, md: 5 }}>
             <ExpenseSummary
               totalAmount={totalAmount}
@@ -57,7 +67,7 @@ export default function PageExpenses({
           }}
         >
           <Typography
-            variant="h5"
+            variant="body1"
             gutterBottom
             className="font-weight-thin font-color-dark-gray"
           >

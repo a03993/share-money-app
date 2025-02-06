@@ -8,7 +8,7 @@ export default function ExpenseSummary({ totalAmount, expenseItem }) {
   return (
     <>
       {isExpensesPage && (
-        <Typography variant="h6" sx={{ mb: 6 }}>
+        <Typography variant="h6" sx={{ mb: 3 }}>
           Summary
         </Typography>
       )}

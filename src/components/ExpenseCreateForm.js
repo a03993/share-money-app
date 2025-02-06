@@ -13,15 +13,15 @@ const formBoxStyle = {
   alignItems: "center",
   justifyContent: "center",
   width: "70%",
-  maxWidth: "800px",
-  marginTop: theme.spacing(8),
-  marginLeft: "auto",
-  marginRight: "auto",
-  gap: theme.spacing(2),
+  mt: {
+    xs: theme.spacing(4),
+    sm: theme.spacing(8),
+  },
+  ml: "auto",
+  mr: "auto",
   flexWrap: "wrap",
 
   "& .MuiTextField-root": {
-    width: "25ch",
     flex: "1 1 auto",
   },
 };

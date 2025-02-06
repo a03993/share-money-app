@@ -68,15 +68,14 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
 
   return (
     <>
-      <Typography variant="h6" sx={{ mb: 3 }}>
-        Expense List
-      </Typography>
+      <Typography variant="h6">Expense List</Typography>
       {flattenedExpenses.length === 0 && (
         <Alert
-          severity=""
+          severity="none"
           sx={{
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.neutral.main,
+            mt: 3,
           }}
         >
           NOTHING INSIDE!
@@ -84,7 +83,7 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
           Use the form above to add an expense and get started.
         </Alert>
       )}
-      <List>
+      <List sx={{ mt: 1 }}>
         {flattenedExpenses.map((expense, index) => (
           <div key={index}>
             <ListItem
