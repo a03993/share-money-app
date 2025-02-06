@@ -2,9 +2,7 @@ import React from "react";
 import {
   List,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Checkbox,
   Paper,
   Avatar,
   Box,
