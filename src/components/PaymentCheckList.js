@@ -7,6 +7,7 @@ import {
   Avatar,
   Box,
   Typography,
+  Checkbox,
 } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
@@ -36,21 +37,22 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
   const labelId = `transfer-list-item-${value}-label`;
 
   return (
-    <ListItemButton
-      key={value}
-      role="listitem"
-      onClick={handleToggle(value)}
-      sx={{
-        backgroundColor: checked.includes(value)
-          ? "rgba(0, 0, 0, 0.08)"
-          : "transparent",
-        "&:hover": {
-          backgroundColor: checked.includes(value)
-            ? "rgba(0, 0, 0, 0.12)"
-            : "rgba(0, 0, 0, 0.04)",
-        },
-      }}
-    >
+    <ListItemButton key={value} role="listitem" onClick={handleToggle(value)}>
+      <Checkbox
+        checked={checked.includes(value)}
+        tabIndex={-1}
+        disableRipple
+        inputProps={{
+          "aria-labelledby": labelId,
+        }}
+        sx={{
+          padding: 0,
+          mr: 1,
+          "& .MuiSvgIcon-root": {
+            fontSize: 20,
+          },
+        }}
+      />
       <ListItemText
         id={labelId}
         primary={
