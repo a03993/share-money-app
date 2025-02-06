@@ -15,8 +15,7 @@ export default function PageHome({ setPage }) {
     try {
       // TODO: call API
       expenseMockData.push(newExpenseData);
-      navigate(`/list/${newLinkId}`);
-      setPage("Expenses");
+      navigate(`/expenses/${newLinkId}`);
     } catch (error) {
       console.error("Failed to create expense:", error);
     }

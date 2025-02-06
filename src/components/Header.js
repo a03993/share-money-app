@@ -11,10 +11,9 @@ import {
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { headerStyle } from "../styles/headerStyle";
-
-const pages = ["Expenses", "Settlement", "Create User"];
 
 const Logo = ({ onClick, style }) => (
   <Typography
@@ -30,7 +29,13 @@ const Logo = ({ onClick, style }) => (
   </Typography>
 );
 
-const NavigationMenu = ({ anchorEl, onClose, page, onPageChange }) => (
+const NavigationMenu = ({
+  anchorEl,
+  onClose,
+  currentPath,
+  linkId,
+  onNavigate,
+}) => (
   <Menu
     id="navigation-mobile-menu"
     anchorEl={anchorEl}
@@ -47,43 +52,57 @@ const NavigationMenu = ({ anchorEl, onClose, page, onPageChange }) => (
     onClose={onClose}
     sx={{ display: { xs: "block", md: "none" } }}
   >
-    {pages.map((pageName) => (
-      <MenuItem
-        key={pageName}
-        disabled={page === pageName}
-        onClick={() => {
-          onClose();
-          onPageChange(pageName);
-        }}
-      >
-        <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
-          {pageName}
-        </Typography>
-      </MenuItem>
-    ))}
+    <MenuItem
+      disabled={currentPath === `/expenses/${linkId}`}
+      onClick={() => {
+        onClose();
+        onNavigate(`/expenses/${linkId}`);
+      }}
+    >
+      <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
+        Expenses
+      </Typography>
+    </MenuItem>
+    <MenuItem
+      disabled={currentPath === `/expenses/${linkId}/settlement`}
+      onClick={() => {
+        onClose();
+        onNavigate(`/expenses/${linkId}/settlement`);
+      }}
+    >
+      <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
+        Settlement
+      </Typography>
+    </MenuItem>
+    <MenuItem
+      onClick={() => {
+        onClose();
+        onNavigate("create-user");
+      }}
+    >
+      <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
+        Create User
+      </Typography>
+    </MenuItem>
   </Menu>
 );
 
-export default function Header({
-  page,
-  setPage,
-  setOpenCreateUserModal,
-  linkId,
-}) {
+export default function Header({ setOpenCreateUserModal, linkId }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
-
+  const navigate = useNavigate();
+  const { pathname: currentPath } = useLocation();
   const theme = useTheme();
 
   const handleNavMenu = (event = null) => {
     setAnchorElNav(event?.currentTarget || null);
   };
 
-  const handleChangePage = (pageName) => {
-    if (pageName === "Create User") {
+  const handleNavigation = (path) => {
+    if (path === "create-user") {
       setOpenCreateUserModal(true);
       return;
     }
-    setPage(pageName);
+    navigate(path);
   };
 
   return (
@@ -91,7 +110,7 @@ export default function Header({
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo
-            onClick={() => handleChangePage("Home")}
+            onClick={() => handleNavigation("/")}
             style={headerStyle.logoDesktop}
           />
           <Box sx={headerStyle.mobileMenuContainer}>
@@ -108,12 +127,12 @@ export default function Header({
             <NavigationMenu
               anchorEl={anchorElNav}
               onClose={() => handleNavMenu()}
-              page={page}
-              onPageChange={handleChangePage}
+              linkId={linkId}
+              onPageChange={handleNavigation}
             />
           </Box>
           <Logo
-            onClick={() => handleChangePage("Home")}
+            onClick={() => handleNavigation("/")}
             style={headerStyle.logoMobile}
           />
           <Box
@@ -122,21 +141,42 @@ export default function Header({
               visibility: linkId ? "visible" : "hidden",
             }}
           >
-            {pages.map((pageName) => (
-              <Button
-                key={pageName}
-                onClick={() => handleChangePage(pageName)}
-                disabled={page === pageName}
-                sx={{
-                  fontWeight: 600,
-                  fontSize: 16,
-                  color: theme.palette.secondary.main,
-                  opacity: page === pageName ? 1 : 0.2,
-                }}
-              >
-                {pageName}
-              </Button>
-            ))}
+            <Button
+              onClick={() => handleNavigation(`/expenses/${linkId}`)}
+              disabled={currentPath === `/expenses/${linkId}`}
+              sx={{
+                fontWeight: 600,
+                fontSize: 16,
+                color: theme.palette.secondary.main,
+                opacity: currentPath === `/expenses/${linkId}` ? 1 : 0.2,
+              }}
+            >
+              Expenses
+            </Button>
+            <Button
+              onClick={() => handleNavigation(`/expenses/${linkId}/settlement`)}
+              disabled={currentPath === `/expenses/${linkId}/settlement`}
+              sx={{
+                fontWeight: 600,
+                fontSize: 16,
+                color: theme.palette.secondary.main,
+                opacity:
+                  currentPath === `/expenses/${linkId}/settlement` ? 1 : 0.2,
+              }}
+            >
+              Settlement
+            </Button>
+            <Button
+              onClick={() => handleNavigation("create-user")}
+              sx={{
+                fontWeight: 600,
+                fontSize: 16,
+                color: theme.palette.secondary.main,
+                opacity: 0.2,
+              }}
+            >
+              Create User
+            </Button>
           </Box>
         </Toolbar>
       </Container>

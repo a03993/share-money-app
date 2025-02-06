@@ -9,7 +9,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<ExpenseLayout />} />
-          <Route path="/list/:linkId" element={<ExpenseLayout />} />
+          <Route path="/expenses/:linkId" element={<ExpenseLayout />} />
+          <Route
+            path="/expenses/:linkId/settlement"
+            element={<ExpenseLayout />}
+          />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

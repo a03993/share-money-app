@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { expenseMockData } from "../mock/mockData";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Header from "./Header";
 import PageHome from "./PageHome";
 import PageExpenses from "./PageExpenses";
@@ -22,7 +22,7 @@ const calculateTotalAmount = (data, linkId) => {
 
 export default function ExpenseLayout() {
   const { linkId } = useParams();
-  const [page, setPage] = useState(linkId ? "Expenses" : "Home");
+  const location = useLocation();
   const [expenseList, setExpenseList] = useState(expenseMockData);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
@@ -45,30 +45,15 @@ export default function ExpenseLayout() {
     if (linkId && expenseItem.length === 0) {
       setOpenCreateUserModal(true);
     }
-  }, [expenseList, linkId]);
+  }, [linkId, expenseItem.length]);
 
-  return (
-    <>
-      <Header
-        page={page}
-        setPage={setPage}
-        setOpenCreateUserModal={setOpenCreateUserModal}
-        linkId={linkId}
-      />
-      {page === "Home" && <PageHome setPage={setPage} />}
-      {page === "Expenses" && (
-        <PageExpenses
-          page={page}
-          expenseList={expenseList}
-          setExpenseList={setExpenseList}
-          totalAmount={totalAmount}
-          setOpenCreateUserModal={setOpenCreateUserModal}
-          linkId={linkId}
-          currentExpenseItem={currentExpenseItem}
-          expenseItem={expenseItem}
-        />
-      )}
-      {page === "Settlement" && (
+  const renderContent = () => {
+    if (!linkId) {
+      return <PageHome />;
+    }
+
+    if (location.pathname.includes("/settlement")) {
+      return (
         <PageSettlement
           expenseList={expenseList}
           totalAmount={totalAmount}
@@ -76,7 +61,30 @@ export default function ExpenseLayout() {
           linkId={linkId}
           currentExpenseItem={currentExpenseItem}
         />
-      )}
+      );
+    }
+
+    return (
+      <PageExpenses
+        expenseList={expenseList}
+        setExpenseList={setExpenseList}
+        totalAmount={totalAmount}
+        setOpenCreateUserModal={setOpenCreateUserModal}
+        linkId={linkId}
+        currentExpenseItem={currentExpenseItem}
+        expenseItem={expenseItem}
+      />
+    );
+  };
+
+  return (
+    <>
+      <Header
+        currentPath={location.pathname}
+        setOpenCreateUserModal={setOpenCreateUserModal}
+        linkId={linkId}
+      />
+      {renderContent()}
       <CreateUserModal
         open={openCreateUserModal}
         setOpen={setOpenCreateUserModal}
