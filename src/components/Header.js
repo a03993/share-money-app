@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Menu } from "@mui/material";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { headerStyle } from "../styles/headerStyle";
@@ -35,6 +35,7 @@ const NavigationMenu = ({
   currentPath,
   linkId,
   onNavigate,
+  paths,
 }) => (
   <Menu
     id="navigation-mobile-menu"
@@ -53,10 +54,10 @@ const NavigationMenu = ({
     sx={{ display: { xs: "block", md: "none" } }}
   >
     <MenuItem
-      disabled={currentPath === `/expenses/${linkId}`}
+      disabled={currentPath === paths.expenses}
       onClick={() => {
         onClose();
-        onNavigate(`/expenses/${linkId}`);
+        onNavigate(paths.expenses);
       }}
     >
       <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
@@ -64,10 +65,10 @@ const NavigationMenu = ({
       </Typography>
     </MenuItem>
     <MenuItem
-      disabled={currentPath === `/expenses/${linkId}/settlement`}
+      disabled={currentPath === paths.settlement}
       onClick={() => {
         onClose();
-        onNavigate(`/expenses/${linkId}/settlement`);
+        onNavigate(paths.settlement);
       }}
     >
       <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
@@ -77,7 +78,7 @@ const NavigationMenu = ({
     <MenuItem
       onClick={() => {
         onClose();
-        onNavigate("create-user");
+        onNavigate(paths.createUser);
       }}
     >
       <Typography className="font-weight-bold" sx={headerStyle.menuItemText}>
@@ -92,6 +93,24 @@ export default function Header({ setOpenCreateUserModal, linkId }) {
   const navigate = useNavigate();
   const { pathname: currentPath } = useLocation();
   const theme = useTheme();
+
+  const commonButtonStyle = useMemo(
+    () => ({
+      fontWeight: 600,
+      fontSize: 16,
+      color: theme.palette.secondary.main,
+    }),
+    [theme.palette.secondary.main]
+  );
+
+  const PATHS = useMemo(
+    () => ({
+      expenses: `/expenses/${linkId}`,
+      settlement: `/expenses/${linkId}/settlement`,
+      createUser: "create-user",
+    }),
+    [linkId]
+  );
 
   const handleNavMenu = (event = null) => {
     setAnchorElNav(event?.currentTarget || null);
@@ -127,8 +146,10 @@ export default function Header({ setOpenCreateUserModal, linkId }) {
             <NavigationMenu
               anchorEl={anchorElNav}
               onClose={() => handleNavMenu()}
+              currentPath={currentPath}
               linkId={linkId}
-              onPageChange={handleNavigation}
+              onNavigate={handleNavigation}
+              paths={PATHS}
             />
           </Box>
           <Logo
@@ -142,36 +163,29 @@ export default function Header({ setOpenCreateUserModal, linkId }) {
             }}
           >
             <Button
-              onClick={() => handleNavigation(`/expenses/${linkId}`)}
-              disabled={currentPath === `/expenses/${linkId}`}
+              onClick={() => handleNavigation(PATHS.expenses)}
+              disabled={currentPath === PATHS.expenses}
               sx={{
-                fontWeight: 600,
-                fontSize: 16,
-                color: theme.palette.secondary.main,
-                opacity: currentPath === `/expenses/${linkId}` ? 1 : 0.2,
+                ...commonButtonStyle,
+                opacity: currentPath === PATHS.expenses ? 1 : 0.2,
               }}
             >
               Expenses
             </Button>
             <Button
-              onClick={() => handleNavigation(`/expenses/${linkId}/settlement`)}
-              disabled={currentPath === `/expenses/${linkId}/settlement`}
+              onClick={() => handleNavigation(PATHS.settlement)}
+              disabled={currentPath === PATHS.settlement}
               sx={{
-                fontWeight: 600,
-                fontSize: 16,
-                color: theme.palette.secondary.main,
-                opacity:
-                  currentPath === `/expenses/${linkId}/settlement` ? 1 : 0.2,
+                ...commonButtonStyle,
+                opacity: currentPath === PATHS.settlement ? 1 : 0.2,
               }}
             >
               Settlement
             </Button>
             <Button
-              onClick={() => handleNavigation("create-user")}
+              onClick={() => handleNavigation(PATHS.createUser)}
               sx={{
-                fontWeight: 600,
-                fontSize: 16,
-                color: theme.palette.secondary.main,
+                ...commonButtonStyle,
                 opacity: 0.2,
               }}
             >

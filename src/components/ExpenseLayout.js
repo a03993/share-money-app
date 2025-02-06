@@ -79,11 +79,7 @@ export default function ExpenseLayout() {
 
   return (
     <>
-      <Header
-        currentPath={location.pathname}
-        setOpenCreateUserModal={setOpenCreateUserModal}
-        linkId={linkId}
-      />
+      <Header setOpenCreateUserModal={setOpenCreateUserModal} linkId={linkId} />
       {renderContent()}
       <CreateUserModal
         open={openCreateUserModal}
