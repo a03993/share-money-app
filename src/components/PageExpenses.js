@@ -5,13 +5,11 @@ import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 
 export default function PageExpenses({
-  page,
   expenseList,
   setExpenseList,
   totalAmount,
   setOpenCreateUserModal,
   linkId,
-  currentExpenseItem,
   expenseItem,
 }) {
   const commonGridSx = {
@@ -36,7 +34,6 @@ export default function PageExpenses({
         <Grid container spacing={2} sx={{ ...commonGridSx, mt: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>
             <ExpenseSummary
-              page={page}
               totalAmount={totalAmount}
               expenseItem={expenseItem}
             />

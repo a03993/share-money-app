@@ -71,7 +71,6 @@ export default function ExpenseLayout() {
         totalAmount={totalAmount}
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}
-        currentExpenseItem={currentExpenseItem}
         expenseItem={expenseItem}
       />
     );

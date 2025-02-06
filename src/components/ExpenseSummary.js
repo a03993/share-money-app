@@ -1,21 +1,22 @@
 import { Typography } from "@mui/material";
-import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 
-export default function ExpenseSummary({ page, totalAmount, expenseItem }) {
-  const isListPage = page === "Expenses";
+export default function ExpenseSummary({ totalAmount, expenseItem }) {
+  const location = useLocation();
+  const isExpensesPage = location.pathname.includes("expenses");
 
   return (
     <>
-      {isListPage && (
+      {isExpensesPage && (
         <Typography variant="h6" sx={{ mb: 6 }}>
           Summary
         </Typography>
       )}
-      <Typography variant={isListPage ? "h3" : "h5"} gutterBottom>
+      <Typography variant={isExpensesPage ? "h3" : "h5"} gutterBottom>
         {expenseItem?.length || 0}
         <Typography
           className="font-weight-extra-bold"
-          variant={page === "Expenses" ? "h5" : "h6"}
+          variant={isExpensesPage ? "h5" : "h6"}
           component="span"
         >
           人
@@ -25,9 +26,3 @@ export default function ExpenseSummary({ page, totalAmount, expenseItem }) {
     </>
   );
 }
-
-ExpenseSummary.propTypes = {
-  page: PropTypes.string.isRequired,
-  totalAmount: PropTypes.number.isRequired,
-  expenseItem: PropTypes.array,
-};
