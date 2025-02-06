@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid2";
-import { Typography } from "@mui/material";
+import { Alert } from "@mui/material";
 
 import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
@@ -7,7 +7,7 @@ import PaymentStatusTransfer from "./PaymentStatusTransfer";
 import ExpenseSummary from "./ExpenseSummary";
 
 import { useState, useEffect } from "react";
-
+import { useTheme } from "@mui/material/styles";
 const commonGridSx = {
   maxWidth: {
     xs: "80%",
@@ -131,6 +131,7 @@ export default function PageSettlement({
   currentExpenseItem,
 }) {
   const [paymentDetails, setPaymentDetails] = useState([]);
+  const theme = useTheme();
 
   useEffect(() => {
     const actualExpense = calculateTotalExpensePerPerson(currentExpenseItem);
@@ -145,58 +146,52 @@ export default function PageSettlement({
 
   return (
     <>
-      {expenseItem.length !== 0 ? (
-        <>
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            sx={{
-              ...commonGridSx,
-              mt: 10,
-              mb: 10,
-              justifyContent: "center",
-            }}
-          >
-            <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
-              <PerPersonExpenseAmount
-                totalAmount={totalAmount}
-                expenseList={expenseList}
-                linkId={linkId}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <MemberAvatars members={expenseItem} />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
-              <ExpenseSummary
-                page="result"
-                totalAmount={totalAmount}
-                expenseItem={expenseItem}
-              />
-            </Grid>
-          </Grid>
-          <PaymentStatusTransfer paymentDetails={paymentDetails} />
-        </>
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        sx={{
+          ...commonGridSx,
+          mt: 8,
+          mb: { xs: 4, sm: 8 },
+          justifyContent: "center",
+        }}
+      >
+        <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
+          <PerPersonExpenseAmount
+            totalAmount={totalAmount}
+            expenseList={expenseList}
+            linkId={linkId}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <MemberAvatars members={expenseItem} />
+        </Grid>
+        <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: "center" }}>
+          <ExpenseSummary
+            page="result"
+            totalAmount={totalAmount}
+            expenseItem={expenseItem}
+          />
+        </Grid>
+      </Grid>
+      {paymentDetails.length > 0 ? (
+        <PaymentStatusTransfer paymentDetails={paymentDetails} />
       ) : (
-        <Grid
-          container
-          spacing={2}
+        <Alert
+          severity="none"
           sx={{
-            ...commonGridSx,
-            mt: 20,
-            justifyContent: "center",
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.neutral.main,
+            mt: 3,
+            width: { xs: "70%", sm: "50%" },
+            mx: "auto",
           }}
         >
-          <Typography
-            variant="h5"
-            gutterBottom
-            className="font-weight-thin font-color-dark-gray text-align-center"
-          >
-            No expenses found
-            <br /> Please add some expenses in the EXPENSES page
-          </Typography>
-        </Grid>
+          <strong>NO SETTLEMENT FOUND!</strong>
+          <br />
+          Please add some expenses items in the Expenses page first.
+        </Alert>
       )}
     </>
   );
