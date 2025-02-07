@@ -105,8 +105,8 @@ export default function Header({ setOpenCreateUserModal, linkId }) {
 
   const PATHS = useMemo(
     () => ({
-      expenses: `/expenses/${linkId}`,
-      settlement: `/expenses/${linkId}/settlement`,
+      expenses: `/${linkId}/expenses`,
+      settlement: `/${linkId}/settlement`,
       createUser: "create-user",
     }),
     [linkId]

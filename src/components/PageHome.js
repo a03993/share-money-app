@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { expenseMockData } from "../mock/mockData";
 
-export default function PageHome({ setPage }) {
+export default function PageHome() {
   const navigate = useNavigate();
 
   const handleCreateLink = () => {
@@ -15,7 +15,7 @@ export default function PageHome({ setPage }) {
     try {
       // TODO: call API
       expenseMockData.push(newExpenseData);
-      navigate(`/expenses/${newLinkId}`);
+      navigate(`/${newLinkId}/expenses`);
     } catch (error) {
       console.error("Failed to create expense:", error);
     }
