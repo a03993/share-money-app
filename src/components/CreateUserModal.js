@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
+import { expenseService } from "../services/expenseService";
 
 export default function CreateUserModal({
   modalOpen,
@@ -101,20 +102,8 @@ export default function CreateUserModal({
     }));
 
     try {
-      const response = await fetch(`/api/${linkId}/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ users: newUsers }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create users");
-      }
-
-      const refreshResponse = await fetch(`/api/${linkId}/expenses`);
-      const refreshData = await refreshResponse.json();
+      await expenseService.createUsers(linkId, newUsers);
+      const refreshData = await expenseService.getExpenses(linkId);
 
       setExpenseList((prevExpenseList) => {
         const newList = prevExpenseList.filter(

@@ -1,11 +1,9 @@
 import { Box, TextField, Button, Snackbar, Alert } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
 import { useState } from "react";
-
+import { expenseService } from "../services/expenseService";
 import ExpensePayerSelector from "./ExpensePayerSelector";
 import ExpenseShareSelector from "./ExpenseShareSelector";
-
 import theme from "../styles/theme";
 
 const formBoxStyle = {
@@ -82,24 +80,13 @@ export default function ExpenseCreateForm({
     }
 
     try {
-      const response = await fetch(`/api/${linkId}/expenses`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          item,
-          amount: parseFloat(amount),
-          payer,
-          sharedBy,
-        }),
+      const updatedExpense = await expenseService.createExpense(linkId, {
+        item,
+        amount: parseFloat(amount),
+        payer,
+        sharedBy,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create expense");
-      }
-
-      const updatedExpense = await response.json();
       setExpenseList((prev) =>
         prev.map((exp) => (exp.linkId === linkId ? updatedExpense : exp))
       );

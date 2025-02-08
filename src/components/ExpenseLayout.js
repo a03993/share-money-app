@@ -5,6 +5,7 @@ import PageHome from "./PageHome";
 import PageExpenses from "./PageExpenses";
 import PageSettlement from "./PageSettlement";
 import CreateUserModal from "./CreateUserModal";
+import { expenseService } from "../services/expenseService";
 
 const calculateTotalAmount = (data, linkId) => {
   const currentExpenseItem = data.find((entry) => entry.linkId === linkId);
@@ -30,17 +31,11 @@ export default function ExpenseLayout() {
       if (!linkId) return;
 
       try {
-        const response = await fetch(`/api/${linkId}/expenses`);
-        const data = await response.json();
-
-        if (response.ok) {
-          setExpenseList((prev) => {
-            const newList = prev.filter((item) => item.linkId !== linkId);
-            return [...newList, data];
-          });
-        } else {
-          console.error("Error:", data.message);
-        }
+        const data = await expenseService.getExpenses(linkId);
+        setExpenseList((prev) => {
+          const newList = prev.filter((item) => item.linkId !== linkId);
+          return [...newList, data];
+        });
       } catch (error) {
         console.error("Error fetching expense data:", error);
       }

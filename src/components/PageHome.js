@@ -1,28 +1,15 @@
 import { Box, Typography, Button } from "@mui/material";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
+import { expenseService } from "../services/expenseService";
 
 export default function PageHome() {
   const navigate = useNavigate();
 
   const handleCreateLink = async () => {
     const newLinkId = nanoid();
-    const newExpenseData = {
-      linkId: newLinkId,
-    };
     try {
-      const response = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newExpenseData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create expense");
-      }
-
+      await expenseService.createExpenseLink({ linkId: newLinkId });
       navigate(`/${newLinkId}/expenses`);
     } catch (error) {
       console.error("Failed to create expense:", error);
