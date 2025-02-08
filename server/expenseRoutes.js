@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const ExpenseModel = require("./expenseModel");
+const Expense = require("./expenseModel");
 
 router.post("/", async (req, res) => {
   try {
-    const newExpense = new ExpenseModel({
+    const newExpense = new Expense({
       linkId: req.body.linkId,
       expenses: [],
     });
@@ -21,7 +21,7 @@ router.post("/:linkId/users", async (req, res) => {
     const { users } = req.body;
     const { linkId } = req.params;
 
-    const currentExpense = await ExpenseModel.findOne({ linkId });
+    const currentExpense = await Expense.findOne({ linkId });
 
     if (!currentExpense) {
       return res.status(404).json({ message: "Expense list not found" });
@@ -39,7 +39,7 @@ router.post("/:linkId/users", async (req, res) => {
 router.get("/:linkId/expenses", async (req, res) => {
   try {
     const { linkId } = req.params;
-    const expense = await ExpenseModel.findOne({ linkId });
+    const expense = await Expense.findOne({ linkId });
 
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
@@ -56,12 +56,12 @@ router.post("/:linkId/expenses", async (req, res) => {
     const { linkId } = req.params;
     const { item, amount, payer, sharedBy } = req.body;
 
-    const expense = await ExpenseModel.findOne({ linkId });
+    const expense = await Expense.findOne({ linkId });
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    const payerExpense = expense.expenses.find(exp => exp.name === payer);
+    const payerExpense = expense.expenses.find((exp) => exp.name === payer);
     if (!payerExpense) {
       return res.status(404).json({ message: "Payer not found" });
     }
