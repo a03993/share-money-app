@@ -65,10 +65,10 @@ export default function ExpenseLayout() {
   );
 
   useEffect(() => {
-    if (linkId && expenseItem.length === 0) {
+    if (linkId && currentExpenseItem && !expenseItem.length) {
       setOpenCreateUserModal(true);
     }
-  }, [linkId, expenseItem.length]);
+  }, [linkId, expenseItem, currentExpenseItem]);
 
   const renderContent = () => {
     if (!linkId) {
