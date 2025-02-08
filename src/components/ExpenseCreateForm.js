@@ -59,7 +59,7 @@ export default function ExpenseCreateForm({
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { item, amount, payer, sharedBy } = formData;
 
@@ -81,44 +81,53 @@ export default function ExpenseCreateForm({
       return;
     }
 
-    const newExpense = { item, amount: parseFloat(amount), sharedBy };
+    try {
+      const response = await fetch(`/api/${linkId}/expenses`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item,
+          amount: parseFloat(amount),
+          payer,
+          sharedBy,
+        }),
+      });
 
-    const updatedExpenseList = expenseList.map((expenseItem) => {
-      if (expenseItem.linkId === linkId) {
-        return {
-          ...expenseItem,
-          expenses: expenseItem.expenses.map((expense) => {
-            if (expense.name === payer) {
-              return {
-                ...expense,
-                personalExpenses: [...expense.personalExpenses, newExpense],
-              };
-            }
-            return expense;
-          }),
-        };
+      if (!response.ok) {
+        throw new Error("Failed to create expense");
       }
-      return expenseItem;
-    });
 
-    setExpenseList(updatedExpenseList);
-    setNotification({
-      open: true,
-      message: "Expenses created successfully!",
-      severity: "success",
-    });
-    setError({
-      item: false,
-      amount: false,
-      payer: false,
-      sharedBy: false,
-    });
-    setFormData({
-      item: "",
-      amount: 0,
-      payer: "",
-      sharedBy: [],
-    });
+      const updatedExpense = await response.json();
+      setExpenseList((prev) =>
+        prev.map((exp) => (exp.linkId === linkId ? updatedExpense : exp))
+      );
+
+      setNotification({
+        open: true,
+        message: "Expenses created successfully!",
+        severity: "success",
+      });
+      setError({
+        item: false,
+        amount: false,
+        payer: false,
+        sharedBy: false,
+      });
+      setFormData({
+        item: "",
+        amount: 0,
+        payer: "",
+        sharedBy: [],
+      });
+    } catch (error) {
+      setNotification({
+        open: true,
+        message: "Failed to create expense. Please try again.",
+        severity: "error",
+      });
+    }
   };
 
   return (

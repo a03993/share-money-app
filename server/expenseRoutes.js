@@ -51,4 +51,28 @@ router.get("/:linkId/expenses", async (req, res) => {
   }
 });
 
+router.post("/:linkId/expenses", async (req, res) => {
+  try {
+    const { linkId } = req.params;
+    const { item, amount, payer, sharedBy } = req.body;
+
+    const expense = await ExpenseModel.findOne({ linkId });
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    const payerExpense = expense.expenses.find(exp => exp.name === payer);
+    if (!payerExpense) {
+      return res.status(404).json({ message: "Payer not found" });
+    }
+
+    payerExpense.personalExpenses.push({ item, amount, sharedBy });
+    const updatedExpense = await expense.save();
+
+    res.status(201).json(updatedExpense);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
