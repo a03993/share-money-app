@@ -113,12 +113,15 @@ export default function CreateUserModal({
         throw new Error("Failed to create users");
       }
 
-      const updatedExpense = await response.json();
-      setExpenseList((prevExpenseList) =>
-        prevExpenseList.map((item) =>
-          item.linkId === expenseItem.linkId ? updatedExpense : item
-        )
-      );
+      const refreshResponse = await fetch(`/api/${linkId}/expenses`);
+      const refreshData = await refreshResponse.json();
+
+      setExpenseList((prevExpenseList) => {
+        const newList = prevExpenseList.filter(
+          (item) => item.linkId !== linkId
+        );
+        return [...newList, refreshData];
+      });
 
       setAlert({
         open: true,
@@ -137,7 +140,6 @@ export default function CreateUserModal({
   };
 
   const handleClose = () => {
-    // check after setting the GET API
     if (!expenseItem.length) {
       setAlert({
         open: true,
