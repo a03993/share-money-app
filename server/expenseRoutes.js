@@ -22,15 +22,30 @@ router.post("/:linkId/users", async (req, res) => {
     const { linkId } = req.params;
 
     const currentExpense = await ExpenseModel.findOne({ linkId });
-    
+
     if (!currentExpense) {
       return res.status(404).json({ message: "Expense list not found" });
     }
 
     currentExpense.expenses.push(...users);
     const updatedExpense = await currentExpense.save();
-    
+
     res.status(200).json(updatedExpense);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/:linkId/expenses", async (req, res) => {
+  try {
+    const { linkId } = req.params;
+    const expense = await ExpenseModel.findOne({ linkId });
+
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    res.status(200).json(expense);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
