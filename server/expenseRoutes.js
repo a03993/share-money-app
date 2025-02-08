@@ -16,4 +16,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/:linkId/users", async (req, res) => {
+  try {
+    const { users } = req.body;
+    const { linkId } = req.params;
+
+    const currentExpense = await ExpenseModel.findOne({ linkId });
+    
+    if (!currentExpense) {
+      return res.status(404).json({ message: "Expense list not found" });
+    }
+
+    currentExpense.expenses.push(...users);
+    const updatedExpense = await currentExpense.save();
+    
+    res.status(200).json(updatedExpense);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

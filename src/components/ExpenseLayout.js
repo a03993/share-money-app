@@ -27,7 +27,7 @@ export default function ExpenseLayout() {
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
   const currentExpenseItem = useMemo(
-    () => expenseList.find((data) => data.linkId === linkId),
+    () => expenseList.find((item) => item.linkId === linkId),
     [expenseList, linkId]
   );
 
@@ -81,9 +81,10 @@ export default function ExpenseLayout() {
       <Header setOpenCreateUserModal={setOpenCreateUserModal} linkId={linkId} />
       {renderContent()}
       <CreateUserModal
-        open={openCreateUserModal}
-        setOpen={setOpenCreateUserModal}
+        modalOpen={openCreateUserModal}
+        setModalOpen={setOpenCreateUserModal}
         setExpenseList={setExpenseList}
+        linkId={linkId}
         expenseItem={expenseItem}
       />
     </>
