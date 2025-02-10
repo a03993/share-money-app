@@ -31,6 +31,18 @@ export const expenseService = {
     return response.json();
   },
 
+  deleteExpense: async (linkId, expenseData) => {
+    const response = await fetch(`${BASE_URL}/${linkId}/expenses`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(expenseData),
+    });
+    if (!response.ok) throw new Error("Failed to delete expense");
+    return response.json();
+  },
+
   createUsers: async (linkId, users) => {
     const response = await fetch(`${BASE_URL}/${linkId}/users`, {
       method: "POST",

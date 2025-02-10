@@ -9,6 +9,7 @@ import {
   Collapse,
   Box,
   Alert,
+  Snackbar,
 } from "@mui/material";
 import {
   Delete as DeleteIcon,
@@ -18,9 +19,15 @@ import {
 
 import { useState, useMemo } from "react";
 import { useTheme } from "@mui/material/styles";
+import { expenseService } from "../services/expenseService";
 
 export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
   const [expanded, setExpanded] = useState({});
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   const theme = useTheme();
 
@@ -31,23 +38,43 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
     }));
   };
 
-  const handleDelete = (expenseToDelete) => {
-    setExpenseList((prevData) =>
-      prevData.map((group) => {
-        if (group.linkId !== linkId) return group;
-        return {
-          ...group,
-          expenses: group.expenses.map((person) => ({
-            ...person,
-            personalExpenses: person.personalExpenses.filter(
-              (expense) =>
-                expense.item !== expenseToDelete.item ||
-                expense.amount !== expenseToDelete.amount
-            ),
-          })),
-        };
-      })
-    );
+  const handleDelete = async (expenseToDelete) => {
+    try {
+      await expenseService.deleteExpense(linkId, {
+        item: expenseToDelete.item,
+        amount: expenseToDelete.amount,
+        payer: expenseToDelete.name,
+      });
+
+      setExpenseList((prevData) =>
+        prevData.map((group) => {
+          if (group.linkId !== linkId) return group;
+          return {
+            ...group,
+            expenses: group.expenses.map((person) => ({
+              ...person,
+              personalExpenses: person.personalExpenses.filter(
+                (expense) =>
+                  expense.item !== expenseToDelete.item ||
+                  expense.amount !== expenseToDelete.amount
+              ),
+            })),
+          };
+        })
+      );
+      setNotification({
+        open: true,
+        message: "Expense deleted successfully!",
+        severity: "success",
+      });
+    } catch (error) {
+      console.error("Failed to delete expense:", error);
+      setNotification({
+        open: true,
+        message: "Failed to delete expense. Please try again.",
+        severity: "error",
+      });
+    }
   };
 
   const flattenedExpenses = useMemo(() => {
@@ -68,6 +95,20 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
 
   return (
     <>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={3000}
+        onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
+          severity={notification.severity}
+          sx={{ width: "100%" }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
       <Typography variant="h6">Expense List</Typography>
       {flattenedExpenses.length === 0 && (
         <Alert
