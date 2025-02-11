@@ -11,7 +11,7 @@ const UserInfoSchema = new mongoose.Schema({
   },
 });
 
-const PaymentDetailSchema = new mongoose.Schema({
+const SettlementDetailSchema = new mongoose.Schema({
   payer: {
     type: UserInfoSchema,
     required: true,
@@ -31,9 +31,9 @@ const PaymentDetailSchema = new mongoose.Schema({
   },
 });
 
-const PaymentSchema = new mongoose.Schema({
+const SettlementSchema = new mongoose.Schema({
   linkId: { type: String, required: true, ref: "Expense" },
-  payments: [PaymentDetailSchema],
+  settlements: [SettlementDetailSchema],
 });
 
-module.exports = mongoose.model("Payment", PaymentSchema);
+module.exports = mongoose.model("Settlement", SettlementSchema);
