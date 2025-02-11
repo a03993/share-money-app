@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Settlement = require("./settlementModel");
 
-router.get("/:linkId/settlement", async (req, res) => {
+router.get("/:linkId/settlements", async (req, res) => {
   try {
     const { linkId } = req.params;
     const settlement = await Settlement.findOne({ linkId });
