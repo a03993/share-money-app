@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 
 import PaymentCheckList from "./PaymentCheckList";
 
-export default function PaymentStatusTransfer({ paymentDetails }) {
+export default function PaymentStatusTransfer({ settlementDetails }) {
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
@@ -19,8 +19,8 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
   };
 
   useEffect(() => {
-    setLeft(paymentDetails.map((_, index) => index));
-  }, [paymentDetails]);
+    setLeft(settlementDetails.map((_, index) => index));
+  }, [settlementDetails]);
 
   return (
     <Grid
@@ -34,7 +34,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         </Typography>
         <PaymentCheckList
           items={left}
-          paymentDetails={paymentDetails}
+          settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
           emptyMessage="✓ All payments are settled! No one need to pay."
@@ -46,7 +46,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         </Typography>
         <PaymentCheckList
           items={right}
-          paymentDetails={paymentDetails}
+          settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
           emptyMessage="← Move completed payments from the left."

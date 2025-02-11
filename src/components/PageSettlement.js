@@ -1,11 +1,10 @@
 import Grid from "@mui/material/Grid2";
 import { Alert } from "@mui/material";
-
 import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
 import PaymentStatusTransfer from "./PaymentStatusTransfer";
 import ExpenseSummary from "./ExpenseSummary";
-
+import { settlementService } from "../services/settlementService";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 
@@ -122,19 +121,51 @@ export default function PageSettlement({
   linkId,
   currentExpenseItem,
 }) {
-  const [paymentDetails, setPaymentDetails] = useState([]);
+  const [settlementDetails, setSettlementDetails] = useState([]);
   const theme = useTheme();
 
   useEffect(() => {
-    const actualExpense = calculateTotalExpensePerPerson(currentExpenseItem);
-    const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
-    const newPaymentDetails = calculatePayments(
-      actualExpense,
-      paidAmount,
-      expenseList
-    );
-    setPaymentDetails(newPaymentDetails);
-  }, [expenseList, currentExpenseItem]);
+    const fetchSettlementDetails = async () => {
+      try {
+        const data = await settlementService.getSettlements(linkId);
+        setSettlementDetails(data.settlements);
+      } catch (error) {
+        console.error("Error fetching settlements:", error);
+      }
+    };
+
+    if (linkId) {
+      fetchSettlementDetails();
+    }
+  }, [linkId]);
+
+  useEffect(() => {
+    const fetchAndUpdateSettlements = async () => {
+      if (!currentExpenseItem || expenseList.length === 0) return;
+
+      const actualExpense = calculateTotalExpensePerPerson(currentExpenseItem);
+      const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
+      const newSettlementDetails = calculatePayments(
+        actualExpense,
+        paidAmount,
+        expenseList
+      );
+
+      try {
+        const data = await settlementService.updateSettlements(
+          linkId,
+          newSettlementDetails
+        );
+        setSettlementDetails(data.settlements);
+      } catch (error) {
+        console.error("Error updating settlements:", error);
+      }
+    };
+
+    if (linkId) {
+      fetchAndUpdateSettlements();
+    }
+  }, [expenseList, currentExpenseItem, linkId, totalAmount]);
 
   return (
     <>
@@ -168,8 +199,8 @@ export default function PageSettlement({
           />
         </Grid>
       </Grid>
-      {paymentDetails.length > 0 ? (
-        <PaymentStatusTransfer paymentDetails={paymentDetails} />
+      {settlementDetails.length > 0 ? (
+        <PaymentStatusTransfer settlementDetails={settlementDetails} />
       ) : (
         <Alert
           severity="none"
