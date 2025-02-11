@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const expenseRoutes = require("./expenseRoutes");
-
+const paymentRoutes = require("./settlementRoutes");
 dotenv.config();
 
 const app = express();
@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api", expenseRoutes);
+app.use("/api", paymentRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)
