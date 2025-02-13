@@ -92,7 +92,7 @@ const EmptyList = ({ message, theme }) => (
 
 export default function PaymentCheckList({
   items,
-  paymentDetails,
+  settlementDetails,
   checked,
   handleToggle,
   emptyMessage,
@@ -119,7 +119,7 @@ export default function PaymentCheckList({
               key={value}
               value={value}
               checked={checked}
-              paymentDetail={paymentDetails[value]}
+              paymentDetail={settlementDetails[value]}
               handleToggle={handleToggle}
             />
           ))}

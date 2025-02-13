@@ -1,11 +1,9 @@
 import { Box, TextField, Button, Snackbar, Alert } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
 import { useState } from "react";
-
+import { expenseService } from "../services/expenseService";
 import ExpensePayerSelector from "./ExpensePayerSelector";
 import ExpenseShareSelector from "./ExpenseShareSelector";
-
 import theme from "../styles/theme";
 
 const formBoxStyle = {
@@ -59,7 +57,7 @@ export default function ExpenseCreateForm({
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { item, amount, payer, sharedBy } = formData;
 
@@ -81,44 +79,42 @@ export default function ExpenseCreateForm({
       return;
     }
 
-    const newExpense = { item, amount: parseFloat(amount), sharedBy };
+    try {
+      const updatedExpense = await expenseService.createExpense(linkId, {
+        item,
+        amount: parseFloat(amount),
+        payer,
+        sharedBy,
+      });
 
-    const updatedExpenseList = expenseList.map((expenseItem) => {
-      if (expenseItem.linkId === linkId) {
-        return {
-          ...expenseItem,
-          expenses: expenseItem.expenses.map((expense) => {
-            if (expense.name === payer) {
-              return {
-                ...expense,
-                personalExpenses: [...expense.personalExpenses, newExpense],
-              };
-            }
-            return expense;
-          }),
-        };
-      }
-      return expenseItem;
-    });
+      setExpenseList((prev) =>
+        prev.map((exp) => (exp.linkId === linkId ? updatedExpense : exp))
+      );
 
-    setExpenseList(updatedExpenseList);
-    setNotification({
-      open: true,
-      message: "Expenses created successfully!",
-      severity: "success",
-    });
-    setError({
-      item: false,
-      amount: false,
-      payer: false,
-      sharedBy: false,
-    });
-    setFormData({
-      item: "",
-      amount: 0,
-      payer: "",
-      sharedBy: [],
-    });
+      setNotification({
+        open: true,
+        message: "Expenses created successfully!",
+        severity: "success",
+      });
+      setError({
+        item: false,
+        amount: false,
+        payer: false,
+        sharedBy: false,
+      });
+      setFormData({
+        item: "",
+        amount: 0,
+        payer: "",
+        sharedBy: [],
+      });
+    } catch (error) {
+      setNotification({
+        open: true,
+        message: "Failed to create expense. Please try again.",
+        severity: "error",
+      });
+    }
   };
 
   return (

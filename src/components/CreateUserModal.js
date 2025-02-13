@@ -14,18 +14,27 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
+import { expenseService } from "../services/expenseService";
 
 export default function CreateUserModal({
-  open,
-  setOpen,
+  modalOpen,
+  setModalOpen,
   setExpenseList,
+  linkId,
   expenseItem,
 }) {
-  const [userList, setUserList] = useState([{ name: "", avatar: 2 }]);
-  const [nameErrors, setNameErrors] = useState([false]);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [severity, setSeverity] = useState("error");
+  const [userList, setUserList] = useState([
+    {
+      name: "",
+      avatar: 2,
+      hasError: false,
+    },
+  ]);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   const theme = useTheme();
 
@@ -51,37 +60,38 @@ export default function CreateUserModal({
   };
 
   const addUserField = () => {
-    setUserList([...userList, { name: "", avatar: 2 }]);
-    setNameErrors([...nameErrors, false]);
+    setUserList([...userList, { name: "", avatar: 2, hasError: false }]);
   };
 
   const removeUserField = (index) => {
     const newUserList = userList.filter((_, i) => i !== index);
-    const newNameErrors = nameErrors.filter((_, i) => i !== index);
     setUserList(newUserList);
-    setNameErrors(newNameErrors);
   };
 
-  const handleNameChange = (index, value) => {
+  const handleUserChange = (index, field, value) => {
     const newUserList = [...userList];
-    newUserList[index].name = value;
+    newUserList[index] = {
+      ...newUserList[index],
+      [field]: value,
+      hasError: false,
+    };
     setUserList(newUserList);
   };
 
-  const handleAvatarChange = (index, avatarIndex) => {
-    const newUserList = [...userList];
-    newUserList[index].avatar = avatarIndex;
-    setUserList(newUserList);
-  };
-
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const hasEmptyNames = userList.some((user) => !user.name);
     if (hasEmptyNames) {
-      const newNameErrors = userList.map((user) => !user.name);
-      setNameErrors(newNameErrors);
-      setSeverity("error");
-      setSnackbarOpen(true);
-      setSnackbarMessage("User names cannot be empty!");
+      setUserList(
+        userList.map((user) => ({
+          ...user,
+          hasError: !user.name,
+        }))
+      );
+      setAlert({
+        open: true,
+        message: "User names cannot be empty!",
+        severity: "error",
+      });
       return;
     }
 
@@ -91,48 +101,61 @@ export default function CreateUserModal({
       personalExpenses: [],
     }));
 
-    setExpenseList((prevExpenseList) =>
-      prevExpenseList.map((item) => ({
-        ...item,
-        expenses: [...item.expenses, ...newUsers],
-      }))
-    );
+    try {
+      await expenseService.createUsers(linkId, newUsers);
+      const refreshData = await expenseService.getExpenses(linkId);
 
-    setSeverity("success");
-    setSnackbarOpen(true);
-    setSnackbarMessage("Users created successfully!");
-    setOpen(false);
-    setUserList([{ name: "", avatar: 2 }]);
-    setNameErrors([false]);
+      setExpenseList((prevExpenseList) => {
+        const newList = prevExpenseList.filter(
+          (item) => item.linkId !== linkId
+        );
+        return [...newList, refreshData];
+      });
+
+      setAlert({
+        open: true,
+        message: "Users created successfully!",
+        severity: "success",
+      });
+      setModalOpen(false);
+      setUserList([{ name: "", avatar: 2, hasError: false }]);
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: "Failed to create users. Please try again.",
+        severity: "error",
+      });
+    }
   };
 
   const handleClose = () => {
-    if (expenseItem.length === 0) {
-      setSnackbarOpen(true);
-      setSnackbarMessage("You have to create The FIRST User before closing.");
+    if (!expenseItem.length) {
+      setAlert({
+        open: true,
+        message: "You have to create The FIRST User before closing.",
+        severity: "error",
+      });
       return;
     }
-    setOpen(false);
-    setSnackbarOpen(false);
-    setNameErrors([false]);
+    setModalOpen(false);
   };
 
   return (
     <>
       <Snackbar
-        open={snackbarOpen}
+        open={alert.open}
         autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={() => setAlert({ open: false, message: "", severity: "" })}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert severity={severity} sx={{ width: "100%" }}>
-          {snackbarMessage}
+        <Alert severity={alert.severity} sx={{ width: "100%" }}>
+          {alert.message}
         </Alert>
       </Snackbar>
       <Modal
         aria-labelledby="create-user-modal-title"
         aria-describedby="create-user-modal-description"
-        open={open}
+        open={modalOpen}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -141,7 +164,7 @@ export default function CreateUserModal({
           },
         }}
       >
-        <Fade in={open}>
+        <Fade in={modalOpen}>
           <Box sx={style}>
             <Typography
               id="create-user-modal-title"
@@ -176,16 +199,20 @@ export default function CreateUserModal({
                   }
                   variant="outlined"
                   value={user.name}
-                  onChange={(e) => handleNameChange(index, e.target.value)}
+                  onChange={(e) =>
+                    handleUserChange(index, "name", e.target.value)
+                  }
                   sx={{ mr: 1 }}
                   required
-                  error={!user.name && nameErrors[index]}
+                  error={!user.name && user.hasError}
                 />
                 <Stack direction="row" spacing={0.5}>
                   {avatarList.map((color, avatarIndex) => (
                     <Box
                       key={avatarIndex}
-                      onClick={() => handleAvatarChange(index, avatarIndex)}
+                      onClick={() =>
+                        handleUserChange(index, "avatar", avatarIndex)
+                      }
                       sx={{
                         cursor: "pointer",
                         padding: "2px",

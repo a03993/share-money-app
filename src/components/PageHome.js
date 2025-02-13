@@ -1,20 +1,15 @@
 import { Box, Typography, Button } from "@mui/material";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
-import { expenseMockData } from "../mock/mockData";
+import { expenseService } from "../services/expenseService";
 
 export default function PageHome() {
   const navigate = useNavigate();
 
-  const handleCreateLink = () => {
+  const handleCreateLink = async () => {
     const newLinkId = nanoid();
-    const newExpenseData = {
-      linkId: newLinkId,
-      expenses: [],
-    };
     try {
-      // TODO: call API
-      expenseMockData.push(newExpenseData);
+      await expenseService.createExpenseLink({ linkId: newLinkId });
       navigate(`/${newLinkId}/expenses`);
     } catch (error) {
       console.error("Failed to create expense:", error);
