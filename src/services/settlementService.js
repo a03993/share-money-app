@@ -18,4 +18,19 @@ export const settlementService = {
     if (!response.ok) throw new Error("Failed to save settlements");
     return response.json();
   },
+
+  updateSettlementStatus: async (linkId, settlementId, status) => {
+    const response = await fetch(
+      `${BASE_URL}/${linkId}/settlements/${settlementId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+    if (!response.ok) throw new Error("Failed to update settlement status");
+    return response.json();
+  },
 };

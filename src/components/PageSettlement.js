@@ -143,20 +143,28 @@ export default function PageSettlement({
     const fetchAndUpdateSettlements = async () => {
       if (!currentExpenseItem || expenseList.length === 0) return;
 
-      const actualExpense = calculateTotalExpensePerPerson(currentExpenseItem);
-      const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
-      const newSettlementDetails = calculatePayments(
-        actualExpense,
-        paidAmount,
-        expenseList
-      );
-
       try {
-        const data = await settlementService.updateSettlements(
-          linkId,
-          newSettlementDetails
-        );
-        setSettlementDetails(data.settlements);
+        const existingData = await settlementService.getSettlements(linkId);
+        const existingSettlements = existingData.settlements;
+        if (!existingSettlements || existingSettlements.length === 0) {
+          const actualExpense =
+            calculateTotalExpensePerPerson(currentExpenseItem);
+          const paidAmount =
+            calculateAmountPaidByEachPerson(currentExpenseItem);
+          const newSettlementDetails = calculatePayments(
+            actualExpense,
+            paidAmount,
+            expenseList
+          );
+
+          const data = await settlementService.updateSettlements(
+            linkId,
+            newSettlementDetails
+          );
+          setSettlementDetails(data.settlements);
+        } else {
+          setSettlementDetails(existingSettlements);
+        }
       } catch (error) {
         console.error("Error updating settlements:", error);
       }
@@ -200,7 +208,10 @@ export default function PageSettlement({
         </Grid>
       </Grid>
       {settlementDetails.length > 0 ? (
-        <PaymentStatusTransfer settlementDetails={settlementDetails} />
+        <PaymentStatusTransfer
+          settlementDetails={settlementDetails}
+          linkId={linkId}
+        />
       ) : (
         <Alert
           severity="none"
