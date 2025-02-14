@@ -84,7 +84,7 @@ const EmptyList = ({ message, theme }) => (
       alignItems: "center",
     }}
   >
-    <Typography variant="body1" color={theme.palette.neutral.main}>
+    <Typography variant="body1" color={theme.palette.secondary.dark}>
       {message}
     </Typography>
   </Box>
@@ -105,7 +105,7 @@ export default function PaymentCheckList({
     height: 350,
     overflow: "auto",
     marginTop: 2,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.grayscale.medium,
   };
 
   return (

@@ -46,7 +46,7 @@ export default function CreateUserModal({
       xs: "80%",
       sm: 400,
     },
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.grayscale.medium,
     p: 4,
   };
 

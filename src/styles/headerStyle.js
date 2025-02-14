@@ -13,7 +13,7 @@ const commonLogoStyle = {
 
 export const headerStyle = {
   appBar: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.grayscale.medium,
     boxShadow: "none",
     transition: "all 0.3s ease-in-out",
   },

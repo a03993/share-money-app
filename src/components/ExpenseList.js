@@ -73,8 +73,8 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
         <Alert
           severity="none"
           sx={{
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.neutral.main,
+            backgroundColor: theme.palette.grayscale.medium,
+            color: theme.palette.secondary.dark,
             mt: 3,
           }}
         >
@@ -127,7 +127,7 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
               <List
                 component="div"
                 disablePadding
-                sx={{ backgroundColor: theme.palette.background.paper }}
+                sx={{ backgroundColor: theme.palette.grayscale.medium }}
               >
                 {expense.sharedBy && (
                   <ListItem sx={{ pl: 4 }}>

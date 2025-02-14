@@ -28,7 +28,7 @@ const theme = createTheme({
         },
         secondary: {
           fontWeight: 300,
-          color: palette.neutral.main,
+          color: palette.secondary.dark,
         },
       },
     },
@@ -36,10 +36,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "&.paper-border .MuiAvatar-root": {
-            borderColor: palette.background.paper,
+            borderColor: palette.grayscale.medium,
           },
-          "&.neutral-lightest-border .MuiAvatar-root": {
-            borderColor: palette.neutral.lightest,
+          "&.grayscale-lightest-border .MuiAvatar-root": {
+            borderColor: palette.grayscale.light,
           },
         },
       },
@@ -61,12 +61,12 @@ const theme = createTheme({
         root: {
           "& .MuiOutlinedInput-root": {
             ...commonStyles,
-            backgroundColor: palette.neutral.lightest,
+            backgroundColor: palette.grayscale.light,
             "&:hover": {
-              backgroundColor: palette.background.default,
+              backgroundColor: palette.grayscale.base,
             },
             "&.Mui-focused": {
-              backgroundColor: palette.background.default,
+              backgroundColor: palette.grayscale.base,
               "& fieldset": {
                 borderColor: palette.primary.main,
                 borderWidth: "2px",
@@ -78,7 +78,7 @@ const theme = createTheme({
             borderWidth: "1px",
           },
           "& label": {
-            color: palette.neutral.main,
+            color: palette.secondary.dark,
           },
         },
       },
@@ -94,10 +94,10 @@ const theme = createTheme({
             fontSize: 12,
           },
           "&.font-color-light-gray": {
-            color: palette.neutral.light,
+            color: palette.secondary.light,
           },
           "&.font-color-dark-gray": {
-            color: palette.neutral.main,
+            color: palette.secondary.dark,
           },
           "&.font-weight-thin": {
             fontWeight: 300,
@@ -121,12 +121,12 @@ const theme = createTheme({
             transform: "scale(1.05)",
           },
           "&.light-button": {
-            backgroundColor: palette.neutral.light,
-            color: palette.neutral.main,
+            backgroundColor: palette.secondary.light,
+            color: palette.secondary.dark,
           },
           "&.dark-button": {
             backgroundColor: palette.primary.main,
-            color: palette.background.default,
+            color: palette.grayscale.base,
           },
           "&.rectangular-button": {
             borderRadius: 30,
@@ -147,7 +147,7 @@ const theme = createTheme({
             "&::before, &::after": {
               content: '""',
               position: "absolute",
-              backgroundColor: palette.neutral.main,
+              backgroundColor: palette.secondary.dark,
               borderRadius: 2,
               top: "50%",
               left: "50%",
@@ -165,7 +165,7 @@ const theme = createTheme({
             "&:hover": {
               backgroundColor: palette.primary.main,
               "&::before, &::after": {
-                backgroundColor: palette.background.default,
+                backgroundColor: palette.grayscale.base,
               },
             },
           },
@@ -176,7 +176,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "&.expense-list-button": {
-            color: palette.neutral.light,
+            color: palette.secondary.light,
           },
         },
       },
