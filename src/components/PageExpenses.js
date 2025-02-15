@@ -23,7 +23,6 @@ export default function PageExpenses({
   return (
     <>
       <ExpenseCreateForm
-        expenseList={expenseList}
         setExpenseList={setExpenseList}
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}
