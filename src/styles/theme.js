@@ -1,7 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-
 import { palette } from "./palette";
-import { commonStyles } from "./commonStyle";
 
 const theme = createTheme({
   typography: {
@@ -60,7 +58,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            ...commonStyles,
+            borderRadius: "2rem",
             backgroundColor: palette.grayscale.light,
             "&:hover": {
               backgroundColor: palette.grayscale.base,
