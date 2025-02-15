@@ -33,10 +33,10 @@ const theme = createTheme({
     MuiAvatarGroup: {
       styleOverrides: {
         root: {
-          "&.paper-border .MuiAvatar-root": {
+          "&.gray-border .MuiAvatar-root": {
             borderColor: palette.grayscale.medium,
           },
-          "&.grayscale-lightest-border .MuiAvatar-root": {
+          "&.white-border .MuiAvatar-root": {
             borderColor: palette.grayscale.light,
           },
         },

@@ -235,7 +235,7 @@ export default function CreateUserModal({
                 gap: 1,
               }}
             >
-              <AvatarGroup max={4} className="paper-border">
+              <AvatarGroup max={4} className="gray-border">
                 {userList.map((user) => (
                   <Avatar
                     key={user.name}

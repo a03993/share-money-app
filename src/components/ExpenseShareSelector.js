@@ -46,7 +46,21 @@ export default function ExpenseShareSelector({
 
   const renderValue = (selected) => (
     <div style={avatarGroup}>
-      <AvatarGroup max={8} className="grayscale-lightest-border">
+      <AvatarGroup
+        max={8}
+        className="white-border"
+        slotProps={{
+          additionalAvatar: {
+            sx: {
+              width: 30,
+              height: 30,
+              fontSize: 16,
+              backgroundColor: theme.palette.grayscale.light,
+              color: theme.palette.secondary.dark,
+            },
+          },
+        }}
+      >
         {selected.map((name) => {
           const item = expenseItem.find((item) => item.name === name);
           if (!item) return null;
