@@ -75,21 +75,6 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
   );
 };
 
-const EmptyList = ({ message, theme }) => (
-  <Box
-    sx={{
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <Typography variant="body1" color={theme.palette.secondary.dark}>
-      {message}
-    </Typography>
-  </Box>
-);
-
 export default function PaymentCheckList({
   items,
   paymentDetails,
@@ -100,9 +85,8 @@ export default function PaymentCheckList({
   const theme = useTheme();
 
   const paperStyles = {
-    width: { xs: "85%", sm: 450 },
     minWidth: 350,
-    height: 350,
+    height: 300,
     overflow: "auto",
     marginTop: 2,
     backgroundColor: theme.palette.grayscale.medium,
@@ -111,7 +95,19 @@ export default function PaymentCheckList({
   return (
     <Paper sx={paperStyles}>
       {items.length === 0 ? (
-        <EmptyList message={emptyMessage} theme={theme} />
+        <Typography
+          variant="body1"
+          color={theme.palette.secondary.dark}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {emptyMessage}
+        </Typography>
       ) : (
         <List dense component="div" role="list">
           {items.map((value) => (

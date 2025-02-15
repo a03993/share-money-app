@@ -37,7 +37,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="✓ All payments are settled! No one need to pay."
+          emptyMessage="No payments needed at the moment."
         />
       </Grid>
       <Grid>
@@ -49,7 +49,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="← Move completed payments from the left."
+          emptyMessage="No completed payments yet."
         />
       </Grid>
     </Grid>
