@@ -40,11 +40,7 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
 
   const handleDelete = async (expenseToDelete) => {
     try {
-      await expenseService.deleteExpense(linkId, {
-        item: expenseToDelete.item,
-        amount: expenseToDelete.amount,
-        payer: expenseToDelete.name,
-      });
+      await expenseService.deleteExpense(linkId, expenseToDelete._id);
 
       setExpenseList((prevData) =>
         prevData.map((group) => {
@@ -54,9 +50,7 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
             expenses: group.expenses.map((person) => ({
               ...person,
               personalExpenses: person.personalExpenses.filter(
-                (expense) =>
-                  expense.item !== expenseToDelete.item ||
-                  expense.amount !== expenseToDelete.amount
+                (expense) => expense._id !== expenseToDelete._id
               ),
             })),
           };

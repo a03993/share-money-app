@@ -83,23 +83,18 @@ router.post("/:linkId/expenses", async (req, res) => {
 router.delete("/:linkId/expenses", async (req, res) => {
   try {
     const { linkId } = req.params;
-    const { item, amount, payer } = req.body;
+    const { _id } = req.body;
 
     const currentExpense = await Expense.findOne({ linkId });
     if (!currentExpense) {
       return res.status(404).json({ message: "Expense Page not found" });
     }
 
-    const payerExpense = currentExpense.expenses.find(
-      (exp) => exp.name === payer
-    );
-    if (!payerExpense) {
-      return res.status(404).json({ message: "Payer not found" });
-    }
-
-    payerExpense.personalExpenses = payerExpense.personalExpenses.filter(
-      (exp) => exp.item !== item || exp.amount !== amount
-    );
+    currentExpense.expenses.forEach((person) => {
+      person.personalExpenses = person.personalExpenses.filter(
+        (exp) => exp._id.toString() !== _id
+      );
+    });
 
     const updatedExpense = await currentExpense.save();
     res.status(200).json(updatedExpense);

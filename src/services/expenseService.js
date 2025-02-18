@@ -31,13 +31,13 @@ export const expenseService = {
     return response.json();
   },
 
-  deleteExpense: async (linkId, expenseData) => {
+  deleteExpense: async (linkId, expenseId) => {
     const response = await fetch(`${BASE_URL}/${linkId}/expenses`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(expenseData),
+      body: JSON.stringify({ _id: expenseId }),
     });
     if (!response.ok) throw new Error("Failed to delete expense");
     return response.json();
