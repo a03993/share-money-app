@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
     const savedExpense = await newExpense.save();
     res.status(201).json(savedExpense);
   } catch (error) {
+    console.error("Error creating the link for expense:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -22,9 +23,8 @@ router.post("/:linkId/users", async (req, res) => {
     const { linkId } = req.params;
 
     const currentExpense = await Expense.findOne({ linkId });
-
     if (!currentExpense) {
-      return res.status(404).json({ message: "Expense list not found" });
+      return res.status(404).json({ message: "Expense Page not found" });
     }
 
     currentExpense.expenses.push(...users);
@@ -32,6 +32,7 @@ router.post("/:linkId/users", async (req, res) => {
 
     res.status(200).json(updatedExpense);
   } catch (error) {
+    console.error("Error creating users:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -39,14 +40,15 @@ router.post("/:linkId/users", async (req, res) => {
 router.get("/:linkId/expenses", async (req, res) => {
   try {
     const { linkId } = req.params;
-    const expense = await Expense.findOne({ linkId });
 
-    if (!expense) {
-      return res.status(404).json({ message: "Expense not found" });
+    const currentExpense = await Expense.findOne({ linkId });
+    if (!currentExpense) {
+      return res.status(404).json({ message: "Expenses Page not found" });
     }
 
-    res.status(200).json(expense);
+    res.status(200).json(currentExpense);
   } catch (error) {
+    console.error("Error fetching expenses:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -56,21 +58,24 @@ router.post("/:linkId/expenses", async (req, res) => {
     const { linkId } = req.params;
     const { item, amount, payer, sharedBy } = req.body;
 
-    const expense = await Expense.findOne({ linkId });
-    if (!expense) {
-      return res.status(404).json({ message: "Expense not found" });
+    const currentExpense = await Expense.findOne({ linkId });
+    if (!currentExpense) {
+      return res.status(404).json({ message: "Expense Page not found" });
     }
 
-    const payerExpense = expense.expenses.find((exp) => exp.name === payer);
+    const payerExpense = currentExpense.expenses.find(
+      (exp) => exp.name === payer
+    );
     if (!payerExpense) {
       return res.status(404).json({ message: "Payer not found" });
     }
 
     payerExpense.personalExpenses.push({ item, amount, sharedBy });
-    const updatedExpense = await expense.save();
+    const updatedExpense = await currentExpense.save();
 
     res.status(201).json(updatedExpense);
   } catch (error) {
+    console.error("Error adding expense item:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -80,12 +85,14 @@ router.delete("/:linkId/expenses", async (req, res) => {
     const { linkId } = req.params;
     const { item, amount, payer } = req.body;
 
-    const expense = await Expense.findOne({ linkId });
-    if (!expense) {
-      return res.status(404).json({ message: "Expense not found" });
+    const currentExpense = await Expense.findOne({ linkId });
+    if (!currentExpense) {
+      return res.status(404).json({ message: "Expense Page not found" });
     }
 
-    const payerExpense = expense.expenses.find((exp) => exp.name === payer);
+    const payerExpense = currentExpense.expenses.find(
+      (exp) => exp.name === payer
+    );
     if (!payerExpense) {
       return res.status(404).json({ message: "Payer not found" });
     }
@@ -93,10 +100,11 @@ router.delete("/:linkId/expenses", async (req, res) => {
     payerExpense.personalExpenses = payerExpense.personalExpenses.filter(
       (exp) => exp.item !== item || exp.amount !== amount
     );
-    
-    const updatedExpense = await expense.save();
+
+    const updatedExpense = await currentExpense.save();
     res.status(200).json(updatedExpense);
   } catch (error) {
+    console.error("Error deleting expense item:", error);
     res.status(500).json({ message: error.message });
   }
 });
