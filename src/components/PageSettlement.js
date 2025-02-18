@@ -141,39 +141,30 @@ export default function PageSettlement({
 
   useEffect(() => {
     const fetchAndUpdateSettlements = async () => {
-      if (!currentExpenseItem || expenseList.length === 0) return;
+      if (!currentExpenseItem || expenseList.length === 0 || !linkId) return;
 
       try {
-        const existingData = await settlementService.getSettlements(linkId);
-        const existingSettlements = existingData.settlements;
-        if (!existingSettlements || existingSettlements.length === 0) {
-          const actualExpense =
-            calculateTotalExpensePerPerson(currentExpenseItem);
-          const paidAmount =
-            calculateAmountPaidByEachPerson(currentExpenseItem);
-          const newSettlementDetails = calculatePayments(
-            actualExpense,
-            paidAmount,
-            expenseList
-          );
+        const actualExpense =
+          calculateTotalExpensePerPerson(currentExpenseItem);
+        const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
+        const newSettlementDetails = calculatePayments(
+          actualExpense,
+          paidAmount,
+          expenseList
+        );
 
-          const data = await settlementService.updateSettlements(
-            linkId,
-            newSettlementDetails
-          );
-          setSettlementDetails(data.settlements);
-        } else {
-          setSettlementDetails(existingSettlements);
-        }
+        const data = await settlementService.updateSettlements(
+          linkId,
+          newSettlementDetails
+        );
+        setSettlementDetails(data.settlements);
       } catch (error) {
         console.error("Error updating settlements:", error);
       }
     };
 
-    if (linkId) {
-      fetchAndUpdateSettlements();
-    }
-  }, [expenseList, currentExpenseItem, linkId, totalAmount]);
+    fetchAndUpdateSettlements();
+  }, [currentExpenseItem, expenseList, linkId]);
 
   return (
     <>
