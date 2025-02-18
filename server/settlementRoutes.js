@@ -13,10 +13,10 @@ router.get("/:linkId/settlements", async (req, res) => {
         settlements: [],
       });
       await newSettlement.save();
-      return res.json({ settlements: [] });
+      return res.status(201).json({ settlements: [] });
     }
 
-    res.json({ settlements: settlement.settlements });
+    res.status(200).json({ settlements: settlement.settlements });
   } catch (error) {
     res
       .status(500)
@@ -40,7 +40,7 @@ router.post("/:linkId/settlements", async (req, res) => {
       { new: true, upsert: true }
     );
 
-    res.json({ settlements: settlement.settlements });
+    res.status(201).json({ settlements: settlement.settlements });
   } catch (error) {
     res
       .status(500)
@@ -66,7 +66,7 @@ router.put("/:linkId/settlements/:settlementId", async (req, res) => {
     settlementDetail.status = status;
     await settlement.save();
 
-    res.json({ settlement: settlementDetail });
+    res.status(200).json({ settlement: settlementDetail });
   } catch (error) {
     res.status(500).json({
       message: "Error updating settlement status",
