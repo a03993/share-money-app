@@ -26,7 +26,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
     <Grid
       container
       spacing={2}
-      sx={{ justifyContent: "center", alignItems: "center" }}
+      sx={{ justifyContent: "center", alignItems: "center", padding: 2 }}
     >
       <Grid>
         <Typography variant="h6" align="left">
@@ -37,7 +37,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="No payments needed at the moment."
+          emptyMessage="No payments needed at the moment. Enjoy your time!"
         />
       </Grid>
       <Grid>
@@ -49,7 +49,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
           paymentDetails={paymentDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="No completed payments yet."
+          emptyMessage="No payment records yet. Time to make some transactions!"
         />
       </Grid>
     </Grid>

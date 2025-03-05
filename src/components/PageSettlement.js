@@ -143,10 +143,10 @@ export default function PageSettlement({
         spacing={2}
         alignItems="center"
         sx={{
-          maxWidth: "700px",
+          maxWidth: "650px",
           mx: "auto",
-          mt: 8,
-          mb: { xs: 4, sm: 8 },
+          mt: 10,
+          mb: { xs: 4, sm: 10 },
           justifyContent: "center",
         }}
       >

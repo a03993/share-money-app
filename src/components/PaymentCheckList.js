@@ -46,7 +46,6 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
           "aria-labelledby": labelId,
         }}
         sx={{
-          padding: 0,
           mr: 1,
           "& .MuiSvgIcon-root": {
             fontSize: 20,
@@ -85,8 +84,11 @@ export default function PaymentCheckList({
   const theme = useTheme();
 
   const paperStyles = {
-    minWidth: 350,
-    height: 300,
+    width: {
+      xs: "100%",
+      sm: 400,
+    },
+    height: { xs: 300, sm: 350 },
     overflow: "auto",
     marginTop: 2,
     backgroundColor: theme.palette.grayscale.medium,
@@ -100,10 +102,11 @@ export default function PaymentCheckList({
           color={theme.palette.secondary.dark}
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             height: "100%",
-            width: "100%",
+            width: "80%",
+            margin: "0 auto",
+            alignItems: "center",
+            textAlign: "center",
           }}
         >
           {emptyMessage}
