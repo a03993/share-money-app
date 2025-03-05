@@ -6,13 +6,18 @@ ShareMoney is a React-based application designed for easy bill splitting. The pr
 
 - **No Login Required**: Users can add expenses and participants without the hassle of creating an account.
 - **Bill Splitting**: Automatically calculates the amounts to be paid between participants.
-- **Link Sharing**: In the future, users will be able to create unique links to share with others, enabling collaborative expense tracking without affecting other shared links.
+- **Link Sharing**: Users can create unique links to share with others, enabling collaborative expense tracking without affecting other shared links.
+- **Persistent Storage**: Data is stored using MongoDB Atlas, ensuring users can access their expense records across sessions.
 
 ## Tech Stack
 
 - **Frontend**: React.js with Material-UI (MUI) components for a sleek and responsive design.
-- **Backend**: Currently not implemented but planned for future development.
-- **Deployment**: Hosted on Netlify.
+- **Backend**: Node.js with Express.js, connected to MongoDB Atlas for data persistence.
+- **Database**: MongoDB Atlas, a cloud-hosted database service.
+- **Deployment**:
+  - **Frontend**: Hosted on Netlify.
+  - **Backend**: Hosted on Render.
+  
 
 ## Deployment
 
@@ -24,9 +29,8 @@ The UI design for ShareMoney was created using Figma. You can view and explore t
 
 ## Future Enhancements
 
-- Backend integration for persistent data storage.
-- Collaborative sharing functionality via unique links.
-- Enhanced reporting and analytics for expense tracking.
+- Integration with external financial tools (e.g., bank accounts, PayPal)
+- Multi-currency support for international users
 
 ## Installation
 
@@ -46,6 +50,7 @@ To run this project locally:
    ```
 4. Start the development server:
    ```bash
+   node server/index.js
    npm start
    ```
 5. Open your browser and visit `http://localhost:3000` to use the app locally.
