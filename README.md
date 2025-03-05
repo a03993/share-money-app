@@ -11,6 +11,13 @@ ShareMoney is a React-based application designed for easy bill splitting. The pr
 
 ## Tech Stack
 
+![React](https://img.shields.io/badge/React-%2320232a?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Material-UI](https://img.shields.io/badge/Material--UI-%230081CB?style=for-the-badge&logo=material-ui&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-%23339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-%23000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%2347A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-%2361DAFB?style=for-the-badge&logo=mongodb&logoColor=white)
+
 - **Frontend**: React.js with Material-UI (MUI) components for a sleek and responsive design.
 - **Backend**: Node.js with Express.js, connected to MongoDB Atlas for data persistence.
 - **Database**: MongoDB Atlas, a cloud-hosted database service.
@@ -18,19 +25,12 @@ ShareMoney is a React-based application designed for easy bill splitting. The pr
   - **Frontend**: Hosted on Netlify.
   - **Backend**: Hosted on Render.
   
-
 ## Deployment
 
 You can access the live application here: [ShareMoney](https://share-money-2025.netlify.app/)
 
-## Figma Design
-
-The UI design for ShareMoney was created using Figma. You can view and explore the design here: [ShareMoney Figma Design](https://www.figma.com/design/wf5gIxDnxbsqw491AKW6NV/%E3%80%90web%E3%80%91ShareMoney?node-id=3-5&t=2w08SarPRj1BhKNX-1)
-
-## Future Enhancements
-
-- Integration with external financial tools (e.g., bank accounts, PayPal)
-- Multi-currency support for international users
+>**Note:**  
+> Currently, the live application is a static front-end and is not connected to the backend. To fully use the application, you need to run the project locally. Please follow the **Installation** steps below.
 
 ## Installation
 
@@ -54,6 +54,16 @@ To run this project locally:
    npm start
    ```
 5. Open your browser and visit `http://localhost:3000` to use the app locally.
+
+## Figma Design
+
+The UI design for ShareMoney was created using Figma. You can view and explore the design here: [ShareMoney Figma Design](https://www.figma.com/design/wf5gIxDnxbsqw491AKW6NV/%E3%80%90web%E3%80%91ShareMoney?node-id=3-5&t=2w08SarPRj1BhKNX-1)
+
+## Future Enhancements
+
+- Backend deployment on Netlify
+- Multi-currency support for international users
+- Integration with external financial tools (e.g., bank accounts, PayPal)
 
 ## Contributing
 
