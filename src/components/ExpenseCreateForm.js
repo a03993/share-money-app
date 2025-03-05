@@ -1,11 +1,9 @@
 import { Box, TextField, Button, Snackbar, Alert } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
 import { useState } from "react";
-
+import { expenseService } from "../services/expenseService";
 import ExpensePayerSelector from "./ExpensePayerSelector";
 import ExpenseShareSelector from "./ExpenseShareSelector";
-
 import theme from "../styles/theme";
 
 const formBoxStyle = {
@@ -27,7 +25,6 @@ const formBoxStyle = {
 };
 
 export default function ExpenseCreateForm({
-  expenseList,
   setExpenseList,
   setOpenCreateUserModal,
   linkId,
@@ -35,7 +32,7 @@ export default function ExpenseCreateForm({
 }) {
   const [formData, setFormData] = useState({
     item: "",
-    amount: 0,
+    amount: "",
     payer: "",
     sharedBy: [],
   });
@@ -53,13 +50,25 @@ export default function ExpenseCreateForm({
 
   const handleChange = (field) => (event) => {
     const value = event?.target?.value ?? event;
+
+    if (field === "amount") {
+      const numValue = parseInt(value);
+      if (isNaN(numValue) || numValue < 0 || numValue > 999999999) {
+        setError((prev) => ({ ...prev, amount: true }));
+        return;
+      }
+      setError((prev) => ({ ...prev, amount: false }));
+      setFormData((prev) => ({ ...prev, amount: numValue }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { item, amount, payer, sharedBy } = formData;
 
@@ -67,58 +76,48 @@ export default function ExpenseCreateForm({
       setNotification({
         open: true,
         message:
-          "Please check out the form. Payer, Item, Price, Share By are required!",
+          "Please check out the form. All fields are required!",
         severity: "error",
       });
-
-      setError({
-        item: item === "",
-        amount: amount === 0,
-        payer: payer === "",
-        sharedBy: sharedBy.length === 0,
-      });
-
       return;
     }
 
-    const newExpense = { item, amount: parseFloat(amount), sharedBy };
+    try {
+      const updatedExpense = await expenseService.createExpense(linkId, {
+        item,
+        amount: parseInt(amount),
+        payer,
+        sharedBy,
+      });
 
-    const updatedExpenseList = expenseList.map((expenseItem) => {
-      if (expenseItem.linkId === linkId) {
-        return {
-          ...expenseItem,
-          expenses: expenseItem.expenses.map((expense) => {
-            if (expense.name === payer) {
-              return {
-                ...expense,
-                personalExpenses: [...expense.personalExpenses, newExpense],
-              };
-            }
-            return expense;
-          }),
-        };
-      }
-      return expenseItem;
-    });
+      setExpenseList((prev) =>
+        prev.map((exp) => (exp.linkId === linkId ? updatedExpense : exp))
+      );
 
-    setExpenseList(updatedExpenseList);
-    setNotification({
-      open: true,
-      message: "Expenses created successfully!",
-      severity: "success",
-    });
-    setError({
-      item: false,
-      amount: false,
-      payer: false,
-      sharedBy: false,
-    });
-    setFormData({
-      item: "",
-      amount: 0,
-      payer: "",
-      sharedBy: [],
-    });
+      setNotification({
+        open: true,
+        message: "Expenses created successfully!",
+        severity: "success",
+      });
+      setError({
+        item: false,
+        amount: false,
+        payer: false,
+        sharedBy: false,
+      });
+      setFormData({
+        item: "",
+        amount: "",
+        payer: "",
+        sharedBy: [],
+      });
+    } catch (error) {
+      setNotification({
+        open: true,
+        message: "Failed to create expense. Please try again.",
+        severity: "error",
+      });
+    }
   };
 
   return (
@@ -165,11 +164,11 @@ export default function ExpenseCreateForm({
             error={!formData.item && error.item}
           />
           <TextField
-            id="price-input"
-            label="Price"
+            id="amount-input"
+            label="Amount"
             variant="outlined"
             type="number"
-            value={formData.amount === 0 ? "" : formData.amount}
+            value={formData.amount}
             onChange={handleChange("amount")}
             required
             error={!formData.amount && error.amount}

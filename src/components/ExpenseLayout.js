@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
-import { expenseMockData } from "../mock/mockData";
 import { useParams, useLocation } from "react-router-dom";
 import Header from "./Header";
 import PageHome from "./PageHome";
 import PageExpenses from "./PageExpenses";
 import PageSettlement from "./PageSettlement";
 import CreateUserModal from "./CreateUserModal";
+import { expenseService } from "../services/expenseService";
 
 const calculateTotalAmount = (data, linkId) => {
   const currentExpenseItem = data.find((entry) => entry.linkId === linkId);
@@ -23,11 +23,29 @@ const calculateTotalAmount = (data, linkId) => {
 export default function ExpenseLayout() {
   const { linkId } = useParams();
   const location = useLocation();
-  const [expenseList, setExpenseList] = useState(expenseMockData);
+  const [expenseList, setExpenseList] = useState([]);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
+  useEffect(() => {
+    const fetchExpenseData = async () => {
+      if (!linkId) return;
+
+      try {
+        const data = await expenseService.getExpenses(linkId);
+        setExpenseList((prev) => {
+          const newList = prev.filter((item) => item.linkId !== linkId);
+          return [...newList, data];
+        });
+      } catch (error) {
+        console.error("Error fetching expense data:", error);
+      }
+    };
+
+    fetchExpenseData();
+  }, [linkId]);
+
   const currentExpenseItem = useMemo(
-    () => expenseList.find((data) => data.linkId === linkId),
+    () => expenseList.find((item) => item.linkId === linkId),
     [expenseList, linkId]
   );
 
@@ -42,10 +60,10 @@ export default function ExpenseLayout() {
   );
 
   useEffect(() => {
-    if (linkId && expenseItem.length === 0) {
+    if (linkId && currentExpenseItem && !expenseItem.length) {
       setOpenCreateUserModal(true);
     }
-  }, [linkId, expenseItem.length]);
+  }, [linkId, expenseItem, currentExpenseItem]);
 
   const renderContent = () => {
     if (!linkId) {
@@ -81,9 +99,10 @@ export default function ExpenseLayout() {
       <Header setOpenCreateUserModal={setOpenCreateUserModal} linkId={linkId} />
       {renderContent()}
       <CreateUserModal
-        open={openCreateUserModal}
-        setOpen={setOpenCreateUserModal}
+        modalOpen={openCreateUserModal}
+        setModalOpen={setOpenCreateUserModal}
         setExpenseList={setExpenseList}
+        linkId={linkId}
         expenseItem={expenseItem}
       />
     </>

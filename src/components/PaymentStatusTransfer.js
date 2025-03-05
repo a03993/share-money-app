@@ -1,26 +1,59 @@
 import { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
+import { settlementService } from "../services/settlementService";
 import PaymentCheckList from "./PaymentCheckList";
 
-export default function PaymentStatusTransfer({ paymentDetails }) {
+export default function PaymentStatusTransfer({ settlementDetails, linkId }) {
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
-  const handleToggle = (item) => () => {
-    if (left.includes(item)) {
-      setRight([...right, item]);
-      setLeft(left.filter((i) => i !== item));
-    } else {
-      setLeft([...left, item]);
-      setRight(right.filter((i) => i !== item));
+  const handleToggle = (index) => async () => {
+    try {
+      const status = left.includes(index) ? "completed" : "pending";
+
+      const settlement = settlementDetails[index];
+      if (!settlement || !settlement._id) {
+        console.error("failed to find settlement");
+        return;
+      }
+
+      const settlementId = settlement._id.$oid || settlement._id;
+
+      await settlementService.updateSettlementStatus(
+        linkId,
+        settlementId,
+        status
+      );
+
+      if (left.includes(index)) {
+        setRight([...right, index]);
+        setLeft(left.filter((i) => i !== index));
+      } else {
+        setLeft([...left, index]);
+        setRight(right.filter((i) => i !== index));
+      }
+    } catch (error) {
+      console.error("failed to update settlement status:", error);
+      alert("failed to update settlement status, please try again later");
     }
   };
 
   useEffect(() => {
-    setLeft(paymentDetails.map((_, index) => index));
-  }, [paymentDetails]);
+    const pendingIndices = [];
+    const completedIndices = [];
+
+    settlementDetails.forEach((settlement, index) => {
+      if (settlement.status === "completed") {
+        completedIndices.push(index);
+      } else {
+        pendingIndices.push(index);
+      }
+    });
+
+    setLeft(pendingIndices);
+    setRight(completedIndices);
+  }, [settlementDetails]);
 
   return (
     <Grid
@@ -34,7 +67,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         </Typography>
         <PaymentCheckList
           items={left}
-          paymentDetails={paymentDetails}
+          settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
           emptyMessage="✓ All payments are settled! No one need to pay."
@@ -46,7 +79,7 @@ export default function PaymentStatusTransfer({ paymentDetails }) {
         </Typography>
         <PaymentCheckList
           items={right}
-          paymentDetails={paymentDetails}
+          settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
           emptyMessage="← Move completed payments from the left."
