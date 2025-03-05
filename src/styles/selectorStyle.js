@@ -12,16 +12,16 @@ export const avatarGroup = {
 
 export const selectStyle = {
   borderRadius: 10,
-  backgroundColor: theme.palette.neutral.lightest,
+  backgroundColor: theme.palette.grayscale.light,
 
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: theme.palette.primary.main,
   },
   "&:hover": {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.grayscale.base,
   },
   "&.Mui-focused": {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.grayscale.base,
     "& fieldset": {
       borderColor: theme.palette.primary.main,
     },

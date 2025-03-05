@@ -55,7 +55,7 @@ export default function CreateUserModal({
       xs: "80%",
       sm: 400,
     },
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.grayscale.medium,
     p: 4,
   };
 
@@ -262,7 +262,7 @@ export default function CreateUserModal({
                 gap: 1,
               }}
             >
-              <AvatarGroup max={4} className="paper-border">
+              <AvatarGroup max={4} className="gray-border">
                 {userList.map((user) => (
                   <Avatar
                     key={user.name}

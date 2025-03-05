@@ -3,15 +3,16 @@ export const palette = {
     main: "#0E0E0E",
   },
   secondary: {
+    dark: "#606060",
     main: "#828282",
-  },
-  neutral: {
-    lightest: "#F9F9F9",
     light: "#E5E5E5",
-    main: "#606060",
+  },
+  grayscale: {
+    medium: "#F4F4F4",
+    light: "#F9F9F9",
+    base: "#FFFFFF",
   },
   background: {
-    default: "#FFFFFF",
     paper: "#F4F4F4",
   },
   avatar: {

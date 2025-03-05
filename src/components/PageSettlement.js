@@ -73,10 +73,10 @@ export default function PageSettlement({
         spacing={2}
         alignItems="center"
         sx={{
-          maxWidth: "700px",
+          maxWidth: "650px",
           mx: "auto",
-          mt: 8,
-          mb: { xs: 4, sm: 8 },
+          mt: 10,
+          mb: { xs: 4, sm: 10 },
           justifyContent: "center",
         }}
       >
@@ -107,8 +107,8 @@ export default function PageSettlement({
         <Alert
           severity="none"
           sx={{
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.neutral.main,
+            backgroundColor: theme.palette.grayscale.medium,
+            color: theme.palette.secondary.dark,
             mt: 3,
             width: { xs: "70%", sm: "50%" },
             mx: "auto",

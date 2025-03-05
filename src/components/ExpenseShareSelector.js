@@ -27,7 +27,7 @@ const UserAvatar = memo(({ name, color, theme }) => (
     alt={name}
     sx={{
       backgroundColor: color,
-      borderColor: theme.palette.neutral.lightest,
+      borderColor: theme.palette.grayscale.light,
     }}
     className="small-mui-avatar"
   >
@@ -46,7 +46,21 @@ export default function ExpenseShareSelector({
 
   const renderValue = (selected) => (
     <div style={avatarGroup}>
-      <AvatarGroup max={8} className="neutral-lightest-border">
+      <AvatarGroup
+        max={8}
+        className="white-border"
+        slotProps={{
+          additionalAvatar: {
+            sx: {
+              width: 30,
+              height: 30,
+              fontSize: 16,
+              backgroundColor: theme.palette.grayscale.light,
+              color: theme.palette.secondary.dark,
+            },
+          },
+        }}
+      >
         {selected.map((name) => {
           const item = expenseItem.find((item) => item.name === name);
           if (!item) return null;

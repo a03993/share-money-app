@@ -46,7 +46,6 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
           "aria-labelledby": labelId,
         }}
         sx={{
-          padding: 0,
           mr: 1,
           "& .MuiSvgIcon-root": {
             fontSize: 20,
@@ -75,21 +74,6 @@ const PaymentItem = ({ value, checked, paymentDetail, handleToggle }) => {
   );
 };
 
-const EmptyList = ({ message, theme }) => (
-  <Box
-    sx={{
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <Typography variant="body1" color={theme.palette.neutral.main}>
-      {message}
-    </Typography>
-  </Box>
-);
-
 export default function PaymentCheckList({
   items,
   settlementDetails,
@@ -100,18 +84,33 @@ export default function PaymentCheckList({
   const theme = useTheme();
 
   const paperStyles = {
-    width: { xs: "85%", sm: 450 },
-    minWidth: 350,
-    height: 350,
+    width: {
+      xs: "100%",
+      sm: 400,
+    },
+    height: { xs: 300, sm: 350 },
     overflow: "auto",
     marginTop: 2,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.grayscale.medium,
   };
 
   return (
     <Paper sx={paperStyles}>
       {items.length === 0 ? (
-        <EmptyList message={emptyMessage} theme={theme} />
+        <Typography
+          variant="body1"
+          color={theme.palette.secondary.dark}
+          sx={{
+            display: "flex",
+            height: "100%",
+            width: "80%",
+            margin: "0 auto",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          {emptyMessage}
+        </Typography>
       ) : (
         <List dense component="div" role="list">
           {items.map((value) => (

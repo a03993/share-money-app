@@ -59,7 +59,7 @@ export default function PaymentStatusTransfer({ settlementDetails, linkId }) {
     <Grid
       container
       spacing={2}
-      sx={{ justifyContent: "center", alignItems: "center" }}
+      sx={{ justifyContent: "center", alignItems: "center", padding: 2 }}
     >
       <Grid>
         <Typography variant="h6" align="left">
@@ -70,7 +70,7 @@ export default function PaymentStatusTransfer({ settlementDetails, linkId }) {
           settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="✓ All payments are settled! No one need to pay."
+          emptyMessage="No payments needed at the moment. Enjoy your time!"
         />
       </Grid>
       <Grid>
@@ -82,7 +82,7 @@ export default function PaymentStatusTransfer({ settlementDetails, linkId }) {
           settlementDetails={settlementDetails}
           checked={right}
           handleToggle={handleToggle}
-          emptyMessage="← Move completed payments from the left."
+          emptyMessage="No payment records yet. Time to make some transactions!"
         />
       </Grid>
     </Grid>
