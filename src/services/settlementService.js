@@ -1,14 +1,14 @@
-const BASE_URL = "/api";
+const BASE_URL = "/api/settlements";
 
 export const settlementService = {
   getSettlements: async (linkId) => {
-    const response = await fetch(`${BASE_URL}/${linkId}/settlements`);
+    const response = await fetch(`${BASE_URL}/${linkId}`);
     if (!response.ok) throw new Error("Failed to fetch settlements");
     return response.json();
   },
 
   updateSettlements: async (linkId, settlements) => {
-    const response = await fetch(`${BASE_URL}/${linkId}/settlements`, {
+    const response = await fetch(`${BASE_URL}/${linkId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const settlementService = {
 
   updateSettlementStatus: async (linkId, settlementId, status) => {
     const response = await fetch(
-      `${BASE_URL}/${linkId}/settlements/${settlementId}`,
+      `${BASE_URL}/${linkId}/${settlementId}`,
       {
         method: "PUT",
         headers: {

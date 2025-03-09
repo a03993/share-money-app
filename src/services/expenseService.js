@@ -1,4 +1,4 @@
-const BASE_URL = "/api";
+const BASE_URL = "/api/expenses";
 
 export const expenseService = {
   createExpenseLink: async (newExpenseData) => {
@@ -14,13 +14,13 @@ export const expenseService = {
   },
 
   getExpenses: async (linkId) => {
-    const response = await fetch(`${BASE_URL}/${linkId}/expenses`);
+    const response = await fetch(`${BASE_URL}/${linkId}`);
     if (!response.ok) throw new Error("Failed to fetch expenses");
     return response.json();
   },
 
   createExpense: async (linkId, expenseData) => {
-    const response = await fetch(`${BASE_URL}/${linkId}/expenses`, {
+    const response = await fetch(`${BASE_URL}/${linkId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const expenseService = {
   },
 
   deleteExpense: async (linkId, expenseId) => {
-    const response = await fetch(`${BASE_URL}/${linkId}/expenses`, {
+    const response = await fetch(`${BASE_URL}/${linkId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
