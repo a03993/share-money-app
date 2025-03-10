@@ -1,4 +1,4 @@
-# ShareMoney
+# ShareMoney Frontend
 
 ShareMoney is a React-based application designed for easy bill splitting. The primary goal is to allow users to create expense lists and assign participants without requiring any login. At the end of the process, the app calculates and displays who owes money to whom.
 
@@ -7,23 +7,14 @@ ShareMoney is a React-based application designed for easy bill splitting. The pr
 - **No Login Required**: Users can add expenses and participants without the hassle of creating an account.
 - **Bill Splitting**: Automatically calculates the amounts to be paid between participants.
 - **Link Sharing**: Users can create unique links to share with others, enabling collaborative expense tracking without affecting other shared links.
-- **Persistent Storage**: Data is stored using MongoDB Atlas, ensuring users can access their expense records across sessions.
 
 ## Tech Stack
 
 ![React](https://img.shields.io/badge/React-%2320232a?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Material-UI](https://img.shields.io/badge/Material--UI-%230081CB?style=for-the-badge&logo=material-ui&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-%23339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-%23000000?style=for-the-badge&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-%2347A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-%2361DAFB?style=for-the-badge&logo=mongodb&logoColor=white)
 
 - **Frontend**: React.js with Material-UI (MUI) components for a sleek and responsive design.
-- **Backend**: Node.js with Express.js, connected to MongoDB Atlas for data persistence.
-- **Database**: MongoDB Atlas, a cloud-hosted database service.
-- **Deployment**:
-  - **Frontend**: Hosted on Netlify.
-  - **Backend**: Hosted on Render.
+- **Deployment**: Hosted on Render and Netlify.
   
 ## Deployment
 
@@ -50,7 +41,6 @@ To run this project locally:
    ```
 4. Start the development server:
    ```bash
-   node server/index.js
    npm start
    ```
 5. Open your browser and visit `http://localhost:3000` to use the app locally.
@@ -61,8 +51,8 @@ The UI design for ShareMoney was created using Figma. You can view and explore t
 
 ## Future Enhancements
 
-- Backend deployment on Netlify
-- Multi-currency support for international users
+- More precise warning message displays
+- Smooth transition animations
 - Integration with external financial tools (e.g., bank accounts, PayPal)
 
 ## Contributing
