@@ -25,52 +25,41 @@ export default function PageSettlement({
   const theme = useTheme();
 
   useEffect(() => {
-    const fetchSettlementDetails = async () => {
-      try {
-        const data = await settlementService.getSettlements(linkId);
-        setSettlementDetails(data.settlements);
-      } catch (error) {
-        console.error("Error fetching settlements:", error);
-      }
-    };
-
-    if (linkId) {
-      fetchSettlementDetails();
-    }
-  }, [linkId]);
-
-  useEffect(() => {
     const fetchAndUpdateSettlements = async () => {
-      if (!currentExpenseItem || expenseList.length === 0 || !linkId) return;
+      if (!linkId) return;
 
       try {
         const existingData = await settlementService.getSettlements(linkId);
-        if (existingData.settlements && existingData.settlements.length > 0) {
+
+        if (existingData.settlements?.length > 0) {
           setSettlementDetails(existingData.settlements);
           return;
         }
 
-        const actualExpense =
-          calculateTotalExpensePerPerson(currentExpenseItem);
-        const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
-        const newSettlementDetails = calculatePayments(
-          actualExpense,
-          paidAmount,
-          expenseList
-        );
+        if (currentExpenseItem && expenseList.length > 0) {
+          const actualExpense =
+            calculateTotalExpensePerPerson(currentExpenseItem);
+          const paidAmount =
+            calculateAmountPaidByEachPerson(currentExpenseItem);
+          const newSettlementDetails = calculatePayments(
+            actualExpense,
+            paidAmount,
+            expenseList
+          );
 
-        const data = await settlementService.updateSettlements(
-          linkId,
-          newSettlementDetails
-        );
-        setSettlementDetails(data.settlements);
+          const data = await settlementService.updateSettlements(
+            linkId,
+            newSettlementDetails
+          );
+          setSettlementDetails(data.settlements);
+        }
       } catch (error) {
-        console.error("Error updating settlements:", error);
+        console.error("Error handling settlements:", error);
       }
     };
 
     fetchAndUpdateSettlements();
-  }, [currentExpenseItem, expenseList, linkId]);
+  }, [linkId, currentExpenseItem, expenseList]);
 
   return (
     <>
