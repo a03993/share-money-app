@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid2";
-import { Alert } from "@mui/material";
+import { Alert, Box, CircularProgress } from "@mui/material";
 import PerPersonExpenseAmount from "./PerPersonExpenseAmount";
 import MemberAvatars from "./MemberAvatars";
 import PaymentStatusTransfer from "./PaymentStatusTransfer";
@@ -22,6 +22,7 @@ export default function PageSettlement({
   currentExpenseItem,
 }) {
   const [settlementDetails, setSettlementDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const theme = useTheme();
 
   useEffect(() => {
@@ -29,6 +30,9 @@ export default function PageSettlement({
       if (!linkId) return;
 
       try {
+        setIsLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         const existingData = await settlementService.getSettlements(linkId);
 
         if (existingData.settlements?.length > 0) {
@@ -55,11 +59,32 @@ export default function PageSettlement({
         }
       } catch (error) {
         console.error("Error handling settlements:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchAndUpdateSettlements();
   }, [linkId, currentExpenseItem, expenseList]);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 10,
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+        <Box sx={{ mt: 2, color: theme.palette.text.secondary }}>
+          Calculating who should pay...
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <>
