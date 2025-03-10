@@ -44,6 +44,12 @@ export default function PageSettlement({
       if (!currentExpenseItem || expenseList.length === 0 || !linkId) return;
 
       try {
+        const existingData = await settlementService.getSettlements(linkId);
+        if (existingData.settlements && existingData.settlements.length > 0) {
+          setSettlementDetails(existingData.settlements);
+          return;
+        }
+
         const actualExpense =
           calculateTotalExpensePerPerson(currentExpenseItem);
         const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
