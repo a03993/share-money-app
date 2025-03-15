@@ -29,6 +29,7 @@ export default function ExpenseCreateForm({
   setOpenCreateUserModal,
   linkId,
   expenseItem,
+  setTotalAmount,
 }) {
   const [formData, setFormData] = useState({
     item: "",
@@ -75,20 +76,23 @@ export default function ExpenseCreateForm({
     if (item === "" || amount === 0 || payer === "" || sharedBy.length === 0) {
       setNotification({
         open: true,
-        message:
-          "Please check out the form. All fields are required!",
+        message: "Please check out the form. All fields are required!",
         severity: "error",
       });
       return;
     }
 
     try {
-      const updatedExpense = await expenseService.createExpense(linkId, {
+      const response = await expenseService.createExpense(linkId, {
         item,
         amount: parseInt(amount),
         payer,
         sharedBy,
       });
+
+      const { updatedExpense, totalAmount } = response;
+
+      setTotalAmount(totalAmount);
 
       setExpenseList((prev) =>
         prev.map((exp) => (exp.linkId === linkId ? updatedExpense : exp))

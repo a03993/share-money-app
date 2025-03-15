@@ -21,7 +21,12 @@ import { useState, useMemo } from "react";
 import { useTheme } from "@mui/material/styles";
 import { expenseService } from "../services/expenseService";
 
-export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
+export default function ExpenseList({
+  expenseList,
+  setExpenseList,
+  linkId,
+  setTotalAmount,
+}) {
   const [expanded, setExpanded] = useState({});
   const [notification, setNotification] = useState({
     open: false,
@@ -40,22 +45,21 @@ export default function ExpenseList({ expenseList, setExpenseList, linkId }) {
 
   const handleDelete = async (expenseToDelete) => {
     try {
-      await expenseService.deleteExpense(linkId, expenseToDelete._id);
+      const { updatedExpense, totalAmount } =
+        await expenseService.deleteExpense(linkId, expenseToDelete._id);
 
       setExpenseList((prevData) =>
         prevData.map((group) => {
           if (group.linkId !== linkId) return group;
           return {
             ...group,
-            expenses: group.expenses.map((person) => ({
-              ...person,
-              personalExpenses: person.personalExpenses.filter(
-                (expense) => expense._id !== expenseToDelete._id
-              ),
-            })),
+            expenses: updatedExpense.expenses,
           };
         })
       );
+
+      setTotalAmount(totalAmount);
+
       setNotification({
         open: true,
         message: "Expense deleted successfully!",

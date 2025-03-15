@@ -7,6 +7,7 @@ export default function PageExpenses({
   expenseList,
   setExpenseList,
   totalAmount,
+  setTotalAmount,
   setOpenCreateUserModal,
   linkId,
   expenseItem,
@@ -27,6 +28,7 @@ export default function PageExpenses({
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}
         expenseItem={expenseItem}
+        setTotalAmount={setTotalAmount}
       />
       {expenseItem.length !== 0 ? (
         <Grid
@@ -51,6 +53,7 @@ export default function PageExpenses({
               expenseList={expenseList}
               setExpenseList={setExpenseList}
               linkId={linkId}
+              setTotalAmount={setTotalAmount}
             />
           </Grid>
         </Grid>

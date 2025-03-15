@@ -7,24 +7,12 @@ import PageSettlement from "./PageSettlement";
 import CreateUserModal from "./CreateUserModal";
 import { expenseService } from "../services/expenseService";
 
-const calculateTotalAmount = (data, linkId) => {
-  const currentExpenseItem = data.find((entry) => entry.linkId === linkId);
-  const expenseItem = currentExpenseItem?.expenses || [];
-
-  return expenseItem.reduce((sum, { personalExpenses }) => {
-    const personTotal = personalExpenses.reduce(
-      (expenseSum, { amount }) => expenseSum + amount,
-      0
-    );
-    return sum + personTotal;
-  }, 0);
-};
-
 export default function ExpenseLayout() {
   const { linkId } = useParams();
   const location = useLocation();
   const [expenseList, setExpenseList] = useState([]);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     const fetchExpenseData = async () => {
@@ -36,6 +24,7 @@ export default function ExpenseLayout() {
           const newList = prev.filter((item) => item.linkId !== linkId);
           return [...newList, data];
         });
+        setTotalAmount(data.totalAmount);
       } catch (error) {
         console.error("Error fetching expense data:", error);
       }
@@ -52,11 +41,6 @@ export default function ExpenseLayout() {
   const expenseItem = useMemo(
     () => currentExpenseItem?.expenses || [],
     [currentExpenseItem]
-  );
-
-  const totalAmount = useMemo(
-    () => calculateTotalAmount(expenseList, linkId),
-    [expenseList, linkId]
   );
 
   useEffect(() => {
@@ -87,6 +71,7 @@ export default function ExpenseLayout() {
         expenseList={expenseList}
         setExpenseList={setExpenseList}
         totalAmount={totalAmount}
+        setTotalAmount={setTotalAmount}
         setOpenCreateUserModal={setOpenCreateUserModal}
         linkId={linkId}
         expenseItem={expenseItem}
