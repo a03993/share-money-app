@@ -8,12 +8,6 @@ import { settlementService } from "../services/settlementService";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 
-import {
-  calculateTotalExpensePerPerson,
-  calculateAmountPaidByEachPerson,
-  calculatePayments,
-} from "../utils/settlementCalculations";
-
 export default function PageSettlement({
   expenseList,
   totalAmount,
@@ -41,22 +35,14 @@ export default function PageSettlement({
 
   useEffect(() => {
     const fetchAndUpdateSettlements = async () => {
-      if (!currentExpenseItem || expenseList.length === 0 || !linkId) return;
+      if (!currentExpenseItem || !linkId) return;
 
       try {
-        const actualExpense =
-          calculateTotalExpensePerPerson(currentExpenseItem);
-        const paidAmount = calculateAmountPaidByEachPerson(currentExpenseItem);
-        const newSettlementDetails = calculatePayments(
-          actualExpense,
-          paidAmount,
-          expenseList
-        );
-
         const data = await settlementService.updateSettlements(
           linkId,
-          newSettlementDetails
+          currentExpenseItem
         );
+
         setSettlementDetails(data.settlements);
       } catch (error) {
         console.error("Error updating settlements:", error);
@@ -64,7 +50,7 @@ export default function PageSettlement({
     };
 
     fetchAndUpdateSettlements();
-  }, [currentExpenseItem, expenseList, linkId]);
+  }, [currentExpenseItem, linkId]);
 
   return (
     <>
