@@ -87,6 +87,7 @@ export default function PageSettlement({
       {settlementDetails.length > 0 ? (
         <PaymentStatusTransfer
           settlementDetails={settlementDetails}
+          setSettlementDetails={setSettlementDetails}
           linkId={linkId}
         />
       ) : (

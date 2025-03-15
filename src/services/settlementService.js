@@ -19,13 +19,12 @@ export const settlementService = {
     return response.json();
   },
 
-  updateSettlementStatus: async (linkId, settlementId, status) => {
+  updateSettlementStatus: async (linkId, settlementId) => {
     const response = await fetch(`${BASE_URL}/${linkId}/${settlementId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status }),
     });
     if (!response.ok) throw new Error("Failed to update settlement status");
     return response.json();

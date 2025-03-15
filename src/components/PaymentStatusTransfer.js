@@ -4,34 +4,31 @@ import Grid from "@mui/material/Grid2";
 import { settlementService } from "../services/settlementService";
 import PaymentCheckList from "./PaymentCheckList";
 
-export default function PaymentStatusTransfer({ settlementDetails, linkId }) {
+export default function PaymentStatusTransfer({
+  settlementDetails,
+  setSettlementDetails,
+  linkId,
+}) {
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
   const handleToggle = (index) => async () => {
     try {
-      const status = left.includes(index) ? "completed" : "pending";
-
       const settlement = settlementDetails[index];
-      if (!settlement || !settlement._id) {
-        console.error("failed to find settlement");
-        return;
-      }
-
       const settlementId = settlement._id.$oid || settlement._id;
 
-      await settlementService.updateSettlementStatus(
+      const updatedSettlements = await settlementService.updateSettlementStatus(
         linkId,
-        settlementId,
-        status
+        settlementId
       );
+      setSettlementDetails(updatedSettlements.settlements);
 
-      if (left.includes(index)) {
-        setRight([...right, index]);
-        setLeft(left.filter((i) => i !== index));
-      } else {
+      if (settlement.status === "completed") {
         setLeft([...left, index]);
         setRight(right.filter((i) => i !== index));
+      } else {
+        setRight([...right, index]);
+        setLeft(left.filter((i) => i !== index));
       }
     } catch (error) {
       console.error("failed to update settlement status:", error);
