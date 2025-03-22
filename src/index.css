@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --avatar-beige: #a7958b;
+  --avatar-gold: #bfad76;
+  --avatar-yellow: #e7d3a7;
+  --avatar-peach: #f0b694;
+  --avatar-gray: #c2c2bb;
+
+  --black: #0e0e0e;
+  --gray-dark: #606060;
+  --gray-base: #828282;
+  --gray-light: #e5e5e5;
+  --gray-lighter: #f4f4f4;
+  --gray-lightest: #f9f9f9;
+
+  --white-base: #ffffff;
+}
+
+@theme inline {
+  --avatar-beige: var(--avatar-beige);
+  --avatar-gold: var(--avatar-gold);
+  --avatar-yellow: var(--avatar-yellow);
+  --avatar-peach: var(--avatar-peach);
+  --avatar-gray: var(--avatar-gray);
+  --color-black: var(--black);
+  --color-gray-dark: var(--gray-dark);
+  --color-gray-base: var(--gray-base);
+  --color-gray-light: var(--gray-light);
+  --color-gray-lighter: var(--gray-lighter);
+  --color-gray-lightest: var(--gray-lightest);
+  --color-white-base: var(--white-base);
+}
+
+@layer base {
+  * {
+    @apply bg-white-base text-black;
+  }
+}
