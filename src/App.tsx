@@ -1,7 +1,9 @@
+import { SiteNavigator } from "@/components/SiteNavigator";
+
 function App() {
   return (
     <>
-      <h1>Share Money App</h1>
+      <SiteNavigator />
     </>
   );
 }

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -16,6 +18,9 @@
   --gray-lightest: #f9f9f9;
 
   --white-base: #ffffff;
+
+  --font-bungee: "Bungee", cursive;
+  --font-outfit: "Outfit", sans-serif;
 }
 
 @theme inline {
@@ -31,10 +36,13 @@
   --color-gray-lighter: var(--gray-lighter);
   --color-gray-lightest: var(--gray-lightest);
   --color-white-base: var(--white-base);
+
+  --font-bungee: var(--font-bungee);
+  --font-outfit: var(--font-outfit);
 }
 
 @layer base {
   * {
-    @apply bg-white-base text-black;
+    @apply bg-white-base text-black font-outfit;
   }
 }
