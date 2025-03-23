@@ -1,10 +1,12 @@
 import { AvatarGroup } from "./AvatarGroup";
+import { DoneSettlementCollapsible } from "./DoneSettlementCollapsible";
+import { SettlementTable } from "./SettlementTable";
 import { SplitAmount } from "./SplitAmount";
 import { Summary } from "../Summary";
 
-export function Settlement() {
+export function Settlement({}) {
   return (
-    <main className="grid gap-5 md:grid-cols-3 md:gap-10">
+    <main className="grid md:grid-cols-3 gap-10">
       <section>
         <SplitAmount />
       </section>
@@ -14,8 +16,9 @@ export function Settlement() {
       <section>
         <Summary className="gap-5" inSettlement />
       </section>
-      <section className="border border-gray-dark md:col-span-3">
-        <p>Settlement List</p>
+      <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3 md:mt-10">
+        <SettlementTable />
+        <DoneSettlementCollapsible />
       </section>
     </main>
   );

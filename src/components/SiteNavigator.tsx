@@ -25,7 +25,7 @@ export function SiteNavigator() {
       <TabsContent value="expense">
         <Expense />
       </TabsContent>
-      <TabsContent value="settlement">
+      <TabsContent value="settlement" className="md:mt-20">
         <Settlement />
       </TabsContent>
     </Tabs>
