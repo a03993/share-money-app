@@ -37,8 +37,8 @@ export function CreateUserDialog() {
           + ADD ANOTHER USER
         </Button>
         <DialogFooter>
-          <Button variant="secondary">CREATE</Button>
-          <Button variant="default">CANCEL</Button>
+          <Button variant="secondary">Create</Button>
+          <Button variant="default">Cancel</Button>
           <Avatar>
             <AvatarFallback
               className={`bg-avatar-${selectedColor}`}

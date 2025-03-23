@@ -19,7 +19,7 @@ export function SiteNavigator() {
         <TabsTrigger value="settlement">SETTLEMENT</TabsTrigger>
         <CreateUserDialog />
       </TabsList>
-      <TabsContent value="createLink">
+      <TabsContent value="createLink" className="mt-25">
         <CreateLink />
       </TabsContent>
       <TabsContent value="expense">

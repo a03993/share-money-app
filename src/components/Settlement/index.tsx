@@ -1,17 +1,18 @@
-import { SplitAmount } from "./SplitAmoun";
+import { AvatarGroup } from "./AvatarGroup";
+import { SplitAmount } from "./SplitAmount";
 import { Summary } from "../Summary";
 
 export function Settlement() {
   return (
-    <main className="grid md:grid-cols-3 gap-10">
-      <section className="border border-gray-dark">
+    <main className="grid gap-5 md:grid-cols-3 md:gap-10">
+      <section>
         <SplitAmount />
       </section>
-      <section className="border border-gray-dark">
-        <p>Avatar Group</p>
+      <section className="flex justify-center items-center">
+        <AvatarGroup />
       </section>
-      <section className="border border-gray-dark">
-        <Summary className="text-xl font-normal" />
+      <section>
+        <Summary className="gap-5" inSettlement />
       </section>
       <section className="border border-gray-dark md:col-span-3">
         <p>Settlement List</p>

@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full text-lg font-medium transition-colors cursor-pointer",
+  "inline-flex items-center justify-center text-base tracking-wide font-semibold whitespace-nowrap rounded-full transition-colors cursor-pointer",
   {
     variants: {
       variant: {
-        default: "bg-gray-light text-gray-base shadow-md shadow-black/40",
-        secondary: "bg-black text-white shadow-md shadow-black/40",
+        default: "bg-gray-light text-gray-base",
+        secondary: "bg-black text-white",
         ghost: "bg-transparent text-black text-sm",
       },
       size: {
-        default: "px-4 py-1.5",
+        default: "p-3",
         sm: "p-0",
-        circle: "h-12 w-12",
-        smCircle: "h-8 w-8",
+        md: "p-1",
+        circle: "size-12",
       },
     },
     defaultVariants: {

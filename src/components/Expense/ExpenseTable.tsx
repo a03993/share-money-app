@@ -45,7 +45,7 @@ function ExpenseTableRow({
         <TableCell>
           <Button
             variant="ghost"
-            size="smCircle"
+            size="md"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (
@@ -54,7 +54,7 @@ function ExpenseTableRow({
               <ChevronDownIcon className="size-5 fill-gray-light hover:fill-gray-base" />
             )}
           </Button>
-          <Button variant="ghost" size="smCircle">
+          <Button variant="ghost" size="md">
             <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base" />
           </Button>
         </TableCell>
@@ -112,7 +112,7 @@ export function ExpenseTable() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-base font-medium">Expense List</h1>
+      <h1 className="text-base text-xl">Expense List</h1>
       <Table>
         <TableBody>
           {expenses.map((expense, index) => (
