@@ -11,9 +11,11 @@ const buttonVariants = cva(
       variant: {
         default: "bg-gray-light text-gray-base shadow-md shadow-black/40",
         secondary: "bg-black text-white shadow-md shadow-black/40",
+        ghost: "bg-transparent text-black text-sm",
       },
       size: {
         default: "px-4 py-1.5",
+        sm: "p-0",
         circle: "h-12 w-12",
       },
     },

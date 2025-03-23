@@ -24,11 +24,11 @@
 }
 
 @theme inline {
-  --avatar-beige: var(--avatar-beige);
-  --avatar-gold: var(--avatar-gold);
-  --avatar-yellow: var(--avatar-yellow);
-  --avatar-peach: var(--avatar-peach);
-  --avatar-gray: var(--avatar-gray);
+  --color-avatar-beige: var(--avatar-beige);
+  --color-avatar-gold: var(--avatar-gold);
+  --color-avatar-yellow: var(--avatar-yellow);
+  --color-avatar-peach: var(--avatar-peach);
+  --color-avatar-gray: var(--avatar-gray);
   --color-black: var(--black);
   --color-gray-dark: var(--gray-dark);
   --color-gray-base: var(--gray-base);
