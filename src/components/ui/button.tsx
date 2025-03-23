@@ -17,6 +17,7 @@ const buttonVariants = cva(
         default: "px-4 py-1.5",
         sm: "p-0",
         circle: "h-12 w-12",
+        smCircle: "h-8 w-8",
       },
     },
     defaultVariants: {

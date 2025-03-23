@@ -1,16 +1,19 @@
+import { SplitAmount } from "./SplitAmoun";
+import { Summary } from "../Summary";
+
 export function Settlement() {
   return (
-    <main className="grid grid-cols-3 gap-10">
+    <main className="grid md:grid-cols-3 gap-10">
       <section className="border border-gray-dark">
-        <p>Settlement Per Person</p>
+        <SplitAmount />
       </section>
       <section className="border border-gray-dark">
         <p>Avatar Group</p>
       </section>
       <section className="border border-gray-dark">
-        <p>Summary</p>
+        <Summary className="text-xl font-normal" />
       </section>
-      <section className="border border-gray-dark col-span-3">
+      <section className="border border-gray-dark md:col-span-3">
         <p>Settlement List</p>
       </section>
     </main>

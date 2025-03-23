@@ -1,14 +1,17 @@
+import { ExpenseTable } from "./ExpenseTable";
+import { Summary } from "../Summary";
+
 export function Expense() {
   return (
-    <main className="grid grid-cols-2 gap-10">
-      <section className="border border-gray-dark col-span-2">
+    <main className="grid md:grid-cols-2 gap-10">
+      <section className="border border-gray-dark md:col-span-2">
         Expense Create Form
       </section>
-      <section className="border border-gray-dark">
-        <p>Summary</p>
+      <section>
+        <Summary />
       </section>
-      <section className="border border-gray-dark">
-        <p>Expense List</p>
+      <section>
+        <ExpenseTable />
       </section>
     </main>
   );
