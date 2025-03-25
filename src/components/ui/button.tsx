@@ -9,8 +9,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gray-light text-gray-base",
-        secondary: "bg-black text-white",
+        default:
+          "bg-gray-light text-gray-base hover:drop-shadow-[0_2px_2px_rgba(34,34,34,0.50)]",
+        secondary:
+          "bg-black text-white hover:drop-shadow-[0_2px_2px_rgba(34,34,34,0.50)]",
         ghost: "bg-transparent text-black text-sm",
       },
       size: {

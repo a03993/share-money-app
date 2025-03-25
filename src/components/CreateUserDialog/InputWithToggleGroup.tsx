@@ -31,7 +31,7 @@ export function InputWithToggleGroup({
           ></ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <Button variant="ghost" size="sm">
+      <Button variant="ghost" size="sm" className="font-normal">
         Remove
       </Button>
     </div>

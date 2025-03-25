@@ -38,8 +38,11 @@ export function CreateExpenseForm() {
             <SelectItem value="3">3</SelectItem>
           </SelectContent>
         </Select>
-        <Button size="circle">
-          <Plus className="size-5 text-gray-base bg-gray-light" />
+        <Button
+          size="circle"
+          className="group hover:drop-shadow-none hover:bg-black hover:text-white"
+        >
+          <Plus className="size-5 stroke-gray-dark bg-transparent group-hover:stroke-white" />
         </Button>
       </div>
     </div>
