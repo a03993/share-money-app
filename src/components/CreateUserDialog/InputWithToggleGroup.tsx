@@ -10,16 +10,31 @@ const TOGGLE_ITEMS = [
   { value: "gray", className: "bg-avatar-gray" },
 ];
 
-export function InputWithToggleGroup({
-  selectedColor,
-  setSelectedColor,
-}: {
+interface InputWithToggleGroupProps {
+  userInputs: any[];
   selectedColor: string;
   setSelectedColor: (color: string) => void;
-}) {
+  userName: string;
+  setUserName: (name: string) => void;
+  removeUser: () => void;
+}
+
+export function InputWithToggleGroup({
+  userInputs,
+  selectedColor,
+  setSelectedColor,
+  userName,
+  setUserName,
+  removeUser,
+}: InputWithToggleGroupProps) {
   return (
     <div className="flex w-full max-w-sm items-center gap-3">
-      <Input type="text" placeholder="Name" />
+      <Input
+        type="text"
+        placeholder="Name"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+      />
       <ToggleGroup type="single">
         {TOGGLE_ITEMS.map((item) => (
           <ToggleGroupItem
@@ -31,9 +46,16 @@ export function InputWithToggleGroup({
           ></ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <Button variant="ghost" size="sm" className="font-normal">
-        Remove
-      </Button>
+      {userInputs.length > 1 && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="font-normal"
+          onClick={removeUser}
+        >
+          Remove
+        </Button>
+      )}
     </div>
   );
 }
