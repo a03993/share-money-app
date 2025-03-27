@@ -4,6 +4,8 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
+import { Settlement as SettlementType } from "@/type";
+
 function SettlementTableRow({
   payer,
   amount,
@@ -24,7 +26,7 @@ function SettlementTableRow({
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
-              <AvatarFallback className={`bg-avatar-${payer.color}`}>
+              <AvatarFallback style={{ backgroundColor: payer.color }}>
                 {payer.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -36,7 +38,7 @@ function SettlementTableRow({
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
-              <AvatarFallback className={`bg-avatar-${payee.color}`}>
+              <AvatarFallback style={{ backgroundColor: payee.color }}>
                 {payee.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -51,39 +53,11 @@ function SettlementTableRow({
   );
 }
 
-export function SettlementTable() {
-  const settlements = [
-    {
-      payer: { name: "Andrew", color: "beige" },
-      amount: 1050,
-      payee: { name: "Ben", color: "gold" },
-      status: "done",
-    },
-    {
-      payer: { name: "Ben", color: "gold" },
-      amount: 550,
-      payee: { name: "Andrew", color: "beige" },
-      status: "pending",
-    },
-    {
-      payer: { name: "Cathy", color: "yellow" },
-      amount: 10,
-      payee: { name: "Andrew", color: "beige" },
-      status: "pending",
-    },
-    {
-      payer: { name: "Diana", color: "peach" },
-      amount: 300,
-      payee: { name: "Andrew", color: "beige" },
-      status: "pending",
-    },
-    {
-      payer: { name: "Ethan", color: "gray" },
-      amount: 2300,
-      payee: { name: "Andrew", color: "beige" },
-      status: "pending",
-    },
-  ];
+export function SettlementTable({
+  settlements,
+}: {
+  settlements: SettlementType[];
+}) {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-base text-xl">Settlement List</h1>

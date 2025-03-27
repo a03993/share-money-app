@@ -5,7 +5,29 @@ import { CreateUserDialog } from "@/components/CreateUserDialog";
 import { Expense } from "@/components/Expense";
 import { Settlement } from "@/components/Settlement";
 
-export function SiteNavigator() {
+import { Expense as ExpenseType, Settlement as SettlementType } from "@/type";
+
+interface SiteNavigatorProps {
+  data: {
+    expenses: ExpenseType[];
+    settlements: SettlementType[];
+  };
+}
+
+export function SiteNavigator({ data }: SiteNavigatorProps) {
+  const flattenedExpenses = data.expenses.flatMap((user) =>
+    user.personalExpenses.map((expense) => ({
+      item: expense.item,
+      payer: { name: user.name, color: user.color },
+      amount: expense.amount,
+      shared: expense.sharedBy,
+    }))
+  );
+
+  const totalAmount = flattenedExpenses.reduce(
+    (acc, expense) => acc + expense.amount,
+    0
+  );
   return (
     <Tabs defaultValue="expense">
       <TabsList className="bg-gray-lighter">
@@ -23,10 +45,18 @@ export function SiteNavigator() {
         <CreateLink />
       </TabsContent>
       <TabsContent value="expense">
-        <Expense />
+        <Expense
+          expenses={data.expenses}
+          flattenedExpenses={flattenedExpenses}
+          totalAmount={totalAmount}
+        />
       </TabsContent>
       <TabsContent value="settlement" className="md:mt-20">
-        <Settlement />
+        <Settlement
+          expenses={data.expenses}
+          totalAmount={totalAmount}
+          settlements={data.settlements}
+        />
       </TabsContent>
     </Tabs>
   );

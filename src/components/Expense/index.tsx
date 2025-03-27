@@ -2,17 +2,31 @@ import { CreateExpenseForm } from "./CreateExpenseForm";
 import { ExpenseTable } from "./ExpenseTable";
 import { Summary } from "../Summary";
 
-export function Expense() {
+import { Expense as ExpenseType, ExpenseItem as ExpenseItemType } from "@/type";
+
+interface ExpenseProps {
+  expenses: ExpenseType[];
+  flattenedExpenses: ExpenseItemType[];
+  totalAmount: number;
+}
+
+export function Expense({
+  expenses,
+  flattenedExpenses,
+  totalAmount,
+}: ExpenseProps) {
+  console.log(flattenedExpenses);
+  console.log(totalAmount);
   return (
     <main className="grid md:grid-cols-2 gap-10">
       <section className="md:col-span-2">
-        <CreateExpenseForm />
+        <CreateExpenseForm users={expenses} />
       </section>
       <section>
-        <Summary />
+        <Summary peopleCount={expenses.length} totalAmount={totalAmount} />
       </section>
       <section>
-        <ExpenseTable />
+        <ExpenseTable expensesByPerson={flattenedExpenses} />
       </section>
     </main>
   );

@@ -8,17 +8,18 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 
-function ExpenseTableRow({
-  item,
-  payer,
-  amount,
-  shared,
-}: {
+interface ExpenseItem {
   item: string;
   payer: { name: string; color: string };
   amount: number;
   shared: string[];
-}) {
+}
+
+interface ExpenseTableProps {
+  expensesByPerson: ExpenseItem[];
+}
+
+function ExpenseTableRow({ item, payer, amount, shared }: ExpenseItem) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -27,7 +28,7 @@ function ExpenseTableRow({
         <TableCell>
           <div className="flex items-center space-x-4">
             <Avatar>
-              <AvatarFallback className={`bg-avatar-${payer.color}`}>
+              <AvatarFallback style={{ backgroundColor: payer.color }}>
                 {payer.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -75,47 +76,14 @@ function ExpenseTableRow({
   );
 }
 
-export function ExpenseTable() {
-  // Example data
-  const expenses = [
-    {
-      item: "expense item",
-      payer: { name: "Andrew", color: "beige" },
-      amount: 1050,
-      shared: ["payer name", "payer name"],
-    },
-    {
-      item: "expense item",
-      payer: { name: "Ben", color: "gold" },
-      amount: 550,
-      shared: ["payer name", "payer name", "payer name"],
-    },
-    {
-      item: "expense item",
-      payer: { name: "Cathy", color: "yellow" },
-      amount: 10,
-      shared: ["payer name", "payer name"],
-    },
-    {
-      item: "expense item",
-      payer: { name: "Diana", color: "peach" },
-      amount: 300,
-      shared: ["payer name", "payer name", "payer name"],
-    },
-    {
-      item: "expense item",
-      payer: { name: "Ethan", color: "gray" },
-      amount: 2300,
-      shared: ["payer name", "payer name"],
-    },
-  ];
-
+// 主體 component
+export function ExpenseTable({ expensesByPerson }: ExpenseTableProps) {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-base text-xl">Expense List</h1>
       <Table>
         <TableBody>
-          {expenses.map((expense, index) => (
+          {expensesByPerson.map((expense, index) => (
             <ExpenseTableRow
               key={index}
               item={expense.item}

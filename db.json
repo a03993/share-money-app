@@ -1,0 +1,95 @@
+{
+  "mockLink123": {
+    "id": 1,
+    "createdAt": "2025-03-26T10:00:00.000Z",
+    "expiresAt": "2025-03-28T10:00:00.000Z",
+    "expenses": [
+      {
+        "name": "Barney",
+        "color": "#bfad76",
+        "personalExpenses": [
+          {
+            "item": "Starbucks",
+            "amount": 200,
+            "sharedBy": ["Barney", "Tina"]
+          },
+          {
+            "item": "cigarette",
+            "amount": 600,
+            "sharedBy": ["Barney", "Tina", "Joe"]
+          }
+        ]
+      },
+      {
+        "name": "Tina",
+        "color": "#e7d3a7",
+        "personalExpenses": [
+          {
+            "item": "breakfast",
+            "amount": 150,
+            "sharedBy": ["Barney", "Tina", "Joe"]
+          },
+          {
+            "item": "lunch",
+            "amount": 752,
+            "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
+          }
+        ]
+      },
+      {
+        "name": "Joe",
+        "color": "#a7958b",
+        "personalExpenses": [
+          {
+            "item": "Uber transfer",
+            "amount": 480,
+            "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
+          }
+        ]
+      },
+      {
+        "name": "Winnie",
+        "color": "#f0b694",
+        "personalExpenses": []
+      }
+    ],
+    "settlements": [
+      {
+        "payer": {
+          "name": "Winnie",
+          "color": "#f0b694"
+        },
+        "amount": 244,
+        "payee": {
+          "name": "Tina",
+          "color": "#e7d3a7"
+        },
+        "status": "pending"
+      },
+      {
+        "payer": {
+          "name": "Winnie",
+          "color": "#f0b694"
+        },
+        "amount": 64,
+        "payee": {
+          "name": "Barney",
+          "color": "#bfad76"
+        },
+        "status": "pending"
+      },
+      {
+        "payer": {
+          "name": "Joe",
+          "color": "#a7958b"
+        },
+        "amount": 78,
+        "payee": {
+          "name": "Barney",
+          "color": "#bfad76"
+        },
+        "status": "done"
+      }
+    ]
+  }
+}

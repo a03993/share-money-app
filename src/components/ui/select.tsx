@@ -36,7 +36,8 @@ function SelectTrigger({
       data-size={size}
       className={cn(
         "rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3",
-        "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:bg-gray-lightest",
+        "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:font-light data-[placeholder]:[&>span]:bg-gray-lightest",
+        "[&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1 [&_[data-slot=select-value]]:whitespace-nowrap [&_[data-slot=select-value]]:bg-gray-lightest",
         className
       )}
       {...props}
@@ -107,6 +108,7 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "text-gray-dark",
         className
       )}
       {...props}

@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +11,13 @@ import {
 
 import { Plus } from "lucide-react";
 
-export function CreateExpenseForm() {
+interface User {
+  name: string;
+  color: string;
+}
+
+export function CreateExpenseForm({ users }: { users: User[] }) {
+  console.log("member:", users);
   return (
     <div className="space-y-3">
       <div className="flex flex-col md:flex-row gap-3">
@@ -19,13 +26,23 @@ export function CreateExpenseForm() {
             <SelectValue placeholder="Payer" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="1">1</SelectItem>
-            <SelectItem value="2">2</SelectItem>
-            <SelectItem value="3">3</SelectItem>
+            {users.map((user, index) => (
+              <SelectItem key={index} value={user.name}>
+                <Avatar className="size-7">
+                  <AvatarFallback
+                    className="text-base"
+                    style={{ backgroundColor: user.color }}
+                  >
+                    {user.name.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                {user.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-        <Input placeholder="Item" className="flex-2" />
-        <Input placeholder="Price" className="flex-2" />
+        <Input type="text" placeholder="Item" className="flex-2" />
+        <Input type="number" placeholder="Price" className="flex-2" min="0" />
       </div>
       <div className="flex items-center gap-3">
         <Select>
@@ -33,9 +50,19 @@ export function CreateExpenseForm() {
             <SelectValue placeholder="Share by" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="1">1</SelectItem>
-            <SelectItem value="2">2</SelectItem>
-            <SelectItem value="3">3</SelectItem>
+            {users.map((user, index) => (
+              <SelectItem key={index} value={user.name}>
+                <Avatar className="size-7">
+                  <AvatarFallback
+                    className="text-base"
+                    style={{ backgroundColor: user.color }}
+                  >
+                    {user.name.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                {user.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <Button

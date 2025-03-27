@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 
 export function Summary({
-  peopleCount = 4,
-  totalAmount = 2000,
+  peopleCount,
+  totalAmount,
   className,
   inSettlement,
 }: {
-  peopleCount?: number;
-  totalAmount?: number;
+  peopleCount: number;
+  totalAmount: number;
   className?: string;
   inSettlement?: boolean;
 }) {
@@ -20,7 +20,9 @@ export function Summary({
           inSettlement && "md:justify-end"
         )}
       >
-        <p className="text-5xl">{peopleCount}</p>
+        <p className={cn("text-5xl", inSettlement && "text-2xl")}>
+          {peopleCount}
+        </p>
         <p className="text-xl">人</p>
         <p className="text-5xl">${totalAmount.toLocaleString()}</p>
       </div>
