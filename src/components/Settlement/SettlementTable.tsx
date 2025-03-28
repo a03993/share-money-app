@@ -34,7 +34,7 @@ function SettlementTableRow({
           </div>
         </TableCell>
         <TableCell>pay</TableCell>
-        <TableCell></TableCell>
+        <TableCell className="hidden sm:block"></TableCell>
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
@@ -45,9 +45,9 @@ function SettlementTableRow({
             <p className="text-xs font-light text-gray-dark">{payee.name}</p>
           </div>
         </TableCell>
-        <TableCell></TableCell>
+        <TableCell className="hidden sm:block"></TableCell>
         <TableCell className="text-left">${amount.toLocaleString()}</TableCell>
-        <TableCell></TableCell>
+        <TableCell className="hidden sm:block"></TableCell>
       </TableRow>
     </>
   );

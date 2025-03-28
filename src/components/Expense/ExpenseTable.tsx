@@ -38,9 +38,9 @@ function ExpenseTableRow({ item, payer, amount, shared }: ExpenseItem) {
             </div>
           </div>
         </TableCell>
+        <TableCell className="hidden sm:block"></TableCell>
         <TableCell></TableCell>
-        <TableCell></TableCell>
-        <TableCell></TableCell>
+        <TableCell className="hidden sm:block"></TableCell>
         <TableCell></TableCell>
         <TableCell className="text-right">${amount.toLocaleString()}</TableCell>
         <TableCell>
