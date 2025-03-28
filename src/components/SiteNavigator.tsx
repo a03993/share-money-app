@@ -7,6 +7,8 @@ import { Settlement } from "@/components/Settlement";
 
 import { Expense as ExpenseType, Settlement as SettlementType } from "@/type";
 
+import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
+
 interface SiteNavigatorProps {
   data: {
     expenses: ExpenseType[];
@@ -30,15 +32,28 @@ export function SiteNavigator({ data }: SiteNavigatorProps) {
   );
   return (
     <Tabs defaultValue="expense">
-      <TabsList className="bg-gray-lighter">
+      <TabsList className="relative">
         <TabsTrigger
           value="createLink"
-          className="text-2xl font-black text-black opacity-100 bg-gray-lighter"
+          className="text-2xl text-black font-black opacity-100 absolute sm:relative sm:left-0 left-7"
         >
           ShareMoney
         </TabsTrigger>
-        <TabsTrigger value="expense">EXPENSE</TabsTrigger>
-        <TabsTrigger value="settlement">SETTLEMENT</TabsTrigger>
+        {/* Desktop */}
+        <TabsTrigger value="expense" className="sm:block hidden">
+          EXPENSE
+        </TabsTrigger>
+        <TabsTrigger value="settlement" className="sm:block hidden">
+          SETTLEMENT
+        </TabsTrigger>
+        {/* Mobile */}
+        <TabsTrigger value="expense" className="sm:hidden">
+          <CurrencyDollarIcon className="size-5 fill-gray-base bg-transparent" />
+        </TabsTrigger>
+        <TabsTrigger value="settlement" className="sm:hidden">
+          <WalletIcon className="size-5 fill-gray-base bg-transparent" />
+        </TabsTrigger>
+        {/* Desktop & Mobile */}
         <CreateUserDialog />
       </TabsList>
       <TabsContent value="createLink" className="mt-25">

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
-import { UserIcon } from "@heroicons/react/24/solid";
+import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 export function CreateUserDialog() {
   const [userInputs, setUserInputs] = useState([{ color: "yellow", name: "" }]);
@@ -27,8 +27,13 @@ export function CreateUserDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger className="text-base font-semibold text-gray-base opacity-30 hover:opacity-100 cursor-pointer">
+      {/* Desktop */}
+      <DialogTrigger className="text-gray-base font-semibold opacity-30 hover:opacity-100 cursor-pointer sm:block hidden">
         CREATE USER
+      </DialogTrigger>
+      {/* Mobile */}
+      <DialogTrigger className="opacity-30 hover:opacity-100 cursor-pointer sm:hidden">
+        <UserCircleIcon className="size-5 fill-gray-base bg-transparent" />
       </DialogTrigger>
       <DialogContent className="gap-5">
         <DialogHeader>
