@@ -10,12 +10,12 @@
         "personalExpenses": [
           {
             "item": "Starbucks",
-            "amount": 200,
+            "price": 200,
             "sharedBy": ["Barney", "Tina"]
           },
           {
             "item": "cigarette",
-            "amount": 600,
+            "price": 600,
             "sharedBy": ["Barney", "Tina", "Joe"]
           }
         ]
@@ -26,12 +26,12 @@
         "personalExpenses": [
           {
             "item": "breakfast",
-            "amount": 150,
+            "price": 150,
             "sharedBy": ["Barney", "Tina", "Joe"]
           },
           {
             "item": "lunch",
-            "amount": 752,
+            "price": 752,
             "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
           }
         ]
@@ -42,7 +42,7 @@
         "personalExpenses": [
           {
             "item": "Uber transfer",
-            "amount": 480,
+            "price": 480,
             "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
           }
         ]

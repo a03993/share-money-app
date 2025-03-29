@@ -3,7 +3,7 @@ export interface Expense {
   color: string;
   personalExpenses: {
     item: string;
-    amount: number;
+    price: number;
     sharedBy: string[];
   }[];
 }
@@ -11,7 +11,7 @@ export interface Expense {
 export interface ExpenseItem {
   item: string;
   payer: { name: string; color: string };
-  amount: number;
+  price: number;
   shared: string[];
 }
 

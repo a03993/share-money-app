@@ -9,27 +9,25 @@ import { Expense as ExpenseType, Settlement as SettlementType } from "@/type";
 
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 
-interface SiteNavigatorProps {
-  data: {
-    expenses: ExpenseType[];
-    settlements: SettlementType[];
-  };
+interface SplitTabsProps {
+  expenses: ExpenseType[];
+  settlements: SettlementType[];
 }
 
-export function SplitTabs({ data }: SiteNavigatorProps) {
+export function SplitTabs({ data }: { data: SplitTabsProps }) {
   const navigate = useNavigate();
 
   const flattenedExpenses = data.expenses.flatMap((user) =>
     user.personalExpenses.map((expense) => ({
       item: expense.item,
       payer: { name: user.name, color: user.color },
-      amount: expense.amount,
+      price: expense.price,
       shared: expense.sharedBy,
     }))
   );
 
   const totalAmount = flattenedExpenses.reduce(
-    (acc, expense) => acc + expense.amount,
+    (acc, expense) => acc + expense.price,
     0
   );
   return (

@@ -11,7 +11,7 @@ import {
 interface ExpenseItem {
   item: string;
   payer: { name: string; color: string };
-  amount: number;
+  price: number;
   shared: string[];
 }
 
@@ -19,7 +19,7 @@ interface ExpenseTableProps {
   expensesByPerson: ExpenseItem[];
 }
 
-function ExpenseTableRow({ item, payer, amount, shared }: ExpenseItem) {
+function ExpenseTableRow({ item, payer, price, shared }: ExpenseItem) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -42,7 +42,7 @@ function ExpenseTableRow({ item, payer, amount, shared }: ExpenseItem) {
         <TableCell></TableCell>
         <TableCell className="hidden sm:block"></TableCell>
         <TableCell></TableCell>
-        <TableCell className="text-right">${amount.toLocaleString()}</TableCell>
+        <TableCell className="text-right">${price.toLocaleString()}</TableCell>
         <TableCell>
           <Button
             variant="ghost"
@@ -88,7 +88,7 @@ export function ExpenseTable({ expensesByPerson }: ExpenseTableProps) {
               key={index}
               item={expense.item}
               payer={expense.payer}
-              amount={expense.amount}
+              price={expense.price}
               shared={expense.shared}
             />
           ))}

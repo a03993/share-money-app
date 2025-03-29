@@ -15,8 +15,6 @@ export function Expense({
   flattenedExpenses,
   totalAmount,
 }: ExpenseProps) {
-  console.log(flattenedExpenses);
-  console.log(totalAmount);
   return (
     <main className="grid md:grid-cols-2 gap-10">
       <section className="md:col-span-2">
