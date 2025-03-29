@@ -42,7 +42,7 @@ export function CreateUserDialog({ users }: { users: Expense[] }) {
 
     // TODO: create user to the database
     // TODO: toast message
-    console.log("Create user:", userInputs);
+    console.log("Users created successfully", userInputs);
     setUserInputs([{ color: "#e7d3a7", name: "" }]);
     setIsOpen(false);
   };

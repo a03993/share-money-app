@@ -3,16 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function CreateLink({
-  setLinkId,
-}: {
-  setLinkId: (linkId: string) => void;
-}) {
+export function CreateLink() {
   const navigate = useNavigate();
 
   const handleCreateLink = () => {
-    const newLinkId = "mockLink123"; // TODO: This should be dynamically fetched from the backend
-    setLinkId(newLinkId);
+    const newLinkId = "mockLink123";
+    // TODO: create new linkId by nanoid and save to database
     navigate(`/${newLinkId}`);
   };
 

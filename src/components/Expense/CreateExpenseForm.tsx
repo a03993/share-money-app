@@ -12,10 +12,7 @@ import {
 import { Plus } from "lucide-react";
 import { MultiUserSelect } from "./MultiUserSelect";
 
-interface User {
-  name: string;
-  color: string;
-}
+import { User as UserType } from "@/type";
 
 interface NewExpenseItem {
   payer: string;
@@ -24,16 +21,15 @@ interface NewExpenseItem {
   shared: string[];
 }
 
-const DEFAULT_EXPENSE_ITEM = {
+const DEFAULT_EXPENSE_ITEM: NewExpenseItem = {
   payer: "",
   item: "",
   price: 0,
   shared: [],
 };
 
-export function CreateExpenseForm({ users }: { users: User[] }) {
-  const [newExpenseItem, setNewExpenseItem] =
-    useState<NewExpenseItem>(DEFAULT_EXPENSE_ITEM);
+export function CreateExpenseForm({ users }: { users: UserType[] }) {
+  const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
   const [selectedShared, setSelectedShared] = useState<string[]>([]);
 
   const createExpenseItem = () => {

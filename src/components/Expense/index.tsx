@@ -2,11 +2,16 @@ import { CreateExpenseForm } from "./CreateExpenseForm";
 import { ExpenseTable } from "./ExpenseTable";
 import { Summary } from "../Summary";
 
-import { Expense as ExpenseType, ExpenseItem as ExpenseItemType } from "@/type";
+import { User as UserType, Expense as ExpenseType } from "@/type";
 
 interface ExpenseProps {
   expenses: ExpenseType[];
-  flattenedExpenses: ExpenseItemType[];
+  flattenedExpenses: {
+    payer: UserType;
+    item: string;
+    price: number;
+    shared: string[];
+  }[];
   totalAmount: number;
 }
 

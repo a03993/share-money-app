@@ -11,12 +11,12 @@
           {
             "item": "Starbucks",
             "price": 200,
-            "sharedBy": ["Barney", "Tina"]
+            "shared": ["Barney", "Tina"]
           },
           {
             "item": "cigarette",
             "price": 600,
-            "sharedBy": ["Barney", "Tina", "Joe"]
+            "shared": ["Barney", "Tina", "Joe"]
           }
         ]
       },
@@ -27,12 +27,12 @@
           {
             "item": "breakfast",
             "price": 150,
-            "sharedBy": ["Barney", "Tina", "Joe"]
+            "shared": ["Barney", "Tina", "Joe"]
           },
           {
             "item": "lunch",
             "price": 752,
-            "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
+            "shared": ["Barney", "Tina", "Joe", "Winnie"]
           }
         ]
       },
@@ -43,7 +43,7 @@
           {
             "item": "Uber transfer",
             "price": 480,
-            "sharedBy": ["Barney", "Tina", "Joe", "Winnie"]
+            "shared": ["Barney", "Tina", "Joe", "Winnie"]
           }
         ]
       },

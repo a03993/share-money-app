@@ -1,29 +1,31 @@
-export interface Expense {
+export interface User {
   name: string;
   color: string;
-  personalExpenses: {
-    item: string;
-    price: number;
-    sharedBy: string[];
-  }[];
 }
 
 export interface ExpenseItem {
   item: string;
-  payer: { name: string; color: string };
   price: number;
   shared: string[];
 }
 
+export interface Expense {
+  name: string;
+  color: string;
+  personalExpenses: ExpenseItem[];
+}
+
 export interface Settlement {
-  payer: {
-    name: string;
-    color: string;
-  };
+  payer: User;
   amount: number;
-  payee: {
-    name: string;
-    color: string;
-  };
+  payee: User;
   status: string;
+}
+
+export interface SplitData {
+  id: number;
+  createdAt: string;
+  expiresAt: string;
+  expenses: Expense[];
+  settlements: Settlement[];
 }
