@@ -1,9 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from "react-router-dom";
 
-import { CreateLink } from "@/components/CreateLink";
 import { CreateUserDialog } from "@/components/CreateUserDialog";
 import { Expense } from "@/components/Expense";
 import { Settlement } from "@/components/Settlement";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Expense as ExpenseType, Settlement as SettlementType } from "@/type";
 
@@ -16,7 +16,9 @@ interface SiteNavigatorProps {
   };
 }
 
-export function SiteNavigator({ data }: SiteNavigatorProps) {
+export function SplitTabs({ data }: SiteNavigatorProps) {
+  const navigate = useNavigate();
+
   const flattenedExpenses = data.expenses.flatMap((user) =>
     user.personalExpenses.map((expense) => ({
       item: expense.item,
@@ -36,6 +38,7 @@ export function SiteNavigator({ data }: SiteNavigatorProps) {
         <TabsTrigger
           value="createLink"
           className="text-2xl text-black font-black opacity-100 absolute sm:relative sm:left-0 left-7"
+          onClick={() => navigate("/")}
         >
           ShareMoney
         </TabsTrigger>
@@ -56,9 +59,6 @@ export function SiteNavigator({ data }: SiteNavigatorProps) {
         {/* Desktop & Mobile */}
         <CreateUserDialog />
       </TabsList>
-      <TabsContent value="createLink" className="mt-25">
-        <CreateLink />
-      </TabsContent>
       <TabsContent value="expense">
         <Expense
           expenses={data.expenses}
