@@ -3,11 +3,11 @@ import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const TOGGLE_ITEMS = [
-  { value: "beige", className: "bg-avatar-beige" },
-  { value: "gold", className: "bg-avatar-gold" },
-  { value: "yellow", className: "bg-avatar-yellow" },
-  { value: "peach", className: "bg-avatar-peach" },
-  { value: "gray", className: "bg-avatar-gray" },
+  { value: "#a7958b", className: "bg-avatar-beige" },
+  { value: "#bfad76", className: "bg-avatar-gold" },
+  { value: "#e7d3a7", className: "bg-avatar-yellow" },
+  { value: "#f0b694", className: "bg-avatar-peach" },
+  { value: "#c2c2bb", className: "bg-avatar-gray" },
 ];
 
 interface InputWithToggleGroupProps {

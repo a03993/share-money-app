@@ -15,18 +15,51 @@ import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
 import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
-export function CreateUserDialog() {
-  const [userInputs, setUserInputs] = useState([{ color: "yellow", name: "" }]);
+import { Expense } from "@/type";
+
+export function CreateUserDialog({ users }: { users: Expense[] }) {
+  const [userInputs, setUserInputs] = useState([
+    { color: "#e7d3a7", name: "" },
+  ]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const addUserInput = () => {
-    if (userInputs.length < 5) {
-      setUserInputs([...userInputs, { color: "yellow", name: "" }]);
+    if (userInputs.length >= 5) {
+      console.error("You can only add up to 5 users");
+      // TODO: toast message
+      return;
     }
-    // Todo: toast message
+    setUserInputs([...userInputs, { color: "#e7d3a7", name: "" }]);
+  };
+
+  const handleCreate = () => {
+    const hasEmptyName = userInputs.some((input) => input.name.trim() === "");
+    if (hasEmptyName) {
+      console.error("Name cannot be empty");
+      // TODO: toast message
+      return;
+    }
+
+    // TODO: create user to the database
+    // TODO: toast message
+    console.log("Create user:", userInputs);
+    setUserInputs([{ color: "#e7d3a7", name: "" }]);
+    setIsOpen(false);
+  };
+
+  const handleCancel = () => {
+    if (users.length <= 0) {
+      console.error("You must create at least one user");
+      // TODO: toast message
+      return;
+    }
+
+    setUserInputs([{ color: "#e7d3a7", name: "" }]);
+    setIsOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* Desktop */}
       <DialogTrigger className="text-gray-base font-semibold opacity-30 hover:opacity-100 cursor-pointer sm:block hidden">
         CREATE USER
@@ -74,8 +107,12 @@ export function CreateUserDialog() {
           + ADD ANOTHER USER
         </Button>
         <DialogFooter>
-          <Button variant="secondary">Create</Button>
-          <Button variant="default">Cancel</Button>
+          <Button variant="secondary" onClick={handleCreate}>
+            Create
+          </Button>
+          <Button variant="default" onClick={handleCancel}>
+            Cancel
+          </Button>
           <div className="flex">
             {userInputs.map((input, index) => (
               <Avatar

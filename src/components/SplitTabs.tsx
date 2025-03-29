@@ -57,7 +57,7 @@ export function SplitTabs({ data }: SiteNavigatorProps) {
           <WalletIcon className="size-5 fill-gray-base bg-transparent" />
         </TabsTrigger>
         {/* Desktop & Mobile */}
-        <CreateUserDialog />
+        <CreateUserDialog users={data.expenses} />
       </TabsList>
       <TabsContent value="expense">
         <Expense
