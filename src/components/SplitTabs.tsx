@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 
 import { SplitData } from "@/type";
-
+import { toast } from "sonner";
 export function SplitTabs() {
   const navigate = useNavigate();
   const { linkId } = useParams();
@@ -18,8 +18,7 @@ export function SplitTabs() {
 
   useEffect(() => {
     if (!linkId) {
-      console.error("No linkId found, redirecting to home");
-      // TODO: toast message
+      toast.error("Link ID missing. Returning to home page");
       navigate("/");
       return;
     }
@@ -30,14 +29,13 @@ export function SplitTabs() {
         if (data) {
           setSplitData(data);
         } else {
-          console.error("No data found for the given linkId");
-          // TODO: toast message
+          toast.error("No data found for this link ID");
           navigate("/");
         }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        // TODO: toast message
+        toast.error("Unable to fetch data. Returning to home page");
+        console.error("Unable to fetch data:", error);
         navigate("/");
       })
       .finally(() => {

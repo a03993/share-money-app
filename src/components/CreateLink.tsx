@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { toast } from "sonner";
 export function CreateLink() {
   const navigate = useNavigate();
 
   const handleCreateLink = () => {
     const newLinkId = "mockLink123";
     // TODO: create new linkId by nanoid and save to database
+    toast.success("Link generated successfully");
     navigate(`/${newLinkId}`);
   };
 

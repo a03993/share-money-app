@@ -13,6 +13,7 @@ import { Plus } from "lucide-react";
 import { MultiUserSelect } from "./MultiUserSelect";
 
 import { User as UserType } from "@/type";
+import { toast } from "sonner";
 
 interface NewExpenseItem {
   payer: string;
@@ -34,25 +35,19 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
 
   const createExpenseItem = () => {
     if (!newExpenseItem.payer) {
-      console.error("No payer selected. Please choose one.");
-      // TODO: toast message for payer
+      toast.error("Please select a payer before continuing");
       return;
     }
     if (!newExpenseItem.item) {
-      console.error("Item is required");
-      // TODO: toast message for item
+      toast.error("Please enter an item to proceed");
       return;
     }
     if (newExpenseItem.price <= 0) {
-      console.error("Price must be greater than 0");
-      // TODO: toast message for price
+      toast.error("Please enter a price greater than zero");
       return;
     }
     if (selectedShared.length === 0) {
-      console.error(
-        "No one selected to share with. Please choose at least one."
-      );
-      // TODO: toast message for shared
+      toast.error("Please select at least one person to share with");
       return;
     }
 
@@ -61,8 +56,8 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
       shared: selectedShared,
     };
     // TODO: add new expense item to database
-    console.log("Expense added successfully", updatedExpenseItem);
-    // TODO: toast message
+    console.log("Expense added successfully:", updatedExpenseItem);
+    toast.success("Expense added successfully");
     setNewExpenseItem({
       payer: "",
       item: "",

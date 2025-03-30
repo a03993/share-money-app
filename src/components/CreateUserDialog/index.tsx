@@ -17,6 +17,8 @@ import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 import { Expense } from "@/type";
 
+import { toast } from "sonner";
+
 export function CreateUserDialog({ users }: { users: Expense[] }) {
   const [userInputs, setUserInputs] = useState([
     { color: "#e7d3a7", name: "" },
@@ -25,8 +27,7 @@ export function CreateUserDialog({ users }: { users: Expense[] }) {
 
   const addUserInput = () => {
     if (userInputs.length >= 5) {
-      console.error("You can only add up to 5 users");
-      // TODO: toast message
+      toast.error("Only 5 users are allowed at a time");
       return;
     }
     setUserInputs([...userInputs, { color: "#e7d3a7", name: "" }]);
@@ -35,22 +36,19 @@ export function CreateUserDialog({ users }: { users: Expense[] }) {
   const handleCreate = () => {
     const hasEmptyName = userInputs.some((input) => input.name.trim() === "");
     if (hasEmptyName) {
-      console.error("Name cannot be empty");
-      // TODO: toast message
+      toast.error("Please enter a valid user name");
       return;
     }
 
     // TODO: create user to the database
-    // TODO: toast message
-    console.log("Users created successfully", userInputs);
+    toast.success("Users created successfully");
     setUserInputs([{ color: "#e7d3a7", name: "" }]);
     setIsOpen(false);
   };
 
   const handleCancel = () => {
     if (users.length <= 0) {
-      console.error("You must create at least one user");
-      // TODO: toast message
+      toast.error("Please create at least one user before closing");
       return;
     }
 
