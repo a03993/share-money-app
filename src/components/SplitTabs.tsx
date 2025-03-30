@@ -10,6 +10,7 @@ import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 
 import { SplitData } from "@/type";
 import { toast } from "sonner";
+
 export function SplitTabs() {
   const navigate = useNavigate();
   const { linkId } = useParams();
@@ -22,20 +23,19 @@ export function SplitTabs() {
       navigate("/");
       return;
     }
-    fetch("/db.json")
-      .then((res) => res.json())
-      .then((json) => {
-        const data = json[linkId];
-        if (data) {
-          setSplitData(data);
-        } else {
-          toast.error("No data found for this link ID");
-          navigate("/");
+
+    fetch(`http://localhost:5001/links/${linkId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Invalid link ID");
         }
+        return res.json();
       })
-      .catch((error) => {
-        toast.error("Unable to fetch data. Returning to home page");
-        console.error("Unable to fetch data:", error);
+      .then((data) => {
+        setSplitData(data);
+      })
+      .catch(() => {
+        toast.error("No data found for this link ID");
         navigate("/");
       })
       .finally(() => {

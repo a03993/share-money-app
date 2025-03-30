@@ -1,16 +1,29 @@
 import { useNavigate } from "react-router-dom";
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+
 export function CreateLink() {
   const navigate = useNavigate();
 
-  const handleCreateLink = () => {
-    const newLinkId = "mockLink123";
-    // TODO: create new linkId by nanoid and save to database
-    toast.success("Link generated successfully");
-    navigate(`/${newLinkId}`);
+  const handleCreateLink = async () => {
+    try {
+      const res = await fetch("http://localhost:5001/links", {
+        method: "POST",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create link");
+      }
+
+      const data = await res.json();
+      const newLinkId = data.linkId;
+
+      toast.success("Link generated successfully");
+      navigate(`/${newLinkId}`);
+    } catch (error) {
+      toast.error("Failed to create link");
+    }
   };
 
   return (
