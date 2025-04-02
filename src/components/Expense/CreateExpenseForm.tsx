@@ -82,7 +82,7 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
           <SelectTrigger className="flex-1">
             <SelectValue placeholder="Payer" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-gray-lightest">
             {users.map((user) => (
               <SelectItem key={user.name} value={user.name}>
                 <Avatar className="size-7">
@@ -137,7 +137,7 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
           className="group hover:drop-shadow-none hover:bg-black hover:text-white"
           onClick={createExpenseItem}
         >
-          <Plus className="size-5 stroke-gray-dark bg-transparent group-hover:stroke-white" />
+          <Plus className="size-5 stroke-gray-dark group-hover:stroke-white" />
         </Button>
       </div>
     </div>

@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+
+import { BASE_URL } from "@/constants";
 
 export function CreateLink() {
   const navigate = useNavigate();
 
   const handleCreateLink = async () => {
     try {
-      const res = await fetch("http://localhost:5001/links", {
+      const res = await fetch(`${BASE_URL}/links`, {
         method: "POST",
       });
 

@@ -38,7 +38,7 @@ export function MultiUserSelect({
           {selected.length === 0 ? (
             "Share by"
           ) : (
-            <div className="flex items-center bg-transparent space-x-[-3px]">
+            <div className="flex items-center space-x-[-3px]">
               {selected.map((name) => {
                 const user = users.find((user) => user.name === name);
                 return (
@@ -59,10 +59,14 @@ export function MultiUserSelect({
               })}
             </div>
           )}
-          <ChevronDownIcon className="size-5 stroke-gray-dark bg-transparent" />
+          <ChevronDownIcon className="size-5 stroke-gray-dark" />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="p-0">
+      <PopoverContent
+        className="p-0 bg-gray-lightest"
+        align="start"
+        style={{ width: "var(--radix-popover-trigger-width)" }}
+      >
         <Command>
           <CommandGroup>
             {users.map((user) => (
