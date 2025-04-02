@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { NoDataMessage } from "@/components/NoDataMessage";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
@@ -58,6 +59,17 @@ export function SettlementTable({
 }: {
   settlements: SettlementType[];
 }) {
+  if (settlements.length === 0) {
+    return (
+      <div className="flex-1">
+        <NoDataMessage
+          title="NO SETTLEMENT FOUND!"
+          description="Please add some expenses items in the Expenses page first."
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-base text-xl">Settlement List</h1>

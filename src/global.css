@@ -61,6 +61,6 @@
 
 @layer base {
   * {
-    @apply bg-white-base text-black font-outfit;
+    @apply font-outfit;
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { NoDataMessage } from "@/components/NoDataMessage";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   ChevronDownIcon,
@@ -81,19 +82,26 @@ export function ExpenseTable({ expensesByPerson }: ExpenseTableProps) {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-base text-xl">Expense List</h1>
-      <Table>
-        <TableBody>
-          {expensesByPerson.map((expense, index) => (
-            <ExpenseTableRow
-              key={index}
-              item={expense.item}
-              payer={expense.payer}
-              price={expense.price}
-              shared={expense.shared}
-            />
-          ))}
-        </TableBody>
-      </Table>
+      {expensesByPerson.length > 0 ? (
+        <Table>
+          <TableBody>
+            {expensesByPerson.map((expense, index) => (
+              <ExpenseTableRow
+                key={index}
+                item={expense.item}
+                payer={expense.payer}
+                price={expense.price}
+                shared={expense.shared}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <NoDataMessage
+          title="NO EXPENSES FOUND!"
+          description="Please add some expenses using the form above."
+        />
+      )}
     </div>
   );
 }

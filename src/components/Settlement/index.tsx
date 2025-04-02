@@ -42,7 +42,9 @@ export function Settlement({
       </section>
       <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3 md:mt-10">
         <SettlementTable settlements={pendingSettlements} />
-        <DoneSettlementCollapsible settlements={doneSettlements} />
+        {doneSettlements.length > 0 && (
+          <DoneSettlementCollapsible settlements={doneSettlements} />
+        )}
       </section>
     </main>
   );
