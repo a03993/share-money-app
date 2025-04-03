@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
-import { Settlement as SettlementType, User as UserType } from "@/type";
+import { Settlement as SettlementType, User as UserType } from "@/lib/type";
 
 function SettlementTableRow({
   id,

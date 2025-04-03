@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
-import { BASE_URL } from "@/constants";
+import { BASE_URL } from "@/lib/constants";
 
 export function CheckDialogContent({
   setIsOpen,

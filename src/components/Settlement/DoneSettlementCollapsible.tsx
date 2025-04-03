@@ -11,7 +11,7 @@ import { NoDataMessage } from "@/components/NoDataMessage";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
-import { Settlement as SettlementType, User as UserType } from "@/type";
+import { Settlement as SettlementType, User as UserType } from "@/lib/type";
 
 export function DoneSettlementCollapsible({
   users,

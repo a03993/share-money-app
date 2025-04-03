@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 
-import { BASE_URL } from "@/constants";
+import { BASE_URL } from "@/lib/constants";
 
 export function CreateLink() {
   const navigate = useNavigate();

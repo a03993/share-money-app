@@ -6,8 +6,8 @@ import { CreateExpenseForm } from "./CreateExpenseForm";
 import { ExpenseTable } from "./ExpenseTable";
 import { Summary } from "../Summary";
 
-import { ExpenseFromAPI as ExpenseType, User as UserType } from "@/type";
-import { BASE_URL } from "@/constants";
+import { ExpenseFromAPI as ExpenseType, User as UserType } from "@/lib/type";
+import { BASE_URL } from "@/lib/constants";
 
 export function Expense({
   users,

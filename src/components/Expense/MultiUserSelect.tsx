@@ -7,7 +7,7 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import { User as UserType } from "@/type";
+import { User as UserType } from "@/lib/type";
 
 interface MultiUserSelectProps {
   users: UserType[];

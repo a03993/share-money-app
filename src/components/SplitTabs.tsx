@@ -12,8 +12,8 @@ import {
   SplitData,
   User as UserType,
   ExpenseFromAPI as ExpenseType,
-} from "@/type";
-import { BASE_URL } from "@/constants";
+} from "@/lib/type";
+import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 import { useOnceEffect } from "@/hooks/useOnceEffect";
 

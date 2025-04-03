@@ -16,8 +16,8 @@ import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
 import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { User as UserType } from "@/type";
-import { BASE_URL, COLOR_CLASS_MAP } from "@/constants";
+import { User as UserType } from "@/lib/type";
+import { BASE_URL, COLOR_CLASS_MAP } from "@/lib/constants";
 
 import { toast } from "sonner";
 

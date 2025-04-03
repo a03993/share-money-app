@@ -14,8 +14,8 @@ import {
 import { Plus } from "lucide-react";
 import { MultiUserSelect } from "./MultiUserSelect";
 
-import { User as UserType } from "@/type";
-import { BASE_URL } from "@/constants";
+import { User as UserType } from "@/lib/type";
+import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 
 interface NewExpenseItem {

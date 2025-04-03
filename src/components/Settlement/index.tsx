@@ -7,8 +7,8 @@ import { SettlementTable } from "./SettlementTable";
 import { SplitAmount } from "./SplitAmount";
 import { Summary } from "../Summary";
 
-import { User as UserType, Settlement as SettlementType } from "@/type";
-import { BASE_URL } from "@/constants";
+import { User as UserType, Settlement as SettlementType } from "@/lib/type";
+import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 
 interface SettlementProps {

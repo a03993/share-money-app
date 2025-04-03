@@ -9,8 +9,8 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 
-import { ExpenseItem as ExpenseItemType } from "@/type";
-import { BASE_URL } from "@/constants";
+import { ExpenseItem as ExpenseItemType } from "@/lib/type";
+import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 
 function ExpenseTableRow({
