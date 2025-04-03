@@ -16,7 +16,7 @@ import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
 import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { Expense } from "@/type";
+import { User as UserType } from "@/type";
 import { BASE_URL, COLOR_CLASS_MAP } from "@/constants";
 
 import { toast } from "sonner";
@@ -27,7 +27,7 @@ export function CreateUserDialog({
   setIsOpen,
   onUserCreated,
 }: {
-  users: Expense[];
+  users: UserType[];
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   onUserCreated: () => void;
@@ -76,7 +76,6 @@ export function CreateUserDialog({
       setUserInputs([{ color: "#e7d3a7", name: "" }]);
       setIsOpen(false);
     } catch (err) {
-      console.error(err);
       toast.error("Failed to create users");
     }
   };

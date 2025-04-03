@@ -8,7 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 
-import { SplitData } from "@/type";
+import {
+  SplitData,
+  User as UserType,
+  ExpenseFromAPI as ExpenseType,
+} from "@/type";
 import { BASE_URL } from "@/constants";
 import { toast } from "sonner";
 import { useOnceEffect } from "@/hooks/useOnceEffect";
@@ -17,6 +21,8 @@ export function SplitTabs() {
   const navigate = useNavigate();
   const { linkId } = useParams();
   const [splitData, setSplitData] = useState<SplitData | null>(null);
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
 
@@ -24,19 +30,54 @@ export function SplitTabs() {
     if (!linkId) return;
 
     try {
-      const res = await fetch(`${BASE_URL}/links/${linkId}`);
-      if (!res.ok) throw new Error("Invalid link ID");
+      const [linkRes, expenseRes, userRes] = await Promise.all([
+        fetch(`${BASE_URL}/links/${linkId}`),
+        fetch(`${BASE_URL}/expenses/${linkId}`),
+        fetch(`${BASE_URL}/users/${linkId}`),
+      ]);
 
-      const data = await res.json();
+      if (!linkRes.ok || !expenseRes.ok || !userRes.ok)
+        throw new Error("Invalid link ID or fetch failed");
 
-      setSplitData(data);
+      const linkData = await linkRes.json();
+      const expenses = await expenseRes.json();
+      const usersData = await userRes.json();
 
-      if (data.expenses.length === 0) {
+      // Step 1: clone users + personalExpenses initialize
+      const usersWithExpenses = usersData.map((user: UserType) => ({
+        ...user,
+        personalExpenses: [],
+      }));
+
+      // Step 2:  expenses push into user's personalExpenses
+      expenses.forEach((expense: ExpenseType) => {
+        const payerId = expense.payer._id;
+        const user = usersWithExpenses.find((u: UserType) => u._id === payerId);
+        if (user) {
+          user.personalExpenses.push({
+            item: expense.item,
+            price: expense.price,
+            payer: expense.payer,
+            sharedBy: expense.sharedBy,
+            createdAt: expense.createdAt,
+          });
+        }
+      });
+
+      setSplitData({
+        ...linkData,
+        expenses: usersWithExpenses,
+        settlements: [],
+      });
+
+      setUsers(usersData);
+
+      if (usersData.length === 0) {
         toast.info("No users found. Please create at least one user.");
         setIsUserDialogOpen(true);
       }
     } catch (err) {
-      toast.error("Unable to fetch link");
+      toast.error("Unable to fetch data");
       navigate("/");
     } finally {
       setIsLoading(false);
@@ -80,27 +121,12 @@ export function SplitTabs() {
       </TabsTrigger>
 
       <CreateUserDialog
-        users={splitData?.expenses ?? []}
+        users={users}
         isOpen={isUserDialogOpen}
         setIsOpen={setIsUserDialogOpen}
         onUserCreated={fetchSplitData}
       />
     </>
-  );
-
-  const flattenedExpenses =
-    splitData?.expenses?.flatMap((user) =>
-      user.personalExpenses.map((expense) => ({
-        item: expense.item,
-        payer: { name: user.name, color: user.color },
-        price: expense.price,
-        shared: expense.shared,
-      }))
-    ) ?? [];
-
-  const totalAmount = flattenedExpenses.reduce(
-    (acc, expense) => acc + expense.price,
-    0
   );
 
   return (
@@ -112,9 +138,9 @@ export function SplitTabs() {
       <TabsContent value="expense">
         {!isLoading && splitData && (
           <Expense
-            expenses={splitData.expenses}
-            flattenedExpenses={flattenedExpenses}
+            users={users}
             totalAmount={totalAmount}
+            setTotalAmount={setTotalAmount}
           />
         )}
       </TabsContent>

@@ -1,18 +1,39 @@
 export interface User {
+  _id: string;
   name: string;
   color: string;
 }
 
 export interface ExpenseItem {
+  _id: string;
   item: string;
+  payer: {
+    _id: string;
+    name: string;
+    color: string;
+  };
   price: number;
-  shared: string[];
+  sharedBy: {
+    _id: string;
+    name: string;
+    color?: string;
+  }[];
 }
 
 export interface Expense {
+  _id: string;
   name: string;
   color: string;
   personalExpenses: ExpenseItem[];
+}
+
+export interface ExpenseFromAPI {
+  _id: string;
+  item: string;
+  price: number;
+  payer: User;
+  sharedBy: User[];
+  createdAt?: string;
 }
 
 export interface Settlement {

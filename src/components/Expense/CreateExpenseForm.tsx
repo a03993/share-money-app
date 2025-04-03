@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +15,7 @@ import { Plus } from "lucide-react";
 import { MultiUserSelect } from "./MultiUserSelect";
 
 import { User as UserType } from "@/type";
+import { BASE_URL } from "@/constants";
 import { toast } from "sonner";
 
 interface NewExpenseItem {
@@ -29,11 +32,18 @@ const DEFAULT_EXPENSE_ITEM: NewExpenseItem = {
   shared: [],
 };
 
-export function CreateExpenseForm({ users }: { users: UserType[] }) {
+export function CreateExpenseForm({
+  users,
+  onCreated,
+}: {
+  users: UserType[];
+  onCreated: () => void;
+}) {
+  const { linkId } = useParams();
   const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
   const [selectedShared, setSelectedShared] = useState<string[]>([]);
 
-  const createExpenseItem = () => {
+  const createExpenseItem = async () => {
     if (!newExpenseItem.payer) {
       toast.error("Please select a payer before continuing");
       return;
@@ -51,20 +61,41 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
       return;
     }
 
-    const updatedExpenseItem = {
-      ...newExpenseItem,
-      shared: selectedShared,
+    const payload = {
+      item: newExpenseItem.item,
+      price: newExpenseItem.price,
+      payer: newExpenseItem.payer,
+      sharedBy: selectedShared,
     };
-    // TODO: add new expense item to database
-    console.log("Expense added successfully:", updatedExpenseItem);
-    toast.success("Expense added successfully");
-    setNewExpenseItem({
-      payer: "",
-      item: "",
-      price: 0,
-      shared: [],
-    });
-    setSelectedShared([]);
+
+    try {
+      if (!linkId) {
+        toast.error("Link ID not found in URL");
+        return;
+      }
+
+      const res = await fetch(`${BASE_URL}/expenses/${linkId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        toast.error(error || "Failed to add expense");
+        return;
+      }
+
+      toast.success("Expense added successfully");
+
+      setNewExpenseItem(DEFAULT_EXPENSE_ITEM);
+      setSelectedShared([]);
+      onCreated();
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -73,10 +104,7 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
         <Select
           value={newExpenseItem.payer}
           onValueChange={(value) =>
-            setNewExpenseItem((prevData) => ({
-              ...prevData,
-              payer: value,
-            }))
+            setNewExpenseItem((prev) => ({ ...prev, payer: value }))
           }
         >
           <SelectTrigger className="flex-1">
@@ -84,13 +112,13 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
           </SelectTrigger>
           <SelectContent className="bg-gray-lightest">
             {users.map((user) => (
-              <SelectItem key={user.name} value={user.name}>
+              <SelectItem key={user._id} value={user._id}>
                 <Avatar className="size-7">
                   <AvatarFallback
                     className="text-base"
                     style={{ backgroundColor: user.color }}
                   >
-                    {user.name.charAt(0)}
+                    {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 {user.name}
@@ -104,10 +132,7 @@ export function CreateExpenseForm({ users }: { users: UserType[] }) {
           className="flex-2"
           value={newExpenseItem.item}
           onChange={(e) =>
-            setNewExpenseItem({
-              ...newExpenseItem,
-              item: e.target.value,
-            })
+            setNewExpenseItem({ ...newExpenseItem, item: e.target.value })
           }
         />
         <Input

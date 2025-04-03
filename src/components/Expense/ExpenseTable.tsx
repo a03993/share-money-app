@@ -9,19 +9,38 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 
-interface ExpenseItem {
-  item: string;
-  payer: { name: string; color: string };
-  price: number;
-  shared: string[];
-}
+import { ExpenseItem as ExpenseItemType } from "@/type";
+import { BASE_URL } from "@/constants";
+import { toast } from "sonner";
 
-interface ExpenseTableProps {
-  expensesByPerson: ExpenseItem[];
-}
-
-function ExpenseTableRow({ item, payer, price, shared }: ExpenseItem) {
+function ExpenseTableRow({
+  _id,
+  item,
+  payer,
+  price,
+  sharedBy,
+  onDeleted,
+}: ExpenseItemType & { onDeleted: () => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/expenses/${_id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        toast.error(error || "Failed to delete expense");
+        return;
+      }
+
+      toast.success("Expense deleted successfully");
+      onDeleted();
+    } catch (err) {
+      toast.error("Something went wrong while deleting expense");
+    }
+  };
 
   return (
     <>
@@ -56,7 +75,7 @@ function ExpenseTableRow({ item, payer, price, shared }: ExpenseItem) {
               <ChevronDownIcon className="size-5 fill-gray-light hover:fill-gray-base" />
             )}
           </Button>
-          <Button variant="ghost" size="md">
+          <Button variant="ghost" size="md" onClick={handleDelete}>
             <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base" />
           </Button>
         </TableCell>
@@ -69,7 +88,7 @@ function ExpenseTableRow({ item, payer, price, shared }: ExpenseItem) {
           >
             Shared by:
             <br />
-            {shared.join(", ")}
+            {sharedBy.map((user) => user.name).join(", ")}
           </TableCell>
         </TableRow>
       )}
@@ -77,21 +96,34 @@ function ExpenseTableRow({ item, payer, price, shared }: ExpenseItem) {
   );
 }
 
-// 主體 component
-export function ExpenseTable({ expensesByPerson }: ExpenseTableProps) {
+export function ExpenseTable({
+  expensesByPerson,
+  onDeleted,
+}: {
+  expensesByPerson: ExpenseItemType[];
+  onDeleted: () => void;
+}) {
+  const groupedExpenses = [...expensesByPerson].sort((a, b) => {
+    if (a.payer._id < b.payer._id) return -1;
+    if (a.payer._id > b.payer._id) return 1;
+    return 0;
+  });
+
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-base text-xl">Expense List</h1>
       {expensesByPerson.length > 0 ? (
         <Table>
           <TableBody>
-            {expensesByPerson.map((expense, index) => (
+            {groupedExpenses.map((expense, index) => (
               <ExpenseTableRow
                 key={index}
+                _id={expense._id}
                 item={expense.item}
                 payer={expense.payer}
                 price={expense.price}
-                shared={expense.shared}
+                sharedBy={expense.sharedBy}
+                onDeleted={onDeleted}
               />
             ))}
           </TableBody>

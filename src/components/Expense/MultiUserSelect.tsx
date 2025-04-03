@@ -7,13 +7,10 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-interface User {
-  name: string;
-  color: string;
-}
+import { User as UserType } from "@/type";
 
 interface MultiUserSelectProps {
-  users: User[];
+  users: UserType[];
   selected: string[];
   onChange: (selected: string[]) => void;
 }
@@ -23,11 +20,11 @@ export function MultiUserSelect({
   selected,
   onChange,
 }: MultiUserSelectProps) {
-  const toggleUser = (name: string) => {
-    if (selected.includes(name)) {
-      onChange(selected.filter((n) => n !== name));
+  const toggleUser = (id: string) => {
+    if (selected.includes(id)) {
+      onChange(selected.filter((x) => x !== id));
     } else {
-      onChange([...selected, name]);
+      onChange([...selected, id]);
     }
   };
 
@@ -39,12 +36,12 @@ export function MultiUserSelect({
             "Share by"
           ) : (
             <div className="flex items-center space-x-[-3px]">
-              {selected.map((name) => {
-                const user = users.find((user) => user.name === name);
+              {selected.map((id) => {
+                const user = users.find((user) => user._id === id);
                 return (
                   user && (
                     <Avatar
-                      key={user.name}
+                      key={user._id}
                       className="size-7 outline outline-2 outline-gray-lightest"
                     >
                       <AvatarFallback
@@ -71,8 +68,8 @@ export function MultiUserSelect({
           <CommandGroup>
             {users.map((user) => (
               <CommandItem
-                key={user.name}
-                onSelect={() => toggleUser(user.name)}
+                key={user._id}
+                onSelect={() => toggleUser(user._id)}
                 className="flex items-center gap-2"
               >
                 <Avatar className="size-7">
@@ -84,7 +81,7 @@ export function MultiUserSelect({
                   </AvatarFallback>
                 </Avatar>
                 <span>{user.name}</span>
-                {selected.includes(user.name) && (
+                {selected.includes(user._id) && (
                   <CheckIcon className="ml-auto h-4 w-4 text-primary" />
                 )}
               </CommandItem>
