@@ -37,9 +37,10 @@ export interface ExpenseFromAPI {
 }
 
 export interface Settlement {
-  payer: User;
+  _id: string;
+  from: string;
   amount: number;
-  payee: User;
+  to: string;
   status: string;
 }
 

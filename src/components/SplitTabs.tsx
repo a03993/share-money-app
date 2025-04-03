@@ -147,11 +147,7 @@ export function SplitTabs() {
 
       <TabsContent value="settlement" className="md:mt-20">
         {!isLoading && splitData && (
-          <Settlement
-            expenses={splitData.expenses}
-            totalAmount={totalAmount}
-            settlements={splitData.settlements}
-          />
+          <Settlement users={users} totalAmount={totalAmount} />
         )}
       </TabsContent>
     </Tabs>

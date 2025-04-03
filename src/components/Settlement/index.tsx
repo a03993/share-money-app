@@ -1,22 +1,43 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { AvatarGroup } from "./AvatarGroup";
 import { DoneSettlementCollapsible } from "./DoneSettlementCollapsible";
 import { SettlementTable } from "./SettlementTable";
 import { SplitAmount } from "./SplitAmount";
 import { Summary } from "../Summary";
 
-import { Expense as ExpenseType, Settlement as SettlementType } from "@/type";
+import { User as UserType, Settlement as SettlementType } from "@/type";
+import { BASE_URL } from "@/constants";
+import { toast } from "sonner";
 
 interface SettlementProps {
-  expenses: ExpenseType[];
+  users: UserType[];
   totalAmount: number;
-  settlements: SettlementType[];
 }
 
-export function Settlement({
-  expenses,
-  totalAmount,
-  settlements,
-}: SettlementProps) {
+export function Settlement({ users, totalAmount }: SettlementProps) {
+  const { linkId } = useParams();
+  const [settlements, setSettlements] = useState<SettlementType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchSettlements = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/settlements/${linkId}`);
+      if (!res.ok) throw new Error("Failed to fetch settlements");
+      const data = await res.json();
+      setSettlements(data);
+    } catch (err) {
+      toast.error("Unable to fetch settlements");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (linkId) fetchSettlements();
+  }, [linkId]);
+
   const pendingSettlements = settlements.filter(
     (settlement) => settlement.status === "pending"
   );
@@ -27,7 +48,7 @@ export function Settlement({
   return (
     <main className="grid md:grid-cols-3 gap-10">
       <section>
-        <SplitAmount peopleCount={expenses.length} totalAmount={totalAmount} />
+        <SplitAmount peopleCount={users.length} totalAmount={totalAmount} />
       </section>
       <section className="flex justify-center items-center">
         <AvatarGroup />
@@ -35,15 +56,22 @@ export function Settlement({
       <section>
         <Summary
           className="gap-5"
-          peopleCount={expenses.length}
+          peopleCount={users.length}
           totalAmount={totalAmount}
           inSettlement
         />
       </section>
       <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3 md:mt-10">
-        <SettlementTable settlements={pendingSettlements} />
-        {doneSettlements.length > 0 && (
-          <DoneSettlementCollapsible settlements={doneSettlements} />
+        <SettlementTable
+          users={users}
+          settlements={pendingSettlements}
+          onStatusUpdated={fetchSettlements}
+        />
+        {pendingSettlements.length > 0 && (
+          <DoneSettlementCollapsible
+            users={users}
+            settlements={doneSettlements}
+          />
         )}
       </section>
     </main>
