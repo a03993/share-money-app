@@ -1,17 +1,16 @@
-import * as React from "react";
-import { ChevronsUpDown } from "lucide-react";
-
+import { NoDataMessage } from "@/components/NoDataMessage";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { NoDataMessage } from "@/components/NoDataMessage";
+import { Settlement as SettlementType, User as UserType } from "@/lib/type";
+
+import * as React from "react";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-
-import { Settlement as SettlementType, User as UserType } from "@/lib/type";
+import { ChevronsUpDown } from "lucide-react";
 
 export function DoneSettlementCollapsible({
   users,
@@ -47,8 +46,8 @@ export function DoneSettlementCollapsible({
                 {settlements.length === 0
                   ? "Done settlements is empty"
                   : settlements.length > 1
-                  ? `starred ${settlements.length} done settlements`
-                  : `only ${settlements.length} done settlements`}
+                    ? `starred ${settlements.length} done settlements`
+                    : `only ${settlements.length} done settlements`}
               </h4>
             </div>
             <CollapsibleTrigger asChild>

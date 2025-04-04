@@ -17,7 +17,7 @@ export function Summary({
       <div
         className={cn(
           "flex items-end justify-center md:justify-start",
-          inSettlement && "md:justify-end"
+          inSettlement && "md:justify-end",
         )}
       >
         <p className={cn("text-5xl", inSettlement && "text-2xl")}>

@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-
 import { UserInput as UserInputType } from "@/lib/type";
+
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const TOGGLE_ITEMS = [
   { value: "#a7958b", className: "bg-avatar-beige" },
@@ -56,7 +57,9 @@ export function InputWithToggleGroup({
           onClick={removeUser}
         >
           <span className="hidden md:inline">Remove</span>
-          <span className="inline md:hidden">X</span>
+          <span className="inline md:hidden">
+            <XMarkIcon className="size-4" />
+          </span>
         </Button>
       )}
     </div>

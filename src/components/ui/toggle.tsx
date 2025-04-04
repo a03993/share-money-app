@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
-import * as TogglePrimitive from "@radix-ui/react-toggle";
-import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
+
+import * as React from "react";
+
+import * as TogglePrimitive from "@radix-ui/react-toggle";
+import { type VariantProps, cva } from "class-variance-authority";
 
 const toggleVariants = cva(
   "inline-flex items-center justify-center rounded-full cursor-pointer",
@@ -22,7 +23,7 @@ const toggleVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Toggle({

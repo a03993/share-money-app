@@ -1,6 +1,6 @@
-import * as React from "react";
-
 import { cn } from "@/lib/utils";
+
+import * as React from "react";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -19,11 +19,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
 
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
-    <tbody
-      data-slot="table-body"
-      className={cn("", className)}
-      {...props}
-    />
+    <tbody data-slot="table-body" className={cn("", className)} {...props} />
   );
 }
 

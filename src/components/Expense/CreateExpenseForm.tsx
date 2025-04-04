@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,17 +8,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus } from "lucide-react";
-import { MultiUserSelect } from "./MultiUserSelect";
-
-import {
-  User as UserType,
-  NewExpenseItem as NewExpenseItemType,
-} from "@/lib/type";
 import { BASE_URL } from "@/lib/constants";
-import { toast } from "sonner";
+import {
+  NewExpenseItem as NewExpenseItemType,
+  User as UserType,
+} from "@/lib/type";
+
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { XCircleIcon } from "@heroicons/react/24/outline";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
+
+import { MultiUserSelect } from "./MultiUserSelect";
 
 const DEFAULT_EXPENSE_ITEM: NewExpenseItemType = {
   payer: "",

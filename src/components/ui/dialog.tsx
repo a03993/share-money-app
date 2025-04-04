@@ -1,7 +1,8 @@
-import * as React from "react";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-
 import { cn } from "@/lib/utils";
+
+import * as React from "react";
+
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -19,7 +20,7 @@ const DialogOverlay = React.forwardRef<
       "fixed inset-0 z-50 bg-black/80",
       "data-[state=open]:animate-in data-[state=open]:fade-in-0",
       "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
-      className
+      className,
     )}
     {...props}
   />
@@ -38,7 +39,7 @@ const DialogContent = React.forwardRef<
         "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] bg-white p-10 shadow-lg duration-200 rounded-lg",
         "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-        className
+        className,
       )}
       {...props}
     >

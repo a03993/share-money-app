@@ -1,16 +1,17 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-
-import { CreateExpenseForm } from "./CreateExpenseForm";
-import { ExpenseTable } from "./ExpenseTable";
-import { Summary } from "../Summary";
-
+import { BASE_URL } from "@/lib/constants";
 import {
   ExpenseItemFromAPI as ExpenseType,
   User as UserType,
 } from "@/lib/type";
-import { BASE_URL } from "@/lib/constants";
+
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { toast } from "sonner";
+
+import { Summary } from "../Summary";
+import { CreateExpenseForm } from "./CreateExpenseForm";
+import { ExpenseTable } from "./ExpenseTable";
 
 export function Expense({
   users,
@@ -48,7 +49,7 @@ export function Expense({
   useEffect(() => {
     const totalAmount = expenses.reduce(
       (acc, expense) => acc + expense.price,
-      0
+      0,
     );
     setTotalAmount(totalAmount);
   }, [expenses, setTotalAmount]);

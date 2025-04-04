@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { InputWithToggleGroup } from "./InputWithToggleGroup";
-
-import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-
-import { User as UserType, UserInput as UserInputType } from "@/lib/type";
 import { BASE_URL, COLOR_CLASS_MAP } from "@/lib/constants";
+import { UserInput as UserInputType, User as UserType } from "@/lib/type";
 
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { UserCircleIcon, UserIcon } from "@heroicons/react/24/solid";
 import { toast } from "sonner";
+
+import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
 const DEFAULT_USER_INPUT: UserInputType = { color: "#e7d3a7", name: "" };
 

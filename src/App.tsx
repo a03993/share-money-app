@@ -1,7 +1,8 @@
-import { Routes, Route } from "react-router-dom";
 import { CreateLink } from "@/components/CreateLink";
 import { SplitTabs } from "@/components/SplitTabs";
 import { Toaster } from "@/components/ui/sonner";
+
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (

@@ -1,13 +1,14 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
-import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
-import { CheckIcon, ChevronDownIcon } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
 import { User as UserType } from "@/lib/type";
+import { cn } from "@/lib/utils";
+
+import { CheckIcon, ChevronDownIcon } from "lucide-react";
 
 interface MultiUserSelectProps {
   users: UserType[];
@@ -36,7 +37,7 @@ export function MultiUserSelect({
         <div
           className={cn(
             "rounded-full border border-gray-dark bg-gray-lightest p-3 cursor-pointer w-full text-left text-gray-dark flex items-center justify-between",
-            disabled && "cursor-default text-gray-light border-gray-light"
+            disabled && "cursor-default text-gray-light border-gray-light",
           )}
         >
           {selected.length === 0 ? (
@@ -66,7 +67,7 @@ export function MultiUserSelect({
           <ChevronDownIcon
             className={cn(
               "size-5 stroke-gray-dark",
-              disabled && "stroke-gray-light"
+              disabled && "stroke-gray-light",
             )}
           />
         </div>

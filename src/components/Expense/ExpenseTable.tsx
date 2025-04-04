@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { NoDataMessage } from "@/components/NoDataMessage";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { NoDataMessage } from "@/components/NoDataMessage";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { BASE_URL } from "@/lib/constants";
+import { ExpenseItem as ExpenseItemType } from "@/lib/type";
+
+import { useState } from "react";
+
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-
-import { ExpenseItem as ExpenseItemType } from "@/lib/type";
-import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 
 function ExpenseTableRow({

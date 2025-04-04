@@ -1,7 +1,8 @@
-import * as React from "react";
-import * as AvatarPrimitive from "@radix-ui/react-avatar";
-
 import { cn } from "@/lib/utils";
+
+import * as React from "react";
+
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
 function Avatar({
   className,
@@ -12,7 +13,7 @@ function Avatar({
       data-slot="avatar"
       className={cn(
         "relative flex size-9 shrink-0 overflow-hidden rounded-full",
-        className
+        className,
       )}
       {...props}
     />
@@ -28,7 +29,7 @@ function AvatarFallback({
       data-slot="avatar-fallback"
       className={cn(
         "flex size-full items-center justify-center rounded-full text-white text-xl font-semibold",
-        className
+        className,
       )}
       {...props}
     />

@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-
 import { CreateUserDialog } from "@/components/CreateUserDialog";
 import { Expense } from "@/components/Expense";
 import { Settlement } from "@/components/Settlement";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useOnceEffect } from "@/hooks/useOnceEffect";
+import { BASE_URL } from "@/lib/constants";
+import { User as UserType } from "@/lib/type";
+
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
-
-import { User as UserType } from "@/lib/type";
-import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
-import { useOnceEffect } from "@/hooks/useOnceEffect";
 
 export function SplitTabs() {
   const navigate = useNavigate();

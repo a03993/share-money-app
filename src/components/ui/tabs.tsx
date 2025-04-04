@@ -1,7 +1,8 @@
-import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-
 import { cn } from "@/lib/utils";
+
+import * as React from "react";
+
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 const Tabs = TabsPrimitive.Root;
 
@@ -13,7 +14,7 @@ const TabsList = React.forwardRef<
     ref={ref}
     className={cn(
       "flex py-4 px-7 items-center sm:items-baseline justify-end sm:justify-start gap-4 bg-gray-lighter text-end",
-      className
+      className,
     )}
     {...props}
   />
@@ -29,7 +30,7 @@ const TabsTrigger = React.forwardRef<
     className={cn(
       "whitespace-nowrap text-base font-semibold text-gray-base opacity-30",
       "hover:opacity-100 cursor-pointer data-[state=active]:opacity-100",
-      className
+      className,
     )}
     {...props}
   />

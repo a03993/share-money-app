@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { NoDataMessage } from "@/components/NoDataMessage";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { CheckDialogContent } from "./CheckDialogContent";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { NoDataMessage } from "@/components/NoDataMessage";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Settlement as SettlementType, User as UserType } from "@/lib/type";
+
+import { useState } from "react";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
-import { Settlement as SettlementType, User as UserType } from "@/lib/type";
+import { CheckDialogContent } from "./CheckDialogContent";
 
 function SettlementTableRow({
   id,

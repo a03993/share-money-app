@@ -1,15 +1,16 @@
+import { BASE_URL } from "@/lib/constants";
+import { Settlement as SettlementType, User as UserType } from "@/lib/type";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { toast } from "sonner";
+
+import { Summary } from "../Summary";
 import { AvatarGroup } from "./AvatarGroup";
 import { DoneSettlementCollapsible } from "./DoneSettlementCollapsible";
 import { SettlementTable } from "./SettlementTable";
 import { SplitAmount } from "./SplitAmount";
-import { Summary } from "../Summary";
-
-import { User as UserType, Settlement as SettlementType } from "@/lib/type";
-import { BASE_URL } from "@/lib/constants";
-import { toast } from "sonner";
 
 interface SettlementProps {
   users: UserType[];
@@ -39,10 +40,10 @@ export function Settlement({ users, totalAmount }: SettlementProps) {
   }, [linkId]);
 
   const pendingSettlements = settlements.filter(
-    (settlement) => settlement.status === "pending"
+    (settlement) => settlement.status === "pending",
   );
   const doneSettlements = settlements.filter(
-    (settlement) => settlement.status === "done"
+    (settlement) => settlement.status === "done",
   );
 
   if (isLoading) return null;

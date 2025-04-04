@@ -6,11 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
+import { BASE_URL } from "@/lib/constants";
 
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-
-import { BASE_URL } from "@/lib/constants";
+import { toast } from "sonner";
 
 export function CheckDialogContent({
   setIsOpen,
