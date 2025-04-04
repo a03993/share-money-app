@@ -1,5 +1,5 @@
 import { CreateLink } from "@/components/CreateLink";
-import { SplitTabs } from "@/components/SplitTabs";
+import { LinkPage } from "@/components/LinkPage";
 import { Toaster } from "@/components/ui/sonner";
 
 import { Route, Routes } from "react-router-dom";
@@ -9,7 +9,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<CreateLink />} />
-        <Route path={`/:linkId`} element={<SplitTabs />} />
+        <Route path={`/:linkId`} element={<LinkPage />} />
       </Routes>
       <Toaster />
     </>

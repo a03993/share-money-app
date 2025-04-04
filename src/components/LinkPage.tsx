@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 import { toast } from "sonner";
 
-export function SplitTabs() {
+export function LinkPage() {
   const navigate = useNavigate();
   const { linkId } = useParams();
   const [isSettled, setIsSettled] = useState(false);
@@ -87,12 +87,14 @@ export function SplitTabs() {
         <WalletIcon className="size-5 fill-gray-base" />
       </TabsTrigger>
 
-      <CreateUserDialog
-        users={users}
-        isOpen={isUserDialogOpen}
-        setIsOpen={setIsUserDialogOpen}
-        onUserCreated={fetchInitialData}
-      />
+      {!isSettled && (
+        <CreateUserDialog
+          users={users}
+          isOpen={isUserDialogOpen}
+          setIsOpen={setIsUserDialogOpen}
+          onUserCreated={fetchInitialData}
+        />
+      )}
     </>
   );
 
