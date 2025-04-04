@@ -4,7 +4,7 @@ A simple and intuitive expense sharing system built with **React**, **Vite**, an
 
 ShareMoney helps groups keep track of shared expenses and automatically calculates how much each person owes.
 
-> 💡 Designed with a modern UI using [shadcn/ui](https://ui.shadcn.com/), [Tailwind CSS](https://tailwindcss.com/), and [Heroicons](https://heroicons.com/).  
+> 💡 Designed with a modern UI using **shadcn/ui**, **Tailwind CSS**, and **Heroicons**.  
 > 🎨 Check out the [Figma design](https://www.figma.com/design/wf5gIxDnxbsqw491AKW6NV/ShareMoney?node-id=3-5&p=f&t=bmlN2nxEf5uqFQSf-0) – made from scratch!
 
 ## Table of Contents
@@ -12,7 +12,6 @@ ShareMoney helps groups keep track of shared expenses and automatically calculat
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
-- [Roadmap](#roadmap)
 - [Author](#author)
 
 ## Features
@@ -33,13 +32,13 @@ ShareMoney helps groups keep track of shared expenses and automatically calculat
 [![Heroicons](https://img.shields.io/badge/Heroicons-8B5CF6?logo=heroicons&logoColor=white)](https://heroicons.com/)
 [![React Router](https://img.shields.io/badge/React_Router-CA4245?logo=react-router&logoColor=white)](https://reactrouter.com/)
 
-- **Framework**: [React](https://reactjs.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Icons**: [Heroicons](https://heroicons.com/)
-- **Routing**: [React Router](https://reactrouter.com/) 
+- **Framework**: React
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **Icons**: Heroicons
+- **Routing**: React Router
 
 ## Getting Started
 To run this project locally:
@@ -55,20 +54,10 @@ npm install
 npm run dev
 ```
 
-Then open your browser and go to: http://localhost:5173
-
-## Roadmap
-
-🔧 **In Progress / Priority**
-- [ ] Connect to a backend service (MongoDB)
-
-💡 **Future Ideas**
-- [ ] Live Demo
-- [ ] Add smooth UI interaction animations
-- [ ] Visualize expense data using charts
+Then open your browser and go to: `http://localhost:5173`
 
 ## Author
 
-Made by @a03993
+Tina Chiu [@a03993](https://github.com/a03993)
 
 If you have any suggestions, questions, or feedback — feel free to open an issue or contribute!
