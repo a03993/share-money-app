@@ -25,10 +25,6 @@ function SettlementTableRow({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleCheckClick = () => {
-    console.log(id);
-  };
-
   return (
     <>
       <TableRow>
@@ -36,10 +32,7 @@ function SettlementTableRow({
           <Button variant="ghost" size="md">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <CheckCircleIcon
-                  className="size-5 fill-gray-light hover:fill-lime-500"
-                  onClick={handleCheckClick}
-                />
+                <CheckCircleIcon className="size-5 fill-gray-light hover:fill-lime-500" />
               </DialogTrigger>
               <CheckDialogContent
                 setIsOpen={setIsOpen}
@@ -92,12 +85,10 @@ export function SettlementTable({
 
   if (settlements.length === 0) {
     return (
-      <div className="flex-1">
-        <NoDataMessage
-          title="NO SETTLEMENT FOUND!"
-          description="Please add some expenses items in the Expenses page first."
-        />
-      </div>
+      <NoDataMessage
+        title="NO SETTLEMENT FOUND!"
+        description="Please add some expenses items in the Expenses page first."
+      />
     );
   }
 

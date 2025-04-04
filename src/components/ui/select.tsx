@@ -35,16 +35,17 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3",
-        "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:font-light data-[placeholder]:[&>span]:bg-gray-lightest",
-        "[&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1 [&_[data-slot=select-value]]:whitespace-nowrap [&_[data-slot=select-value]]:bg-gray-lightest",
+        "group rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3",
+        "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:font-light",
+        "disabled:data-[placeholder]:[&>span]:text-gray-light disabled:border-gray-light",
+        "[&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1 [&_[data-slot=select-value]]:whitespace-nowrap",
         className
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-5 stroke-gray-dark bg-gray-lightest" />
+        <ChevronDownIcon className="size-5 stroke-gray-dark group-disabled:stroke-gray-light" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -61,7 +62,10 @@ function SelectContent({
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
+          "bg-popover text-gray-dark relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
+          "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+          "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className

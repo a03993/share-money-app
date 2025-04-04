@@ -14,30 +14,30 @@ import {
 import { Plus } from "lucide-react";
 import { MultiUserSelect } from "./MultiUserSelect";
 
-import { User as UserType } from "@/lib/type";
+import {
+  User as UserType,
+  NewExpenseItem as NewExpenseItemType,
+} from "@/lib/type";
 import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 
-interface NewExpenseItem {
-  payer: string;
-  item: string;
-  price: number;
-  shared: string[];
-}
+import { XCircleIcon } from "@heroicons/react/24/outline";
 
-const DEFAULT_EXPENSE_ITEM: NewExpenseItem = {
+const DEFAULT_EXPENSE_ITEM: NewExpenseItemType = {
   payer: "",
   item: "",
   price: 0,
-  shared: [],
+  sharedBy: [],
 };
 
 export function CreateExpenseForm({
   users,
   onCreated,
+  isSettled,
 }: {
   users: UserType[];
   onCreated: () => void;
+  isSettled: boolean;
 }) {
   const { linkId } = useParams();
   const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
@@ -100,12 +100,19 @@ export function CreateExpenseForm({
 
   return (
     <div className="space-y-3">
+      {isSettled && (
+        <div className="text-sm text-gray-base md:text-start text-center flex items-center gap-1">
+          <XCircleIcon className="size-5" />
+          Add or delete expenses is not allowed.
+        </div>
+      )}
       <div className="flex flex-col md:flex-row gap-3">
         <Select
           value={newExpenseItem.payer}
           onValueChange={(value) =>
             setNewExpenseItem((prev) => ({ ...prev, payer: value }))
           }
+          disabled={isSettled}
         >
           <SelectTrigger className="flex-1">
             <SelectValue placeholder="Payer" />
@@ -134,11 +141,12 @@ export function CreateExpenseForm({
           onChange={(e) =>
             setNewExpenseItem({ ...newExpenseItem, item: e.target.value })
           }
+          disabled={isSettled}
         />
         <Input
           type="number"
           placeholder="Price"
-          className="flex-2"
+          className="flex-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0"
           min="0"
           value={newExpenseItem.price || ""}
           onChange={(e) =>
@@ -147,6 +155,7 @@ export function CreateExpenseForm({
               price: Number(e.target.value),
             })
           }
+          disabled={isSettled}
         />
       </div>
       <div className="flex items-center gap-3">
@@ -155,14 +164,16 @@ export function CreateExpenseForm({
             users={users}
             selected={selectedShared}
             onChange={setSelectedShared}
+            disabled={isSettled}
           />
         </div>
         <Button
           size="circle"
           className="group hover:drop-shadow-none hover:bg-black hover:text-white"
           onClick={createExpenseItem}
+          disabled={isSettled}
         >
-          <Plus className="size-5 stroke-gray-dark group-hover:stroke-white" />
+          <Plus className="size-5 stroke-gray-dark group-hover:stroke-white group-disabled:stroke-gray-light" />
         </Button>
       </div>
     </div>

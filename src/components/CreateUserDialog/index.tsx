@@ -16,10 +16,12 @@ import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
 import { UserIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { User as UserType } from "@/lib/type";
+import { User as UserType, UserInput as UserInputType } from "@/lib/type";
 import { BASE_URL, COLOR_CLASS_MAP } from "@/lib/constants";
 
 import { toast } from "sonner";
+
+const DEFAULT_USER_INPUT: UserInputType = { color: "#e7d3a7", name: "" };
 
 export function CreateUserDialog({
   users,
@@ -33,16 +35,22 @@ export function CreateUserDialog({
   onUserCreated: () => void;
 }) {
   const { linkId } = useParams();
-  const [userInputs, setUserInputs] = useState([
-    { color: "#e7d3a7", name: "" },
+  const [userInputs, setUserInputs] = useState<UserInputType[]>([
+    DEFAULT_USER_INPUT,
   ]);
+
+  const updateUserInputs = (index: number, key: string, value: string) => {
+    const newInputs = [...userInputs];
+    newInputs[index][key] = value;
+    setUserInputs(newInputs);
+  };
 
   const addUserInput = () => {
     if (userInputs.length >= 5) {
       toast.error("Only 5 users are allowed at a time");
       return;
     }
-    setUserInputs([...userInputs, { color: "#e7d3a7", name: "" }]);
+    setUserInputs([...userInputs, DEFAULT_USER_INPUT]);
   };
 
   const handleCreate = async () => {
@@ -73,9 +81,10 @@ export function CreateUserDialog({
 
       onUserCreated();
 
-      setUserInputs([{ color: "#e7d3a7", name: "" }]);
+      setUserInputs([DEFAULT_USER_INPUT]);
       setIsOpen(false);
     } catch (err) {
+      console.error(err);
       toast.error("Failed to create users");
     }
   };
@@ -86,7 +95,7 @@ export function CreateUserDialog({
       return;
     }
 
-    setUserInputs([{ color: "#e7d3a7", name: "" }]);
+    setUserInputs([DEFAULT_USER_INPUT]);
     setIsOpen(false);
   };
 
@@ -117,17 +126,11 @@ export function CreateUserDialog({
             key={index}
             userInputs={userInputs}
             selectedColor={input.color}
-            setSelectedColor={(color) => {
-              const newInputs = [...userInputs];
-              newInputs[index].color = color;
-              setUserInputs(newInputs);
-            }}
+            setSelectedColor={(color) =>
+              updateUserInputs(index, "color", color)
+            }
             userName={input.name}
-            setUserName={(name) => {
-              const newInputs = [...userInputs];
-              newInputs[index].name = name;
-              setUserInputs(newInputs);
-            }}
+            setUserName={(name) => updateUserInputs(index, "name", name)}
             removeUser={() => {
               const newInputs = [...userInputs];
               newInputs.splice(index, 1);

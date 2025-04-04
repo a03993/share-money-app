@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { CreateUserDialog } from "@/components/CreateUserDialog";
@@ -8,11 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 
-import {
-  SplitData,
-  User as UserType,
-  ExpenseFromAPI as ExpenseType,
-} from "@/lib/type";
+import { User as UserType } from "@/lib/type";
 import { BASE_URL } from "@/lib/constants";
 import { toast } from "sonner";
 import { useOnceEffect } from "@/hooks/useOnceEffect";
@@ -20,64 +16,36 @@ import { useOnceEffect } from "@/hooks/useOnceEffect";
 export function SplitTabs() {
   const navigate = useNavigate();
   const { linkId } = useParams();
-  const [splitData, setSplitData] = useState<SplitData | null>(null);
+  const [isSettled, setIsSettled] = useState(false);
   const [users, setUsers] = useState<UserType[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
 
-  const fetchSplitData = async () => {
+  const fetchInitialData = async () => {
     if (!linkId) return;
 
     try {
-      const [linkRes, expenseRes, userRes] = await Promise.all([
+      const [linkRes, userRes] = await Promise.all([
         fetch(`${BASE_URL}/links/${linkId}`),
-        fetch(`${BASE_URL}/expenses/${linkId}`),
         fetch(`${BASE_URL}/users/${linkId}`),
       ]);
 
-      if (!linkRes.ok || !expenseRes.ok || !userRes.ok)
+      if (!linkRes.ok || !userRes.ok)
         throw new Error("Invalid link ID or fetch failed");
 
       const linkData = await linkRes.json();
-      const expenses = await expenseRes.json();
       const usersData = await userRes.json();
 
-      // Step 1: clone users + personalExpenses initialize
-      const usersWithExpenses = usersData.map((user: UserType) => ({
-        ...user,
-        personalExpenses: [],
-      }));
-
-      // Step 2:  expenses push into user's personalExpenses
-      expenses.forEach((expense: ExpenseType) => {
-        const payerId = expense.payer._id;
-        const user = usersWithExpenses.find((u: UserType) => u._id === payerId);
-        if (user) {
-          user.personalExpenses.push({
-            item: expense.item,
-            price: expense.price,
-            payer: expense.payer,
-            sharedBy: expense.sharedBy,
-            createdAt: expense.createdAt,
-          });
-        }
-      });
-
-      setSplitData({
-        ...linkData,
-        expenses: usersWithExpenses,
-        settlements: [],
-      });
-
       setUsers(usersData);
+      setIsSettled(linkData.isSettled);
 
       if (usersData.length === 0) {
-        toast.info("No users found. Please create at least one user.");
+        toast.info("Let's create the first user and start sharing money.");
         setIsUserDialogOpen(true);
       }
     } catch (err) {
-      toast.error("Unable to fetch data");
+      toast.error("Unable to fetch data. Returning to home page.");
       navigate("/");
     } finally {
       setIsLoading(false);
@@ -86,12 +54,12 @@ export function SplitTabs() {
 
   useOnceEffect(() => {
     if (!linkId) {
-      toast.error("Link ID missing. Returning to home page");
+      toast.error("Link ID missing. Returning to home page.");
       navigate("/");
       return;
     }
 
-    fetchSplitData();
+    fetchInitialData();
   });
 
   const TabTriggers = () => (
@@ -124,7 +92,7 @@ export function SplitTabs() {
         users={users}
         isOpen={isUserDialogOpen}
         setIsOpen={setIsUserDialogOpen}
-        onUserCreated={fetchSplitData}
+        onUserCreated={fetchInitialData}
       />
     </>
   );
@@ -136,17 +104,18 @@ export function SplitTabs() {
       </TabsList>
 
       <TabsContent value="expense">
-        {!isLoading && splitData && (
+        {!isLoading && linkId && (
           <Expense
             users={users}
             totalAmount={totalAmount}
             setTotalAmount={setTotalAmount}
+            isSettled={isSettled}
           />
         )}
       </TabsContent>
 
       <TabsContent value="settlement" className="md:mt-20">
-        {!isLoading && splitData && (
+        {!isLoading && linkId && (
           <Settlement users={users} totalAmount={totalAmount} />
         )}
       </TabsContent>

@@ -11,11 +11,11 @@ export const NoDataMessage = ({
 }: NoDataMessageProps) => {
   return (
     <div
-      className={`flex items-center w-full bg-gray-lighter p-4 flex-1 ${className}`}
+      className={`flex w-full bg-gray-lighter p-4 text-base text-gray-dark ${className}`}
     >
-      <div className="flex flex-col text-base">
-        <p className="text-gray-dark">{title}</p>
-        <p className="font-light text-gray-dark">{description}</p>
+      <div className="flex flex-col ">
+        <p>{title}</p>
+        <p className="font-light">{description}</p>
       </div>
     </div>
   );

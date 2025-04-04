@@ -20,7 +20,8 @@ function ExpenseTableRow({
   price,
   sharedBy,
   onDeleted,
-}: ExpenseItemType & { onDeleted: () => void }) {
+  isSettled,
+}: ExpenseItemType & { onDeleted: () => void; isSettled: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDelete = async () => {
@@ -75,9 +76,16 @@ function ExpenseTableRow({
               <ChevronDownIcon className="size-5 fill-gray-light hover:fill-gray-base" />
             )}
           </Button>
-          <Button variant="ghost" size="md" onClick={handleDelete}>
-            <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base" />
-          </Button>
+          {!isSettled && (
+            <Button
+              variant="ghost"
+              size="md"
+              onClick={handleDelete}
+              disabled={isSettled}
+            >
+              <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base " />
+            </Button>
+          )}
         </TableCell>
       </TableRow>
       {isExpanded && (
@@ -99,9 +107,11 @@ function ExpenseTableRow({
 export function ExpenseTable({
   expensesByPerson,
   onDeleted,
+  isSettled,
 }: {
   expensesByPerson: ExpenseItemType[];
   onDeleted: () => void;
+  isSettled: boolean;
 }) {
   const groupedExpenses = [...expensesByPerson].sort((a, b) => {
     if (a.payer._id < b.payer._id) return -1;
@@ -124,6 +134,7 @@ export function ExpenseTable({
                 price={expense.price}
                 sharedBy={expense.sharedBy}
                 onDeleted={onDeleted}
+                isSettled={isSettled}
               />
             ))}
           </TableBody>

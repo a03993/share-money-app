@@ -1,33 +1,19 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { User as UserType } from "@/lib/type";
 
-export function AvatarGroup() {
+export function AvatarGroup({ users }: { users: UserType[] }) {
   return (
     <div className="flex justify-center space-x-[-8px]">
-      <Avatar>
-        <AvatarFallback className="bg-avatar-beige border-2 border-white">
-          A
-        </AvatarFallback>
-      </Avatar>
-      <Avatar>
-        <AvatarFallback className="bg-avatar-gold border-2 border-white">
-          B
-        </AvatarFallback>
-      </Avatar>
-      <Avatar>
-        <AvatarFallback className="bg-avatar-yellow border-2 border-white">
-          C
-        </AvatarFallback>
-      </Avatar>
-      <Avatar>
-        <AvatarFallback className="bg-avatar-peach border-2 border-white">
-          D
-        </AvatarFallback>
-      </Avatar>
-      <Avatar>
-        <AvatarFallback className="bg-avatar-gray border-2 border-white">
-          E
-        </AvatarFallback>
-      </Avatar>
+      {users.map((user) => (
+        <Avatar key={user._id}>
+          <AvatarFallback
+            className="border-2 border-white"
+            style={{ backgroundColor: user.color }}
+          >
+            {user.name.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+      ))}
     </div>
   );
 }

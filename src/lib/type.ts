@@ -4,6 +4,12 @@ export interface User {
   color: string;
 }
 
+export interface UserInput {
+  color: string;
+  name: string;
+  [key: string]: string;
+}
+
 export interface ExpenseItem {
   _id: string;
   item: string;
@@ -20,14 +26,14 @@ export interface ExpenseItem {
   }[];
 }
 
-export interface Expense {
-  _id: string;
-  name: string;
-  color: string;
-  personalExpenses: ExpenseItem[];
+export interface NewExpenseItem {
+  payer: string;
+  item: string;
+  price: number;
+  sharedBy: string[];
 }
 
-export interface ExpenseFromAPI {
+export interface ExpenseItemFromAPI {
   _id: string;
   item: string;
   price: number;
@@ -42,12 +48,4 @@ export interface Settlement {
   amount: number;
   to: string;
   status: string;
-}
-
-export interface SplitData {
-  id: number;
-  createdAt: string;
-  expiresAt: string;
-  expenses: Expense[];
-  settlements: Settlement[];
 }

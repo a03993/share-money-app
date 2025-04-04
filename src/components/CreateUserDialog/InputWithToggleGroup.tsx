@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
+import { UserInput as UserInputType } from "@/lib/type";
+
 const TOGGLE_ITEMS = [
   { value: "#a7958b", className: "bg-avatar-beige" },
   { value: "#bfad76", className: "bg-avatar-gold" },
@@ -11,7 +13,7 @@ const TOGGLE_ITEMS = [
 ];
 
 interface InputWithToggleGroupProps {
-  userInputs: any[];
+  userInputs: UserInputType[];
   selectedColor: string;
   setSelectedColor: (color: string) => void;
   userName: string;
@@ -28,7 +30,7 @@ export function InputWithToggleGroup({
   removeUser,
 }: InputWithToggleGroupProps) {
   return (
-    <div className="flex w-full max-w-sm items-center gap-3">
+    <div className="flex items-center gap-3">
       <Input
         type="text"
         placeholder="Name"
@@ -53,7 +55,8 @@ export function InputWithToggleGroup({
           className="font-normal"
           onClick={removeUser}
         >
-          Remove
+          <span className="hidden md:inline">Remove</span>
+          <span className="inline md:hidden">X</span>
         </Button>
       )}
     </div>

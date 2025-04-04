@@ -6,19 +6,21 @@ import {
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
+import { cn } from "@/lib/utils";
 import { User as UserType } from "@/lib/type";
 
 interface MultiUserSelectProps {
   users: UserType[];
   selected: string[];
   onChange: (selected: string[]) => void;
+  disabled?: boolean;
 }
 
 export function MultiUserSelect({
   users,
   selected,
   onChange,
+  disabled,
 }: MultiUserSelectProps) {
   const toggleUser = (id: string) => {
     if (selected.includes(id)) {
@@ -31,7 +33,12 @@ export function MultiUserSelect({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="rounded-full border border-gray-dark bg-gray-lightest p-3 cursor-pointer w-full text-left text-gray-dark flex items-center justify-between">
+        <div
+          className={cn(
+            "rounded-full border border-gray-dark bg-gray-lightest p-3 cursor-pointer w-full text-left text-gray-dark flex items-center justify-between",
+            disabled && "cursor-default text-gray-light border-gray-light"
+          )}
+        >
           {selected.length === 0 ? (
             "Share by"
           ) : (
@@ -56,7 +63,12 @@ export function MultiUserSelect({
               })}
             </div>
           )}
-          <ChevronDownIcon className="size-5 stroke-gray-dark" />
+          <ChevronDownIcon
+            className={cn(
+              "size-5 stroke-gray-dark",
+              disabled && "stroke-gray-light"
+            )}
+          />
         </div>
       </PopoverTrigger>
       <PopoverContent
@@ -82,7 +94,7 @@ export function MultiUserSelect({
                 </Avatar>
                 <span>{user.name}</span>
                 {selected.includes(user._id) && (
-                  <CheckIcon className="ml-auto h-4 w-4 text-primary" />
+                  <CheckIcon className="ml-auto size-4 text-primary" />
                 )}
               </CommandItem>
             ))}

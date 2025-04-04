@@ -19,7 +19,7 @@ interface SettlementProps {
 export function Settlement({ users, totalAmount }: SettlementProps) {
   const { linkId } = useParams();
   const [settlements, setSettlements] = useState<SettlementType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchSettlements = async () => {
     try {
@@ -30,7 +30,7 @@ export function Settlement({ users, totalAmount }: SettlementProps) {
     } catch (err) {
       toast.error("Unable to fetch settlements");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -45,13 +45,15 @@ export function Settlement({ users, totalAmount }: SettlementProps) {
     (settlement) => settlement.status === "done"
   );
 
+  if (isLoading) return null;
+
   return (
     <main className="grid md:grid-cols-3 gap-10">
       <section>
         <SplitAmount peopleCount={users.length} totalAmount={totalAmount} />
       </section>
       <section className="flex justify-center items-center">
-        <AvatarGroup />
+        <AvatarGroup users={users} />
       </section>
       <section>
         <Summary

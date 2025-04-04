@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+
 import { BASE_URL } from "@/lib/constants";
 
 export function CheckDialogContent({
@@ -52,19 +54,28 @@ export function CheckDialogContent({
       onInteractOutside={(e) => e.preventDefault()}
       onEscapeKeyDown={(e) => e.preventDefault()}
     >
-      <DialogHeader>
-        <DialogTitle>Check Settlement</DialogTitle>
-        <DialogDescription>
-          Once a settlement is marked as “done”, no more expenses can be added.
-          Click the button below if you’re ready to settle up.
+      <DialogHeader className="gap-5">
+        <DialogTitle className="flex items-center gap-2">
+          <ExclamationTriangleIcon className="size-9 fill-toast-green-base stroke-white" />
+          Check Settlement
+        </DialogTitle>
+        <DialogDescription className="flex flex-col gap-3">
+          <p>
+            Marking this settlement as done will permanently lock expense
+            editing for this group. You won’t be able to add or delete any
+            expenses.
+          </p>
+          <p className="font-bold">
+            Proceed only if everyone has finished spending.
+          </p>
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter>
-        <Button variant="secondary" onClick={handleConfirm}>
-          Confirm
-        </Button>
-        <Button variant="default" onClick={handleCancel}>
+      <DialogFooter className="mt-8">
+        <Button variant="secondary" onClick={handleCancel}>
           Cancel
+        </Button>
+        <Button variant="default" onClick={handleConfirm}>
+          Confirm
         </Button>
       </DialogFooter>
     </DialogContent>

@@ -6,17 +6,22 @@ import { CreateExpenseForm } from "./CreateExpenseForm";
 import { ExpenseTable } from "./ExpenseTable";
 import { Summary } from "../Summary";
 
-import { ExpenseFromAPI as ExpenseType, User as UserType } from "@/lib/type";
+import {
+  ExpenseItemFromAPI as ExpenseType,
+  User as UserType,
+} from "@/lib/type";
 import { BASE_URL } from "@/lib/constants";
 
 export function Expense({
   users,
   totalAmount,
   setTotalAmount,
+  isSettled,
 }: {
   users: UserType[];
   totalAmount: number;
   setTotalAmount: (total: number) => void;
+  isSettled: boolean;
 }) {
   const { linkId } = useParams();
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
@@ -48,24 +53,29 @@ export function Expense({
     setTotalAmount(totalAmount);
   }, [expenses, setTotalAmount]);
 
+  if (isLoading) return null;
+
   return (
     <main className="grid grid-cols-2 md:grid-cols-3 gap-10 gap-x-20">
-      {!isLoading && (
-        <>
-          <section className="col-span-2 md:col-span-3">
-            <CreateExpenseForm users={users} onCreated={fetchExpenses} />
-          </section>
-          <section className="col-span-2 md:col-span-1">
-            <Summary peopleCount={users.length} totalAmount={totalAmount} />
-          </section>
-          <section className="col-span-2 md:col-span-2">
-            <ExpenseTable
-              expensesByPerson={expenses}
-              onDeleted={fetchExpenses}
-            />
-          </section>
-        </>
-      )}
+      <>
+        <section className="col-span-2 md:col-span-3">
+          <CreateExpenseForm
+            users={users}
+            onCreated={fetchExpenses}
+            isSettled={isSettled}
+          />
+        </section>
+        <section className="col-span-2 md:col-span-1">
+          <Summary peopleCount={users.length} totalAmount={totalAmount} />
+        </section>
+        <section className="col-span-2 md:col-span-2">
+          <ExpenseTable
+            expensesByPerson={expenses}
+            onDeleted={fetchExpenses}
+            isSettled={isSettled}
+          />
+        </section>
+      </>
     </main>
   );
 }
