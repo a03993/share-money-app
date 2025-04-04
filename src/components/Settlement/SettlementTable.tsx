@@ -33,7 +33,7 @@ function SettlementTableRow({
           <Button variant="ghost" size="md">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <CheckCircleIcon className="size-5 fill-gray-light hover:fill-lime-500" />
+                <CheckCircleIcon className="size-5 fill-gray-light hover:fill-success-base" />
               </DialogTrigger>
               <CheckDialogContent
                 setIsOpen={setIsOpen}

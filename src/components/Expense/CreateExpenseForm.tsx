@@ -101,7 +101,7 @@ export function CreateExpenseForm({
   return (
     <div className="space-y-3">
       {isSettled && (
-        <div className="text-sm text-gray-base md:text-start text-center flex items-center gap-1">
+        <div className="text-sm text-error-base md:text-start text-center flex items-center gap-1">
           <XCircleIcon className="size-5" />
           Add or delete expenses is not allowed.
         </div>

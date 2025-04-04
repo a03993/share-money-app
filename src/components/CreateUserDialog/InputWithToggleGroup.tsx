@@ -58,7 +58,7 @@ export function InputWithToggleGroup({
         >
           <span className="hidden md:inline">Remove</span>
           <span className="inline md:hidden">
-            <XMarkIcon className="size-4" />
+            <XMarkIcon className="size-5" />
           </span>
         </Button>
       )}

@@ -41,8 +41,8 @@ export function DoneSettlementCollapsible({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <CheckCircleIcon className="size-4 fill-lime-500" />
-              <h4 className="text-sm font-semibold text-gray-dark">
+              <CheckCircleIcon className="size-5 fill-success-base" />
+              <h4 className="text-sm text-success-base">
                 {settlements.length === 0
                   ? "Done settlements is empty"
                   : settlements.length > 1

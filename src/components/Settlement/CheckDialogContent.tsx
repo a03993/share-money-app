@@ -55,7 +55,7 @@ export function CheckDialogContent({
     >
       <DialogHeader className="gap-5">
         <DialogTitle className="flex items-center gap-2">
-          <ExclamationTriangleIcon className="size-9 fill-toast-green-base stroke-white" />
+          <ExclamationTriangleIcon className="size-9 fill-success-base stroke-white" />
           Check Settlement
         </DialogTitle>
         <DialogDescription className="flex flex-col gap-3">

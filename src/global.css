@@ -19,13 +19,13 @@
 
   --white-base: #ffffff;
 
-  --toast-red-light: #fbe9e7;
-  --toast-red-base: #e64a19;
-  --toast-red-dark: #bf360c;
+  --error-light: #fbe9e7;
+  --error-base: #e64a19;
+  --error-dark: #bf360c;
 
-  --toast-green-light: #f9fbe7;
-  --toast-green-base: #cddc39;
-  --toast-green-dark: #827717;
+  --success-light: #f9fbe7;
+  --success-base: #cddc39;
+  --success-dark: #827717;
 
   --font-bungee: "Bungee", cursive;
   --font-outfit: "Outfit", sans-serif;
@@ -47,13 +47,13 @@
 
   --color-white-base: var(--white-base);
 
-  --color-toast-red-light: var(--toast-red-light);
-  --color-toast-red-base: var(--toast-red-base);
-  --color-toast-red-dark: var(--toast-red-dark);
+  --color-error-light: var(--error-light);
+  --color-error-base: var(--error-base);
+  --color-error-dark: var(--error-dark);
 
-  --color-toast-green-light: var(--toast-green-light);
-  --color-toast-green-base: var(--toast-green-base);
-  --color-toast-green-dark: var(--toast-green-dark);
+  --color-success-light: var(--success-light);
+  --color-success-base: var(--success-base);
+  --color-success-dark: var(--success-dark);
 
   --font-bungee: var(--font-bungee);
   --font-outfit: var(--font-outfit);

@@ -7,11 +7,8 @@ import { ExpenseItem as ExpenseItemType } from "@/lib/type";
 
 import { useState } from "react";
 
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  TrashIcon,
-} from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 
 function ExpenseTableRow({
@@ -72,9 +69,9 @@ function ExpenseTableRow({
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (
-              <ChevronUpIcon className="size-5 fill-gray-light hover:fill-gray-base" />
+              <ChevronUp className="size-6 stroke-gray-light stroke-2 hover:stroke-gray-base" />
             ) : (
-              <ChevronDownIcon className="size-5 fill-gray-light hover:fill-gray-base" />
+              <ChevronDown className="size-6 stroke-gray-light stroke-2 hover:stroke-gray-base" />
             )}
           </Button>
           {!isSettled && (
