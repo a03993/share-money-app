@@ -21,7 +21,7 @@ export function LinkPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
 
-  const fetchInitialData = async () => {
+  const refetchLinkData = async () => {
     if (!linkId) return;
 
     try {
@@ -58,7 +58,7 @@ export function LinkPage() {
       return;
     }
 
-    fetchInitialData();
+    refetchLinkData();
   });
 
   const TabTriggers = () => (
@@ -92,7 +92,7 @@ export function LinkPage() {
           users={users}
           isOpen={isUserDialogOpen}
           setIsOpen={setIsUserDialogOpen}
-          onUserCreated={fetchInitialData}
+          onRefetchLinkData={refetchLinkData}
         />
       )}
     </>
@@ -117,7 +117,12 @@ export function LinkPage() {
 
       <TabsContent value="settlement" className="md:mt-20">
         {!isLoading && linkId && (
-          <Settlement users={users} totalAmount={totalAmount} />
+          <Settlement
+            users={users}
+            totalAmount={totalAmount}
+            isSettled={isSettled}
+            onRefetchLinkData={refetchLinkData}
+          />
         )}
       </TabsContent>
     </Tabs>

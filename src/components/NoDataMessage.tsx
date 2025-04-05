@@ -11,7 +11,7 @@ export const NoDataMessage = ({
 }: NoDataMessageProps) => {
   return (
     <div
-      className={`flex w-full bg-gray-lighter p-4 text-base text-gray-dark ${className}`}
+      className={`flex w-full bg-gray-lighter p-4 text-base text-gray-dark rounded-md shadow-sm ${className}`}
     >
       <div className="flex flex-col ">
         <p>{title}</p>

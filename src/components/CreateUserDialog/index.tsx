@@ -20,22 +20,27 @@ import { toast } from "sonner";
 
 import { InputWithToggleGroup } from "./InputWithToggleGroup";
 
-const DEFAULT_USER_INPUT: UserInputType = { color: "#e7d3a7", name: "" };
+interface CreateUserDialogProps {
+  users: UserType[];
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  onRefetchLinkData: () => void;
+}
+
+const createDefaultUserInput = (): UserInputType => ({
+  color: "#e7d3a7",
+  name: "",
+});
 
 export function CreateUserDialog({
   users,
   isOpen,
   setIsOpen,
-  onUserCreated,
-}: {
-  users: UserType[];
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  onUserCreated: () => void;
-}) {
+  onRefetchLinkData,
+}: CreateUserDialogProps) {
   const { linkId } = useParams();
   const [userInputs, setUserInputs] = useState<UserInputType[]>([
-    DEFAULT_USER_INPUT,
+    createDefaultUserInput(),
   ]);
 
   const updateUserInputs = (index: number, key: string, value: string) => {
@@ -49,7 +54,7 @@ export function CreateUserDialog({
       toast.error("Only 5 users are allowed at a time");
       return;
     }
-    setUserInputs([...userInputs, DEFAULT_USER_INPUT]);
+    setUserInputs([...userInputs, createDefaultUserInput()]);
   };
 
   const handleCreate = async () => {
@@ -78,12 +83,11 @@ export function CreateUserDialog({
 
       toast.success("Users created successfully");
 
-      onUserCreated();
+      onRefetchLinkData();
 
-      setUserInputs([DEFAULT_USER_INPUT]);
+      setUserInputs([createDefaultUserInput()]);
       setIsOpen(false);
     } catch (err) {
-      console.error(err);
       toast.error("Failed to create users");
     }
   };
@@ -94,7 +98,7 @@ export function CreateUserDialog({
       return;
     }
 
-    setUserInputs([DEFAULT_USER_INPUT]);
+    setUserInputs([createDefaultUserInput()]);
     setIsOpen(false);
   };
 

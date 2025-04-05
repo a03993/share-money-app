@@ -13,17 +13,19 @@ import { Summary } from "../Summary";
 import { CreateExpenseForm } from "./CreateExpenseForm";
 import { ExpenseTable } from "./ExpenseTable";
 
+interface ExpenseProps {
+  users: UserType[];
+  totalAmount: number;
+  setTotalAmount: (total: number) => void;
+  isSettled: boolean;
+}
+
 export function Expense({
   users,
   totalAmount,
   setTotalAmount,
   isSettled,
-}: {
-  users: UserType[];
-  totalAmount: number;
-  setTotalAmount: (total: number) => void;
-  isSettled: boolean;
-}) {
+}: ExpenseProps) {
   const { linkId } = useParams();
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
   const [isLoading, setIsLoading] = useState(true);

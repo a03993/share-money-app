@@ -43,7 +43,7 @@ export function CreateExpenseForm({
   const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
   const [selectedShared, setSelectedShared] = useState<string[]>([]);
 
-  const createExpenseItem = async () => {
+  const handleCreate = async () => {
     if (!newExpenseItem.payer) {
       toast.error("Please select a payer before continuing");
       return;
@@ -170,7 +170,7 @@ export function CreateExpenseForm({
         <Button
           size="circle"
           className="group hover:drop-shadow-none hover:bg-black hover:text-white"
-          onClick={createExpenseItem}
+          onClick={handleCreate}
           disabled={isSettled}
         >
           <Plus className="size-5 stroke-gray-dark group-hover:stroke-white group-disabled:stroke-gray-light" />

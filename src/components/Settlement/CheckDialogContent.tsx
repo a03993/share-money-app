@@ -6,42 +6,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { BASE_URL } from "@/lib/constants";
 
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { toast } from "sonner";
 
 export function CheckDialogContent({
   setIsOpen,
-  settlementId,
-  onSuccess,
+  onStatusUpdate,
 }: {
   setIsOpen: (isOpen: boolean) => void;
-  settlementId: string;
-  onSuccess: () => void;
+  onStatusUpdate: () => void;
 }) {
-  const handleConfirm = async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/settlements/${settlementId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "done" }),
-      });
-
-      if (!res.ok) {
-        const { error } = await res.json();
-        toast.error(error || "Failed to update settlement");
-        return;
-      }
-
-      toast.success("Settlement marked as done");
-      setIsOpen(false);
-      onSuccess();
-    } catch (err) {
-      toast.error("Something went wrong");
-    }
+  const handleConfirm = () => {
+    onStatusUpdate();
+    setIsOpen(false);
   };
 
   const handleCancel = () => {

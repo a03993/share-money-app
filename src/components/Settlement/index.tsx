@@ -15,9 +15,16 @@ import { SplitAmount } from "./SplitAmount";
 interface SettlementProps {
   users: UserType[];
   totalAmount: number;
+  isSettled: boolean;
+  onRefetchLinkData: () => void;
 }
 
-export function Settlement({ users, totalAmount }: SettlementProps) {
+export function Settlement({
+  users,
+  totalAmount,
+  isSettled,
+  onRefetchLinkData,
+}: SettlementProps) {
   const { linkId } = useParams();
   const [settlements, setSettlements] = useState<SettlementType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,12 +46,8 @@ export function Settlement({ users, totalAmount }: SettlementProps) {
     if (linkId) fetchSettlements();
   }, [linkId]);
 
-  const pendingSettlements = settlements.filter(
-    (settlement) => settlement.status === "pending",
-  );
-  const doneSettlements = settlements.filter(
-    (settlement) => settlement.status === "done",
-  );
+  const pendingSettlements = settlements.filter((s) => s.status === "pending");
+  const doneSettlements = settlements.filter((s) => s.status === "done");
 
   if (isLoading) return null;
 
@@ -67,10 +70,13 @@ export function Settlement({ users, totalAmount }: SettlementProps) {
       <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3 md:mt-10">
         <SettlementTable
           users={users}
-          settlements={pendingSettlements}
+          settlements={settlements}
+          pendingSettlements={pendingSettlements}
           onStatusUpdated={fetchSettlements}
+          onRefetchLinkData={onRefetchLinkData}
+          isSettled={isSettled}
         />
-        {pendingSettlements.length > 0 && (
+        {settlements.length > 0 && (
           <DoneSettlementCollapsible
             users={users}
             settlements={doneSettlements}
