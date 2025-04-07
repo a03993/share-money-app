@@ -15,6 +15,7 @@ const buttonVariants = cva(
         secondary:
           "bg-black text-white hover:drop-shadow-[0_2px_2px_rgba(34,34,34,0.50)]",
         ghost: "bg-transparent text-black text-sm",
+        link: "bg-white border border-gray-base text-gray-base text-sm font-normal",
       },
       size: {
         default: "p-3",
