@@ -37,8 +37,9 @@ export function Expense({
 
       const data = await res.json();
       setExpenses(data);
-    } catch (err) {
-      toast.error("Unable to load expenses.");
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+      toast.error("Can not find expenses, please try again.");
     } finally {
       setIsLoading(false);
     }

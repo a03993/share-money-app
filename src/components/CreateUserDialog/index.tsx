@@ -87,8 +87,9 @@ export function CreateUserDialog({
 
       setUserInputs([createDefaultUserInput()]);
       setIsOpen(false);
-    } catch (err) {
-      toast.error("Failed to create users");
+    } catch (error) {
+      console.error("Error creating users:", error);
+      toast.error("Failed to create users, please try again.");
     }
   };
 

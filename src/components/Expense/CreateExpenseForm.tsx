@@ -93,8 +93,9 @@ export function CreateExpenseForm({
       setNewExpenseItem(DEFAULT_EXPENSE_ITEM);
       setSelectedShared([]);
       onCreated();
-    } catch (err) {
-      toast.error("Something went wrong. Please try again.");
+    } catch (error) {
+      console.error("Error creating expense:", error);
+      toast.error("Failed to add expense, please try again.");
     }
   };
 

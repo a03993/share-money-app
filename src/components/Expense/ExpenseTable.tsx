@@ -36,8 +36,9 @@ function ExpenseTableRow({
 
       toast.success("Expense deleted successfully");
       onDeleted();
-    } catch (err) {
-      toast.error("Something went wrong while deleting expense");
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+      toast.error("Failed to delete expense, please try again.");
     }
   };
 

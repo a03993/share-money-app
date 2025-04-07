@@ -40,10 +40,10 @@ export function LinkPage() {
       setIsSettled(linkData.isSettled);
 
       if (usersData.length === 0) {
-        toast.info("Let's create the first user and start sharing money.");
         setIsUserDialogOpen(true);
       }
-    } catch (err) {
+    } catch (error) {
+      console.error("Error fetching link data:", error);
       toast.error("Unable to fetch data. Returning to home page.");
       navigate("/");
     } finally {

@@ -35,8 +35,9 @@ export function Settlement({
       if (!res.ok) throw new Error("Failed to fetch settlements");
       const data = await res.json();
       setSettlements(data);
-    } catch (err) {
-      toast.error("Unable to fetch settlements");
+    } catch (error) {
+      console.error("Error fetching settlements:", error);
+      toast.error("Can not find settlements, please try again.");
     } finally {
       setIsLoading(false);
     }

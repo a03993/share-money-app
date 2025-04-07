@@ -25,7 +25,8 @@ export function CreateLink() {
       toast.success("Link generated successfully");
       navigate(`/${newLinkId}`);
     } catch (error) {
-      toast.error("Failed to create link");
+      console.error("Error creating link:", error);
+      toast.error("Failed to create link, please try again.");
     }
   };
 
