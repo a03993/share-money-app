@@ -24,7 +24,7 @@ export default function Footer() {
           Click below to copy the link and send to your debtors.
         </p>
         <Button variant="link" onClick={handleCopyLink}>
-          {currentUrl}
+          <span className="max-w-80 md:max-w-none truncate">{currentUrl}</span>
         </Button>
       </div>
     </footer>
