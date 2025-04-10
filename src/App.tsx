@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <div className="pb-40">
+      <div className="md:min-h-screen pb-35">
         <Routes>
           <Route path="/" element={<CreateLink />} />
           <Route path={`/:linkId`} element={<LinkPage />} />
