@@ -1,3 +1,4 @@
+import { LoadingSpinnerWithProgress } from "@/components/LoadingSpinnerWithProgress";
 import { BASE_URL } from "@/lib/constants";
 import { Settlement as SettlementType, User as UserType } from "@/lib/type";
 
@@ -39,7 +40,7 @@ export function Settlement({
       console.error("Error fetching settlements:", error);
       toast.error("Can not find settlements, please try again.");
     } finally {
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 500);
     }
   };
 
@@ -50,7 +51,7 @@ export function Settlement({
   const pendingSettlements = settlements.filter((s) => s.status === "pending");
   const doneSettlements = settlements.filter((s) => s.status === "done");
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinnerWithProgress isLoading={isLoading} />;
 
   return (
     <main className="grid md:grid-cols-3 gap-10">

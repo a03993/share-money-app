@@ -1,3 +1,4 @@
+import { LoadingSpinnerWithProgress } from "@/components/LoadingSpinnerWithProgress";
 import { BASE_URL } from "@/lib/constants";
 import {
   ExpenseItemFromAPI as ExpenseType,
@@ -41,7 +42,7 @@ export function Expense({
       console.error("Error fetching expenses:", error);
       toast.error("Can not find expenses, please try again.");
     } finally {
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 500);
     }
   };
 
@@ -57,7 +58,7 @@ export function Expense({
     setTotalAmount(totalAmount);
   }, [expenses, setTotalAmount]);
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinnerWithProgress isLoading={isLoading} />;
 
   return (
     <main className="grid grid-cols-2 md:grid-cols-3 gap-10 gap-x-20">
