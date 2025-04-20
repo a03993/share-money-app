@@ -19,6 +19,7 @@ interface ExpenseProps {
   totalAmount: number;
   setTotalAmount: (total: number) => void;
   isSettled: boolean;
+  setIsUserDialogOpen: (isOpen: boolean) => void;
 }
 
 export function Expense({
@@ -26,6 +27,7 @@ export function Expense({
   totalAmount,
   setTotalAmount,
   isSettled,
+  setIsUserDialogOpen,
 }: ExpenseProps) {
   const { linkId } = useParams();
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
@@ -68,6 +70,7 @@ export function Expense({
             users={users}
             onCreated={fetchExpenses}
             isSettled={isSettled}
+            setIsUserDialogOpen={setIsUserDialogOpen}
           />
         </section>
         <section className="col-span-2 md:col-span-1">

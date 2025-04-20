@@ -30,15 +30,19 @@ const DEFAULT_EXPENSE_ITEM: NewExpenseItemType = {
   sharedBy: [],
 };
 
+interface CreateExpenseFormProps {
+  users: UserType[];
+  onCreated: () => void;
+  isSettled: boolean;
+  setIsUserDialogOpen: (isOpen: boolean) => void;
+}
+
 export function CreateExpenseForm({
   users,
   onCreated,
   isSettled,
-}: {
-  users: UserType[];
-  onCreated: () => void;
-  isSettled: boolean;
-}) {
+  setIsUserDialogOpen,
+}: CreateExpenseFormProps) {
   const { linkId } = useParams();
   const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
   const [selectedShared, setSelectedShared] = useState<string[]>([]);
@@ -132,6 +136,15 @@ export function CreateExpenseForm({
                 {user.name}
               </SelectItem>
             ))}
+            <hr className="border-gray-base m-1" />
+            <Button
+              variant="ghost"
+              size="md"
+              className="text-gray-dark font-normal rounded-sm"
+              onClick={() => setIsUserDialogOpen(true)}
+            >
+              <span>+ Add new payer</span>
+            </Button>
           </SelectContent>
         </Select>
         <Input
@@ -166,6 +179,7 @@ export function CreateExpenseForm({
             selected={selectedShared}
             onChange={setSelectedShared}
             disabled={isSettled}
+            onAddUser={() => setIsUserDialogOpen(true)}
           />
         </div>
         <Button

@@ -111,6 +111,7 @@ export function LinkPage() {
             totalAmount={totalAmount}
             setTotalAmount={setTotalAmount}
             isSettled={isSettled}
+            setIsUserDialogOpen={setIsUserDialogOpen}
           />
         )}
       </TabsContent>

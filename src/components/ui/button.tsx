@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "bg-gray-light text-gray-base hover:drop-shadow-[0_2px_2px_rgba(34,34,34,0.50)] disabled:bg-gray-lightest",
         secondary:
           "bg-black text-white hover:drop-shadow-[0_2px_2px_rgba(34,34,34,0.50)]",
-        ghost: "bg-transparent text-black text-sm",
+        ghost: "bg-transparent text-black text-sm hover:bg-gray-light/50",
         link: "bg-white border border-gray-base text-gray-base text-sm font-normal",
       },
       size: {

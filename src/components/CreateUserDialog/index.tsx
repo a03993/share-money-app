@@ -142,11 +142,7 @@ export function CreateUserDialog({
             }}
           />
         ))}
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-light/50"
-          onClick={addUserInput}
-        >
+        <Button variant="ghost" onClick={addUserInput}>
           + ADD ANOTHER USER
         </Button>
         <DialogFooter>

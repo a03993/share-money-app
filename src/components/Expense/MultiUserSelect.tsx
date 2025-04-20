@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import {
   Popover,
@@ -15,6 +16,7 @@ interface MultiUserSelectProps {
   selected: string[];
   onChange: (selected: string[]) => void;
   disabled?: boolean;
+  onAddUser: () => void;
 }
 
 export function MultiUserSelect({
@@ -22,6 +24,7 @@ export function MultiUserSelect({
   selected,
   onChange,
   disabled,
+  onAddUser,
 }: MultiUserSelectProps) {
   const toggleUser = (id: string) => {
     if (selected.includes(id)) {
@@ -99,6 +102,15 @@ export function MultiUserSelect({
                 )}
               </CommandItem>
             ))}
+            <hr className="border-gray-base m-1" />
+            <Button
+              variant="ghost"
+              size="md"
+              className="text-gray-dark font-normal rounded-sm w-full"
+              onClick={onAddUser}
+            >
+              <span>+ Add new payer</span>
+            </Button>
           </CommandGroup>
         </Command>
       </PopoverContent>
