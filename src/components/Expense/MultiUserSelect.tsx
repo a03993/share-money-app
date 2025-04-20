@@ -44,7 +44,7 @@ export function MultiUserSelect({
           )}
         >
           {selected.length === 0 ? (
-            "Share by"
+            <span className="font-light">Share by</span>
           ) : (
             <div className="flex items-center space-x-[-3px]">
               {selected.map((id) => {
