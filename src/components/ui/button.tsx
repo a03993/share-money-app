@@ -21,6 +21,7 @@ const buttonVariants = cva(
         default: "p-3",
         sm: "p-0",
         md: "p-1",
+        lg: "p-2",
         circle: "size-12",
       },
     },

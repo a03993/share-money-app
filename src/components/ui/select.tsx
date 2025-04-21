@@ -36,7 +36,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "group rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3 cursor-pointer",
+        "group rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3 cursor-pointer outline-none",
         "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:font-light",
         "disabled:data-[placeholder]:[&>span]:text-gray-light disabled:border-gray-light",
         "[&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1 [&_[data-slot=select-value]]:whitespace-nowrap",
@@ -63,7 +63,7 @@ function SelectContent({
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "bg-gray-lightest text-gray-dark relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
+          "bg-gray-lightest text-gray-dark relative z-50 max-h-[16rem] min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
           "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
           "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
@@ -112,11 +112,9 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "text-gray-dark relative flex w-full cursor-pointer items-center gap-2 rounded-sm p-2 text-sm outline-hidden select-none",
+        "text-gray-dark relative flex w-full cursor-pointer items-center gap-2 rounded-sm p-2 text-sm outline-none select-none",
         "*:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         "hover:bg-gray-light/50",
-        "focus:bg-accent focus:text-accent-foreground",
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
       {...props}

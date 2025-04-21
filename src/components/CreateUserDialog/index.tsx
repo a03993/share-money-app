@@ -25,6 +25,9 @@ interface CreateUserDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   onRefetchLinkData: () => void;
+  addPayer: (id: string) => void;
+  addSharedBy: (ids: string[]) => void;
+  source: "payer" | "sharedBy" | null;
 }
 
 const createDefaultUserInput = (): UserInputType => ({
@@ -32,11 +35,19 @@ const createDefaultUserInput = (): UserInputType => ({
   name: "",
 });
 
+const style = {
+  desktop: "sm:block hidden",
+  mobile: "sm:hidden",
+};
+
 export function CreateUserDialog({
   users,
   isOpen,
   setIsOpen,
   onRefetchLinkData,
+  addPayer,
+  addSharedBy,
+  source,
 }: CreateUserDialogProps) {
   const { linkId } = useParams();
   const [userInputs, setUserInputs] = useState<UserInputType[]>([
@@ -64,6 +75,8 @@ export function CreateUserDialog({
       return;
     }
 
+    const newUsers: UserType[] = [];
+
     try {
       for (const input of userInputs) {
         const res = await fetch(`${BASE_URL}/users/${linkId}`, {
@@ -78,6 +91,17 @@ export function CreateUserDialog({
         if (!res.ok) {
           const err = await res.json();
           throw new Error(err.error || "Failed to create user");
+        }
+
+        const createdUser: UserType = await res.json();
+        newUsers.push(createdUser);
+      }
+
+      if (newUsers.length > 0) {
+        if (source === "payer") {
+          addPayer(newUsers[0]._id);
+        } else if (source === "sharedBy") {
+          addSharedBy(newUsers.map((u) => u._id));
         }
       }
 
@@ -106,11 +130,15 @@ export function CreateUserDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* Desktop */}
-      <DialogTrigger className="text-gray-base font-semibold opacity-30 hover:opacity-100 cursor-pointer sm:block hidden">
+      <DialogTrigger
+        className={`text-gray-base font-semibold opacity-30 hover:opacity-100 cursor-pointer ${style.desktop}`}
+      >
         CREATE USER
       </DialogTrigger>
       {/* Mobile */}
-      <DialogTrigger className="opacity-30 hover:opacity-100 cursor-pointer sm:hidden">
+      <DialogTrigger
+        className={`opacity-30 hover:opacity-100 cursor-pointer ${style.mobile}`}
+      >
         <UserCircleIcon className="size-5 fill-gray-base" />
       </DialogTrigger>
       <DialogContent

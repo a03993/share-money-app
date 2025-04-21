@@ -2,6 +2,7 @@ import { LoadingSpinnerWithProgress } from "@/components/LoadingSpinnerWithProgr
 import { BASE_URL } from "@/lib/constants";
 import {
   ExpenseItemFromAPI as ExpenseType,
+  NewExpenseItem as NewExpenseItemType,
   User as UserType,
 } from "@/lib/type";
 
@@ -16,18 +17,24 @@ import { ExpenseTable } from "./ExpenseTable";
 
 interface ExpenseProps {
   users: UserType[];
+  newExpenseItem: NewExpenseItemType;
+  setNewExpenseItem: (newExpenseItem: NewExpenseItemType) => void;
   totalAmount: number;
   setTotalAmount: (total: number) => void;
   isSettled: boolean;
   setIsUserDialogOpen: (isOpen: boolean) => void;
+  setCreateUserSource: (source: "payer" | "sharedBy" | null) => void;
 }
 
 export function Expense({
   users,
+  newExpenseItem,
+  setNewExpenseItem,
   totalAmount,
   setTotalAmount,
   isSettled,
   setIsUserDialogOpen,
+  setCreateUserSource,
 }: ExpenseProps) {
   const { linkId } = useParams();
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
@@ -63,27 +70,28 @@ export function Expense({
   if (isLoading) return <LoadingSpinnerWithProgress isLoading={isLoading} />;
 
   return (
-    <main className="grid grid-cols-2 md:grid-cols-3 gap-10 gap-x-20">
-      <>
-        <section className="col-span-2 md:col-span-3">
-          <CreateExpenseForm
-            users={users}
-            onCreated={fetchExpenses}
-            isSettled={isSettled}
-            setIsUserDialogOpen={setIsUserDialogOpen}
-          />
-        </section>
-        <section className="col-span-2 md:col-span-1">
-          <Summary peopleCount={users.length} totalAmount={totalAmount} />
-        </section>
-        <section className="col-span-2 md:col-span-2">
-          <ExpenseTable
-            expensesByPerson={expenses}
-            onDeleted={fetchExpenses}
-            isSettled={isSettled}
-          />
-        </section>
-      </>
+    <main className="grid grid-cols-2 gap-10 gap-x-20">
+      <section className="col-span-2 md:col-span-3">
+        <CreateExpenseForm
+          users={users}
+          newExpenseItem={newExpenseItem}
+          setNewExpenseItem={setNewExpenseItem}
+          onCreated={fetchExpenses}
+          isSettled={isSettled}
+          setIsUserDialogOpen={setIsUserDialogOpen}
+          setCreateUserSource={setCreateUserSource}
+        />
+      </section>
+      <section className="col-span-2 md:col-span-1">
+        <Summary peopleCount={users.length} totalAmount={totalAmount} />
+      </section>
+      <section className="col-span-2 md:col-span-2">
+        <ExpenseTable
+          expensesByPerson={expenses}
+          onDeleted={fetchExpenses}
+          isSettled={isSettled}
+        />
+      </section>
     </main>
   );
 }

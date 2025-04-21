@@ -44,7 +44,7 @@ export function ExpenseTableRow({
   return (
     <>
       <TableRow>
-        <TableCell>
+        <TableCell className="w-full">
           <div className="flex items-center space-x-4">
             <Avatar>
               <AvatarFallback style={{ backgroundColor: payer.color }}>
@@ -57,12 +57,8 @@ export function ExpenseTableRow({
             </div>
           </div>
         </TableCell>
-        <TableCell className="hidden sm:block"></TableCell>
-        <TableCell></TableCell>
-        <TableCell className="hidden sm:block"></TableCell>
-        <TableCell></TableCell>
-        <TableCell className="text-right">${price.toLocaleString()}</TableCell>
-        <TableCell>
+        <TableCell className="w-full text-right">${price.toLocaleString()}</TableCell>
+        <TableCell className="w-full">
           <Button
             variant="ghost"
             size="md"
@@ -75,13 +71,8 @@ export function ExpenseTableRow({
             )}
           </Button>
           {!isSettled && (
-            <Button
-              variant="ghost"
-              size="md"
-              onClick={handleDelete}
-              disabled={isSettled}
-            >
-              <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base " />
+            <Button variant="ghost" size="md" onClick={handleDelete}>
+              <TrashIcon className="size-5 fill-gray-light hover:fill-gray-base" />
             </Button>
           )}
         </TableCell>
@@ -89,8 +80,8 @@ export function ExpenseTableRow({
       {isExpanded && (
         <TableRow>
           <TableCell
-            colSpan={7}
-            className="px-4 bg-gray-lighter text-sm font-light text-gray-dark"
+            colSpan={3}
+            className="px-4 bg-gray-lighter text-sm font-light text-gray-dark whitespace-normal"
           >
             Shared by:
             <br />

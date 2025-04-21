@@ -18,13 +18,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 md:relative bg-gray-lighter p-5 h-30">
+    <footer className="fixed bottom-0 left-0 right-0 z-50 bg-gray-lighter p-5 h-30">
       <div className="flex flex-col items-center justify-center gap-2 text-sm">
         <p className="text-black">
           Click below to copy the link and send to your debtors.
         </p>
         <Button variant="link" onClick={handleCopyLink}>
-          <span className="max-w-80 md:max-w-none truncate">{currentUrl}</span>
+          <span className="max-w-80 truncate">{currentUrl}</span>
         </Button>
       </div>
     </footer>

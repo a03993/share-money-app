@@ -14,38 +14,35 @@ import {
   User as UserType,
 } from "@/lib/type";
 
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
+import { AddUserButton } from "./AddUserButton";
 import { MultiUserSelect } from "./MultiUserSelect";
-
-const DEFAULT_EXPENSE_ITEM: NewExpenseItemType = {
-  payer: "",
-  item: "",
-  price: 0,
-  sharedBy: [],
-};
 
 interface CreateExpenseFormProps {
   users: UserType[];
+  newExpenseItem: NewExpenseItemType;
+  setNewExpenseItem: (newExpenseItem: NewExpenseItemType) => void;
   onCreated: () => void;
   isSettled: boolean;
   setIsUserDialogOpen: (isOpen: boolean) => void;
+  setCreateUserSource: (source: "payer" | "sharedBy" | null) => void;
 }
 
 export function CreateExpenseForm({
   users,
+  newExpenseItem,
+  setNewExpenseItem,
   onCreated,
   isSettled,
   setIsUserDialogOpen,
+  setCreateUserSource,
 }: CreateExpenseFormProps) {
   const { linkId } = useParams();
-  const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
-  const [selectedShared, setSelectedShared] = useState<string[]>([]);
 
   const handleCreate = async () => {
     if (!newExpenseItem.payer) {
@@ -60,7 +57,7 @@ export function CreateExpenseForm({
       toast.error("Please enter a price greater than zero");
       return;
     }
-    if (selectedShared.length === 0) {
+    if (newExpenseItem.sharedBy.length === 0) {
       toast.error("Please select at least one person to share with");
       return;
     }
@@ -69,7 +66,7 @@ export function CreateExpenseForm({
       item: newExpenseItem.item,
       price: newExpenseItem.price,
       payer: newExpenseItem.payer,
-      sharedBy: selectedShared,
+      sharedBy: newExpenseItem.sharedBy,
     };
 
     try {
@@ -94,8 +91,12 @@ export function CreateExpenseForm({
 
       toast.success("Expense added successfully");
 
-      setNewExpenseItem(DEFAULT_EXPENSE_ITEM);
-      setSelectedShared([]);
+      setNewExpenseItem({
+        payer: "",
+        item: "",
+        price: 0,
+        sharedBy: [],
+      });
       onCreated();
     } catch (error) {
       console.error("Error creating expense:", error);
@@ -115,7 +116,7 @@ export function CreateExpenseForm({
         <Select
           value={newExpenseItem.payer}
           onValueChange={(value) =>
-            setNewExpenseItem((prev) => ({ ...prev, payer: value }))
+            setNewExpenseItem({ ...newExpenseItem, payer: value })
           }
           disabled={isSettled}
         >
@@ -137,14 +138,12 @@ export function CreateExpenseForm({
               </SelectItem>
             ))}
             <hr className="border-gray-base m-1" />
-            <Button
-              variant="ghost"
-              size="md"
-              className="text-gray-dark font-normal rounded-sm"
-              onClick={() => setIsUserDialogOpen(true)}
-            >
-              <span>+ Add new payer</span>
-            </Button>
+            <AddUserButton
+              onClick={() => {
+                setCreateUserSource("payer");
+                setIsUserDialogOpen(true);
+              }}
+            />
           </SelectContent>
         </Select>
         <Input
@@ -176,10 +175,15 @@ export function CreateExpenseForm({
         <div className="flex-1">
           <MultiUserSelect
             users={users}
-            selected={selectedShared}
-            onChange={setSelectedShared}
+            selected={newExpenseItem.sharedBy}
+            onChange={(selectedUsers) =>
+              setNewExpenseItem({ ...newExpenseItem, sharedBy: selectedUsers })
+            }
             disabled={isSettled}
-            onAddUser={() => setIsUserDialogOpen(true)}
+            onAddUser={() => {
+              setCreateUserSource("sharedBy");
+              setIsUserDialogOpen(true);
+            }}
           />
         </div>
         <Button

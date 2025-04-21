@@ -87,9 +87,7 @@ export function SettlementTableRow({
             <p className="text-xs font-light text-gray-dark">{from.name}</p>
           </div>
         </TableCell>
-        <TableCell className="hidden sm:block"></TableCell>
         <TableCell>pay</TableCell>
-        <TableCell className="hidden sm:block"></TableCell>
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
@@ -100,7 +98,6 @@ export function SettlementTableRow({
             <p className="text-xs font-light text-gray-dark">{to.name}</p>
           </div>
         </TableCell>
-        <TableCell className="hidden sm:block"></TableCell>
         <TableCell className="text-left">${amount.toLocaleString()}</TableCell>
       </TableRow>
     </>

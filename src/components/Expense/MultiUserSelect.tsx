@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import {
   Popover,
@@ -10,6 +9,9 @@ import { User as UserType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
+
+import { AvatarGroup } from "../Settlement/AvatarGroup";
+import { AddUserButton } from "./AddUserButton";
 
 interface MultiUserSelectProps {
   users: UserType[];
@@ -46,26 +48,11 @@ export function MultiUserSelect({
           {selected.length === 0 ? (
             <span className="font-light">Share by</span>
           ) : (
-            <div className="flex items-center space-x-[-3px]">
-              {selected.map((id) => {
-                const user = users.find((user) => user._id === id);
-                return (
-                  user && (
-                    <Avatar
-                      key={user._id}
-                      className="size-7 outline outline-2 outline-gray-lightest"
-                    >
-                      <AvatarFallback
-                        className="text-base"
-                        style={{ backgroundColor: user.color }}
-                      >
-                        {user.name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                  )
-                );
-              })}
-            </div>
+            <AvatarGroup
+              users={users.filter((user) => selected.includes(user._id))}
+              maxDisplay={8}
+              select
+            />
           )}
           <ChevronDownIcon
             className={cn(
@@ -82,6 +69,26 @@ export function MultiUserSelect({
       >
         <Command>
           <CommandGroup>
+            <CommandItem
+              onSelect={() => {
+                if (selected.length === users.length) {
+                  onChange([]);
+                } else {
+                  onChange(users.map((u) => u._id));
+                }
+              }}
+              className="flex items-center justify-between font-normal"
+            >
+              <span>ALL</span>
+              <CheckIcon
+                className={cn(
+                  "size-4",
+                  selected.length === users.length
+                    ? "text-primary"
+                    : "text-transparent",
+                )}
+              />
+            </CommandItem>
             {users.map((user) => (
               <CommandItem
                 key={user._id}
@@ -103,14 +110,7 @@ export function MultiUserSelect({
               </CommandItem>
             ))}
             <hr className="border-gray-base m-1" />
-            <Button
-              variant="ghost"
-              size="md"
-              className="text-gray-dark font-normal rounded-sm w-full"
-              onClick={onAddUser}
-            >
-              <span>+ Add new payer</span>
-            </Button>
+            <AddUserButton onClick={onAddUser} />
           </CommandGroup>
         </Command>
       </PopoverContent>

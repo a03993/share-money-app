@@ -4,7 +4,10 @@ import { Settlement } from "@/components/Settlement";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useOnceEffect } from "@/hooks/useOnceEffect";
 import { BASE_URL } from "@/lib/constants";
-import { User as UserType } from "@/lib/type";
+import {
+  NewExpenseItem as NewExpenseItemType,
+  User as UserType,
+} from "@/lib/type";
 
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,14 +15,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/solid";
 import { toast } from "sonner";
 
+const DEFAULT_EXPENSE_ITEM: NewExpenseItemType = {
+  payer: "",
+  item: "",
+  price: 0,
+  sharedBy: [],
+};
+
 export function LinkPage() {
   const navigate = useNavigate();
   const { linkId } = useParams();
   const [isSettled, setIsSettled] = useState(false);
   const [users, setUsers] = useState<UserType[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
+  const [newExpenseItem, setNewExpenseItem] = useState(DEFAULT_EXPENSE_ITEM);
+  const [createUserSource, setCreateUserSource] = useState<
+    "payer" | "sharedBy" | null
+  >(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const refetchLinkData = async () => {
     if (!linkId) return;
@@ -72,18 +86,18 @@ export function LinkPage() {
       </TabsTrigger>
 
       {/* Desktop Tabs */}
-      <TabsTrigger value="expense" className="sm:block hidden">
+      <TabsTrigger value="expense" isDesktop>
         EXPENSE
       </TabsTrigger>
-      <TabsTrigger value="settlement" className="sm:block hidden">
+      <TabsTrigger value="settlement" isDesktop>
         SETTLEMENT
       </TabsTrigger>
 
       {/* Mobile Tabs */}
-      <TabsTrigger value="expense" className="sm:hidden">
+      <TabsTrigger value="expense" isMobile>
         <CurrencyDollarIcon className="size-5 fill-gray-base" />
       </TabsTrigger>
-      <TabsTrigger value="settlement" className="sm:hidden">
+      <TabsTrigger value="settlement" isMobile>
         <WalletIcon className="size-5 fill-gray-base" />
       </TabsTrigger>
 
@@ -93,6 +107,16 @@ export function LinkPage() {
           isOpen={isUserDialogOpen}
           setIsOpen={setIsUserDialogOpen}
           onRefetchLinkData={refetchLinkData}
+          source={createUserSource}
+          addPayer={(id) =>
+            setNewExpenseItem((prev) => ({ ...prev, payer: id }))
+          }
+          addSharedBy={(ids) =>
+            setNewExpenseItem((prev) => ({
+              ...prev,
+              sharedBy: Array.from(new Set([...prev.sharedBy, ...ids])),
+            }))
+          }
         />
       )}
     </>
@@ -100,7 +124,7 @@ export function LinkPage() {
 
   return (
     <Tabs defaultValue="expense">
-      <TabsList className="relative">
+      <TabsList className="fixed top-0 left-0 right-0 z-50">
         <TabTriggers />
       </TabsList>
 
@@ -108,15 +132,18 @@ export function LinkPage() {
         {!isLoading && linkId && (
           <Expense
             users={users}
+            newExpenseItem={newExpenseItem}
+            setNewExpenseItem={setNewExpenseItem}
             totalAmount={totalAmount}
             setTotalAmount={setTotalAmount}
             isSettled={isSettled}
             setIsUserDialogOpen={setIsUserDialogOpen}
+            setCreateUserSource={setCreateUserSource}
           />
         )}
       </TabsContent>
 
-      <TabsContent value="settlement" className="md:mt-20">
+      <TabsContent value="settlement">
         {!isLoading && linkId && (
           <Settlement
             users={users}

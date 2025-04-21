@@ -23,13 +23,18 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+    isMobile?: boolean;
+    isDesktop?: boolean;
+  }
+>(({ isMobile, isDesktop, className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
       "whitespace-nowrap text-base font-semibold text-gray-base opacity-30",
       "hover:opacity-100 cursor-pointer data-[state=active]:opacity-100",
+      isMobile && "sm:hidden",
+      isDesktop && "sm:block hidden",
       className,
     )}
     {...props}

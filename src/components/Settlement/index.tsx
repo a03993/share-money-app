@@ -59,7 +59,7 @@ export function Settlement({
         <SplitAmount peopleCount={users.length} totalAmount={totalAmount} />
       </section>
       <section className="flex justify-center items-center">
-        <AvatarGroup users={users} />
+        <AvatarGroup users={users} maxDisplay={4} />
       </section>
       <section>
         <Summary
