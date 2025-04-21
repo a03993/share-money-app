@@ -55,13 +55,9 @@ export function Settlement({
 
   return (
     <main className="grid md:grid-cols-3 gap-10">
-      <section>
+      <section className="flex items-center justify-center gap-5 flex-col md:flex-row md:gap-15 md:col-span-3 md:mt-5">
         <SplitAmount peopleCount={users.length} totalAmount={totalAmount} />
-      </section>
-      <section className="flex justify-center items-center">
         <AvatarGroup users={users} maxDisplay={4} />
-      </section>
-      <section>
         <Summary
           className="gap-5"
           peopleCount={users.length}
@@ -69,7 +65,7 @@ export function Settlement({
           inSettlement
         />
       </section>
-      <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3 md:mt-10">
+      <section className="flex gap-5 flex-col mt-5 md:flex-row md:gap-15 md:col-span-3">
         <SettlementTable
           users={users}
           settlements={settlements}

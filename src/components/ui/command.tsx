@@ -14,8 +14,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      "overflow-x-hidden overflow-y-auto max-h-[16rem] rounded-md bg-gray-lightest text-gray-dark",
-
+      "overflow-x-hidden overflow-y-auto max-h-[16rem] rounded-md bg-gray-lightest text-gray-dark scrollbar-hide",
       className,
     )}
     {...props}

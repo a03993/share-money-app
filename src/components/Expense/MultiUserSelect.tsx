@@ -41,7 +41,7 @@ export function MultiUserSelect({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "rounded-full border border-gray-dark bg-gray-lightest p-3 cursor-pointer w-full text-left text-gray-dark flex items-center justify-between",
+            "rounded-full border border-gray-dark bg-gray-lightest p-3 cursor-pointer w-full text-left text-gray-dark flex items-center justify-between h-13",
             disabled && "cursor-default text-gray-light border-gray-light",
           )}
         >
@@ -77,18 +77,11 @@ export function MultiUserSelect({
                   onChange(users.map((u) => u._id));
                 }
               }}
-              className="flex items-center justify-between font-normal"
+              className="flex items-center justify-center font-normal"
             >
-              <span>ALL</span>
-              <CheckIcon
-                className={cn(
-                  "size-4",
-                  selected.length === users.length
-                    ? "text-primary"
-                    : "text-transparent",
-                )}
-              />
+              <span>Select All</span>
             </CommandItem>
+            <hr className="border-gray-base m-1" />
             {users.map((user) => (
               <CommandItem
                 key={user._id}

@@ -14,6 +14,7 @@ import {
   User as UserType,
 } from "@/lib/type";
 
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { XCircleIcon } from "@heroicons/react/24/outline";
@@ -43,6 +44,7 @@ export function CreateExpenseForm({
   setCreateUserSource,
 }: CreateExpenseFormProps) {
   const { linkId } = useParams();
+  const [payerSelectOpen, setPayerSelectOpen] = useState(false);
 
   const handleCreate = async () => {
     if (!newExpenseItem.payer) {
@@ -118,9 +120,11 @@ export function CreateExpenseForm({
           onValueChange={(value) =>
             setNewExpenseItem({ ...newExpenseItem, payer: value })
           }
+          open={payerSelectOpen}
+          onOpenChange={setPayerSelectOpen}
           disabled={isSettled}
         >
-          <SelectTrigger className="flex-1">
+          <SelectTrigger className="min-w-40">
             <SelectValue placeholder="Payer" />
           </SelectTrigger>
           <SelectContent className="bg-gray-lightest">
@@ -142,6 +146,7 @@ export function CreateExpenseForm({
               onClick={() => {
                 setCreateUserSource("payer");
                 setIsUserDialogOpen(true);
+                setPayerSelectOpen(false);
               }}
             />
           </SelectContent>
