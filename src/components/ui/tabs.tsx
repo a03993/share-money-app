@@ -52,7 +52,7 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn("flex justify-center items-center mt-30 mb-40", className)}
+    className={cn("flex justify-center items-center pt-30 pb-40", className)}
     {...props}
   />
 ));
