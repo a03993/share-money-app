@@ -1,3 +1,4 @@
+// customized from shadcn
 import { cn } from "@/lib/utils";
 
 import * as React from "react";
@@ -13,7 +14,8 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "flex py-4 px-7 items-center sm:items-baseline justify-end sm:justify-start gap-4 bg-gray-lighter text-end",
+      "flex h-13 px-7 items-center justify-end sm:justify-start gap-4 bg-gray-lighter",
+      "fixed top-0 left-0 right-0 z-50",
       className,
     )}
     {...props}
@@ -26,8 +28,9 @@ const TabsTrigger = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
     isMobile?: boolean;
     isDesktop?: boolean;
+    isLogo?: boolean;
   }
->(({ isMobile, isDesktop, className, ...props }, ref) => (
+>(({ isMobile, isDesktop, isLogo, className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -35,6 +38,7 @@ const TabsTrigger = React.forwardRef<
       "hover:opacity-100 cursor-pointer data-[state=active]:opacity-100",
       isMobile && "sm:hidden",
       isDesktop && "sm:block hidden",
+      isLogo && "text-2xl text-black font-black opacity-100",
       className,
     )}
     {...props}
@@ -48,7 +52,7 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn("flex justify-center items-center mt-15", className)}
+    className={cn("flex justify-center items-center mt-30 mb-40", className)}
     {...props}
   />
 ));

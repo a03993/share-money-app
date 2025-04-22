@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BASE_URL } from "@/lib/constants";
+import { COLOR_CLASS_MAP } from "@/lib/constants";
 import {
   NewExpenseItem as NewExpenseItemType,
   User as UserType,
@@ -124,16 +125,16 @@ export function CreateExpenseForm({
           onOpenChange={setPayerSelectOpen}
           disabled={isSettled}
         >
-          <SelectTrigger className="min-w-40">
+          <SelectTrigger>
             <SelectValue placeholder="Payer" />
           </SelectTrigger>
-          <SelectContent className="bg-gray-lightest">
+          <SelectContent>
             {users.map((user) => (
               <SelectItem key={user._id} value={user._id}>
-                <Avatar className="size-7">
+                <Avatar size="sm">
                   <AvatarFallback
-                    className="text-base"
-                    style={{ backgroundColor: user.color }}
+                    size="sm"
+                    className={`bg-${COLOR_CLASS_MAP[user.color]}`}
                   >
                     {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
@@ -164,7 +165,7 @@ export function CreateExpenseForm({
         <Input
           type="number"
           placeholder="Price"
-          className="flex-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0"
+          className="flex-2"
           min="0"
           value={newExpenseItem.price || ""}
           onChange={(e) =>

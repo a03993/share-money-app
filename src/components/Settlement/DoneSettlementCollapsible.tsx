@@ -37,7 +37,7 @@ export function DoneSettlementCollapsible({
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
-          className="w-[300px] space-y-2"
+          className="w-75 space-y-2"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">

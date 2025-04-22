@@ -1,10 +1,29 @@
-import { toggleVariants } from "@/components/ui/toggle";
+// customized from shadcn
 import { cn } from "@/lib/utils";
 
 import * as React from "react";
 
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
-import { type VariantProps } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
+
+const toggleVariants = cva(
+  "inline-flex items-center justify-center rounded-full cursor-pointer",
+  {
+    variants: {
+      variant: {
+        default: "",
+        outline: "outline outline-1 outline-gray-dark outline-offset-3",
+      },
+      size: {
+        default: "size-7",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+);
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants>

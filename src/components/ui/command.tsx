@@ -1,3 +1,4 @@
+// customized from shadcn
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -109,7 +110,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex gap-2 select-none items-center rounded-sm p-2 text-sm outline-none cursor-pointer",
+      "relative flex p-2 gap-2 items-center rounded-sm text-sm select-none outline-none cursor-pointer",
       "hover:bg-gray-light/50",
       "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
       className,

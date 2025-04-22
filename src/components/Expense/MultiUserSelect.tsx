@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { COLOR_CLASS_MAP } from "@/lib/constants";
 import { User as UserType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 
@@ -77,21 +78,17 @@ export function MultiUserSelect({
                   onChange(users.map((u) => u._id));
                 }
               }}
-              className="flex items-center justify-center font-normal"
+              className="justify-center font-normal"
             >
               <span>Select All</span>
             </CommandItem>
             <hr className="border-gray-base m-1" />
             {users.map((user) => (
-              <CommandItem
-                key={user._id}
-                onSelect={() => toggleUser(user._id)}
-                className="flex items-center gap-2"
-              >
-                <Avatar className="size-7">
+              <CommandItem key={user._id} onSelect={() => toggleUser(user._id)}>
+                <Avatar size="sm">
                   <AvatarFallback
-                    className="text-base"
-                    style={{ backgroundColor: user.color }}
+                    size="sm"
+                    className={`bg-${COLOR_CLASS_MAP[user.color]}`}
                   >
                     {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>

@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { COLOR_CLASS_MAP } from "@/lib/constants";
 import { User as UserType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 
@@ -24,13 +25,13 @@ export function AvatarGroup({
       )}
     >
       {displayUsers.map((user) => (
-        <Avatar key={user._id} className={`${select && "size-7"}`}>
+        <Avatar key={user._id} size={select ? "sm" : "md"}>
           <AvatarFallback
+            size={select ? "sm" : "md"}
             className={cn(
-              "border-2 border-white",
-              select && "border-gray-lightest text-md",
+              `bg-${COLOR_CLASS_MAP[user.color]} border-2 border-white`,
+              select && "border-gray-lightest",
             )}
-            style={{ backgroundColor: user.color }}
           >
             {user.name.charAt(0).toUpperCase()}
           </AvatarFallback>
@@ -38,10 +39,11 @@ export function AvatarGroup({
       ))}
 
       {hiddenCount > 0 && (
-        <Avatar className={`${select && "size-7"}`}>
+        <Avatar size={select ? "sm" : "md"}>
           <AvatarFallback
+            size={select ? "sm" : "md"}
             className={cn(
-              "border-2 border-white bg-gray-light text-md",
+              "border-2 border-white bg-gray-light text-base",
               select && "border-gray-lightest text-sm",
             )}
           >

@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { BASE_URL } from "@/lib/constants";
+import { COLOR_CLASS_MAP } from "@/lib/constants";
 import { ExpenseItem as ExpenseItemType } from "@/lib/type";
 
 import { useState } from "react";
@@ -47,7 +48,7 @@ export function ExpenseTableRow({
         <TableCell className="w-full">
           <div className="flex items-center space-x-4">
             <Avatar>
-              <AvatarFallback style={{ backgroundColor: payer.color }}>
+              <AvatarFallback className={`bg-${COLOR_CLASS_MAP[payer.color]}`}>
                 {payer.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -57,7 +58,9 @@ export function ExpenseTableRow({
             </div>
           </div>
         </TableCell>
-        <TableCell className="w-full text-right">${price.toLocaleString()}</TableCell>
+        <TableCell className="w-full text-right">
+          ${price.toLocaleString()}
+        </TableCell>
         <TableCell className="w-full">
           <Button
             variant="ghost"

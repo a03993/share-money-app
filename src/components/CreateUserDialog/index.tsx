@@ -184,10 +184,12 @@ export function CreateUserDialog({
             {userInputs.map((input, index) => (
               <Avatar
                 key={index}
-                className="relative ml-[-6px] border-2 border-white size-12"
+                size="lg"
+                className="ml-[-6px] border-2 border-white"
               >
                 <AvatarFallback
-                  className={`bg-${COLOR_CLASS_MAP[input.color]} text-2xl`}
+                  size="lg"
+                  className={`bg-${COLOR_CLASS_MAP[input.color]}`}
                 >
                   {input.name.length > 0 ? (
                     input.name.charAt(0).toUpperCase()

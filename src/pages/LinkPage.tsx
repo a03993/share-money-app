@@ -80,7 +80,8 @@ export function LinkPage() {
       <TabsTrigger
         value="back"
         onClick={() => navigate("/")}
-        className="text-2xl text-black font-black opacity-100 absolute sm:relative sm:left-0 left-7"
+        isLogo
+        className="absolute sm:relative sm:left-0 left-7"
       >
         ShareMoney
       </TabsTrigger>
@@ -124,7 +125,7 @@ export function LinkPage() {
 
   return (
     <Tabs defaultValue="expense">
-      <TabsList className="fixed top-0 left-0 right-0 z-50">
+      <TabsList>
         <TabTriggers />
       </TabsList>
 

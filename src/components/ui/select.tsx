@@ -1,9 +1,10 @@
+// customized from shadcn
 import { cn } from "@/lib/utils";
 
 import * as React from "react";
 
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon } from "lucide-react";
 
 function Select({
   ...props
@@ -36,7 +37,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "group rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3 cursor-pointer outline-none h-13",
+        "group rounded-full border-1 border-gray-dark bg-gray-lightest flex items-center justify-between p-3 cursor-pointer outline-none h-13 min-w-40",
         "data-[placeholder]:[&>span]:text-gray-dark data-[placeholder]:[&>span]:font-light",
         "disabled:data-[placeholder]:[&>span]:text-gray-light disabled:border-gray-light",
         "[&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1 [&_[data-slot=select-value]]:whitespace-nowrap",

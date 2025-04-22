@@ -1,7 +1,7 @@
-import { CreateLink } from "@/components/CreateLink";
 import Footer from "@/components/Footer";
-import { LinkPage } from "@/components/LinkPage";
 import { Toaster } from "@/components/ui/sonner";
+import { CreateLinkPage } from "@/pages/CreateLinkPage";
+import { LinkPage } from "@/pages/LinkPage";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -11,9 +11,9 @@ function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <div className="md:min-h-screen pt-10 pb-40">
+      <div className="md:min-h-screen">
         <Routes>
-          <Route path="/" element={<CreateLink />} />
+          <Route path="/" element={<CreateLinkPage />} />
           <Route path={`/:linkId`} element={<LinkPage />} />
         </Routes>
       </div>

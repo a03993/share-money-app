@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 
-export function CreateLink() {
+export function CreateLinkPage() {
   const navigate = useNavigate();
 
   const handleCreateLink = async () => {
@@ -32,15 +32,12 @@ export function CreateLink() {
 
   return (
     <Tabs defaultValue="createLink">
-      <TabsList className="relative">
-        <TabsTrigger
-          value="createLink"
-          className="text-2xl text-black font-black opacity-100 absolute sm:relative sm:left-0 left-7"
-        >
+      <TabsList className="justify-start">
+        <TabsTrigger value="createLink" isLogo>
           ShareMoney
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="createLink" className="mt-25">
+      <TabsContent value="createLink" className="mt-40">
         <div className="flex flex-col items-center justify-center gap-7">
           <h2 className="text-9xl font-bungee text-gray-light">$</h2>
           <p className="w-1/2 text-center text-base">

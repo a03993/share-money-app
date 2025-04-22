@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { BASE_URL } from "@/lib/constants";
+import { BASE_URL, COLOR_CLASS_MAP } from "@/lib/constants";
 
 import { useState } from "react";
 
@@ -80,7 +80,7 @@ export function SettlementTableRow({
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
-              <AvatarFallback style={{ backgroundColor: from.color }}>
+              <AvatarFallback className={`bg-${COLOR_CLASS_MAP[from.color]}`}>
                 {from.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -91,7 +91,7 @@ export function SettlementTableRow({
         <TableCell>
           <div className="flex items-center space-x-2">
             <Avatar>
-              <AvatarFallback style={{ backgroundColor: to.color }}>
+              <AvatarFallback className={`bg-${COLOR_CLASS_MAP[to.color]}`}>
                 {to.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
